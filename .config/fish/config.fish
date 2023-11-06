@@ -2,6 +2,8 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
+set fish_greeting ""
+
 if type -q exa
     alias l="exa -l"
     alias ll="exa --icons --long --header --group --created --modified --git -a"
