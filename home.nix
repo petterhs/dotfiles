@@ -19,6 +19,19 @@
   #     xxx
   # '';
 
+  home.file.".config" = {
+    source = ./.config;
+    recursive = true;
+  };
+
+  home.file.".tmux.conf" = {
+    source = ./.tmux.conf;
+  };
+
+  home.file.".shell_aliases" = {
+    source = ./.shell_aliases;
+  };
+
   # set cursor size and dpi for 4k monitor
   xresources.properties = {
     "Xcursor.size" = 16;
@@ -39,7 +52,6 @@
   home.packages = with pkgs; [
 
     # fonts
-
     nerdfonts 
 
     neofetch
@@ -129,7 +141,7 @@
 
     shellAliases = {
       cat = "bat";
-      ls = "eza";
+      ls = "eza -a";
     };
   };
 
