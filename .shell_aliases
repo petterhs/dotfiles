@@ -1,0 +1,6 @@
+alias vim=nvim
+alias config='/usr/bin/git --git-dir=/home/petter/dotfiles/ --work-tree=/home/petter'
+alias q='exit'
+alias ls='eza'
+alias du='dust'
+alias cat='bat'
