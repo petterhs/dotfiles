@@ -19,7 +19,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-30163cea-ed7e-4ef0-abb7-d860a687d7af".device = "/dev/disk/by-uuid/30163cea-ed7e-4ef0-abb7-d860a687d7af";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixdesktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -81,7 +81,14 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+    ];
+  };
+  users.users.petter-work = {
+    isNormalUser = true;
+    description = "petter-work";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      firefox
     ];
   };
   users.defaultUserShell = pkgs.fish;

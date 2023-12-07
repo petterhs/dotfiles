@@ -14,16 +14,17 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
-      "nixos" = nixpkgs.lib.nixosSystem {
+      "nixdesktop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./configuration.nix
+          ./hosts/nixdesktop/configuration.nix
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.petter = import ./home.nix;
+            home-manager.users.petter = import ./home/users/petter.nix;
+            home-manager.users.petter-work = import ./home/users/petter-work.nix;
           }
 
         ];
