@@ -46,8 +46,12 @@
     zoxide
     tmux
     rofi
+    du-dust
+
+    #neovim config dependencies
     gcc
     gnumake
+    nodejs_21 #for copilot
 
     #browsers
     firefox

@@ -2,13 +2,15 @@
   description = "My personal configuration flake";
 
   inputs = {
-    
+
+
+    nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
 
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nix-bitcoin/nixpkgs-unstable";
     };
   };
 
@@ -18,6 +20,7 @@
         system = "x86_64-linux";
         modules = [
           ./hosts/nixdesktop/configuration.nix
+          ./nix/btc.nix
 
           home-manager.nixosModules.home-manager
           {

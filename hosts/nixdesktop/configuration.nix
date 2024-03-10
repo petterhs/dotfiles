@@ -10,6 +10,7 @@
       ./hardware-configuration.nix
     ];
 
+  nixpkgs.config.allowUnfree = true;
 
   # Make ready for nix flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
