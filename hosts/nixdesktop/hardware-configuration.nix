@@ -25,11 +25,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/T7" =
-    { device = "/dev/disk/by-uuid/4EFF-3B26";
-      fsType = "exfat";
-    };
-
   fileSystems."/node" =
     { device = "/dev/disk/by-uuid/77c32958-394d-49bc-b059-eca0be239eb3";
       fsType = "ext4";

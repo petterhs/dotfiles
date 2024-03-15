@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ./programs/hyprland/hyprland.nix
+  ];
 
   home.file.".config" = {
     source = ../.config;
@@ -36,6 +39,7 @@
     # archives
     zip
     unzip
+    xfce.thunar
 
     # utils
     ripgrep # recursively searches directories for a regex pattern
@@ -82,6 +86,8 @@
     ethtool
     pciutils # lspci
     usbutils # lsusb
+    psmisc # killall/pstree/prtstat/fuser/...
+    udiskie
   ];
 
   # starship - an customizable prompt for any shell

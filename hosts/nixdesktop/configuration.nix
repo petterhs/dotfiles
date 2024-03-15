@@ -3,7 +3,9 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
-
+let
+  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+in 
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -13,7 +15,11 @@
   nixpkgs.config.allowUnfree = true;
 
   # Make ready for nix flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    substituters = ["https://hyprland.cachix.org"];
+    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -36,18 +42,60 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the XFCE Desktop Environment.
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "no";
-    xkbVariant = "";
+  programs.hyprland = {
+    enable = true;
+    enableNvidiaPatches = true;
+    xwayland.enable = true;
   };
+
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+    ];
+  };
+
+  services = {
+    xserver.enable = false; # disable xorg server
+    # https://wiki.archlinux.org/title/Greetd
+    greetd = {
+      enable = true;
+      settings = {
+        default_session = {
+          user = "greeter";
+          command = "${tuigreet} --time --remember --cmd Hyprland";
+          };
+      };
+    };
+  };
+
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+
+  # fix https://github.com/ryan4yin/nix-config/issues/10
+  security.pam.services.swaylock = {};
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
+  hardware = {
+    opengl.enable = true;
+    nvidia.modesetting.enable = true;
+    bluetooth.enable = true;
+    bluetooth.powerOnBoot = true;
+  };
+
+  services.blueman.enable = true;
 
   # Configure console keymap
   console.keyMap = "no";
@@ -101,7 +149,14 @@
     wget
     git
     fish
+    dunst
+    libnotify
+    kitty
+    pavucontrol
+    playerctl
+    pulsemixer
   ];
+
 
   environment.variables.EDITOR = "nvim";
 
@@ -134,4 +189,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  # Automatic Garbage Collection
+  nix.gc = {
+                  automatic = true;
+                  dates = "weekly";
+                  options = "--delete-older-than 7d";
+          };
 }
