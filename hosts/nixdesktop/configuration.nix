@@ -90,6 +90,7 @@ in
   hardware = {
     opengl.enable = true;
     nvidia.modesetting.enable = true;
+    nvidia.open = false;
     bluetooth.enable = true;
     bluetooth.powerOnBoot = true;
   };
