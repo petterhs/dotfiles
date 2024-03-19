@@ -22,5 +22,7 @@
   home.packages = with pkgs; [
     teams-for-linux
     # citrix_workspace
-  ];
+
+    sox # audio file processing
+];
 }
