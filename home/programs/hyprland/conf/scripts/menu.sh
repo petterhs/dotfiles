@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-if [[ ! $(pidof rofi) ]]; then
-	rofi -show drun -show-icons
+CONFIG="$HOME/.config/hypr/wofi/config.jsonc"
+STYLE="$HOME/.config/hypr/wofi/style.css"
+if [[ ! $(pidof wofi) ]]; then
+  wofi --conf "${CONFIG}" --style "${STYLE}"
 else
-	pkill rofi 
+	pkill wofi 
 fi

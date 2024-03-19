@@ -5,6 +5,7 @@
     swww
     waybar
     dunst
+    wofi
     # hyprshot
     wl-clipboard
     wlogout
@@ -66,7 +67,10 @@
       source = ./conf/wlogout;
       recursive = true;
     };
-
+    "hypr/wofi" = {
+      source = ./conf/wofi;
+      recursive = true;
+    };
     # music player - mpd
     "mpd" = {
       source = ./conf/mpd;
