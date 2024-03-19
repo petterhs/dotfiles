@@ -9,6 +9,11 @@
     source = ../.config;
     recursive = true;
   };
+  
+  home.file."wallpaper" = {
+    source = ../wallpaper;
+    recursive = true;
+  }
 
   home.file.".tmux.conf" = {
     source = ../.tmux.conf;
@@ -135,8 +140,13 @@
   };
 
   programs.neovim = {
+    defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    extraPackages = [
+      pkgs.tailwindcss-language-server
+      pkgs.lua-language-server
+    ];
   };
 
   # This value determines the home Manager release that your
