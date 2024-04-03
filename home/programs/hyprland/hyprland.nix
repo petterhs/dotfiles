@@ -9,7 +9,7 @@
     # hyprshot
     wl-clipboard
     wlogout
-    swaylock
+    hyprlock
     swayidle
     grim
     hyprpicker
@@ -72,6 +72,12 @@
     "hypr/wofi" = {
       source = ./conf/wofi;
       recursive = true;
+    };
+    "hypr/hyprlock.conf" = {
+      source = ./conf/hyprlock/hyprlock.conf;
+    };
+    "hypr/mocha.conf" = {
+      source = ./conf/mocha.conf;
     };
     # music player - mpd
     "mpd" = {
