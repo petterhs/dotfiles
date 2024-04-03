@@ -28,6 +28,12 @@
 
   fonts.fontconfig.enable = true;
 
+  home.pointerCursor = {
+    gtk.enable = true;
+    package = pkgs.gnome.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 16;
+  };
 
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
@@ -102,6 +108,13 @@
     obs-studio
     gossip
   ];
+
+  programs.git = {
+    enable = true;
+    aliases = {
+      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+    };
+  };
 
   # starship - an customizable prompt for any shell
   programs.starship = {
