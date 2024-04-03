@@ -3,6 +3,7 @@
 {
   imports = [
     ./programs/hyprland/hyprland.nix
+    ./programs/tmux.nix
   ];
 
   home.file.".config" = {
@@ -13,10 +14,6 @@
   home.file."wallpaper" = {
     source = ../wallpaper;
     recursive = true;
-  };
-
-  home.file.".tmux.conf" = {
-    source = ../.tmux.conf;
   };
 
   home.file.".shell_aliases" = {
@@ -53,7 +50,6 @@
     bat
     fish
     zoxide
-    tmux
     rofi
     du-dust
 
@@ -70,6 +66,9 @@
     file
     which
     tree
+
+    # notes
+    obsidian
 
     # nix related
 
@@ -93,6 +92,8 @@
     usbutils # lsusb
     psmisc # killall/pstree/prtstat/fuser/...
     udiskie
+
+    obs-studio
   ];
 
   # starship - an customizable prompt for any shell
