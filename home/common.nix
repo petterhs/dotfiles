@@ -33,7 +33,10 @@
   home.packages = with pkgs; [
 
     # fonts
-    nerdfonts 
+    nerdfonts
+
+    #cursors
+    catppuccin-cursors.mochaLavender
 
     neofetch
     neovim

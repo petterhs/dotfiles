@@ -17,6 +17,7 @@
     slurp
     
     qt5ct
+    qt6ct
     
     libva-utils
     pavucontrol
@@ -25,6 +26,7 @@
     ncmpcpp
     mpd
     mpc-cli
+    obs-studio-plugins.wlrobs
   ];
 
 
@@ -41,7 +43,7 @@
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
         "GDK_BACKEND,wayland"
-
+        #
         # for hyprland with nvidia gpu, ref https://wiki.hyprland.org/Nvidia/
         "LIBVA_DRIVER_NAME,nvidia"
         "XDG_SESSION_TYPE,wayland"

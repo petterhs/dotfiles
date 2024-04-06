@@ -51,7 +51,7 @@ in
     enable = true;
     wlr.enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
+      xdg-desktop-portal-hyprland
     ];
   };
 
@@ -157,8 +157,11 @@ in
     pulsemixer
   ];
 
-
-  environment.variables.EDITOR = "nvim";
+  environment.variables = {
+    EDITOR = "nvim";
+    XCURSOR_THEME = "Catppuccin-Mocha-Lavender-Cursors";
+    XCURSOR_SIZE = "32";
+  };
 
   programs.fish.enable = true;
 
@@ -177,6 +180,10 @@ in
   
   # Enable tailscale
   services.tailscale.enable = true;
+
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

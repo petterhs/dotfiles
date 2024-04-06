@@ -19,5 +19,5 @@ WAYBAR_STYLE="$HOME/.config/hypr/waybar/style.css"
 waybar --bar main-bar --log-level error --config ${WAYBAR_CONFIG} --style ${WAYBAR_STYLE} &
 
 dunst &
-# udiskie &
+udiskie &
 exec mpd &
