@@ -30,7 +30,6 @@ in
     ];
   };
 
-  services.clightning.enable = true;
   services.electrs.enable = true;
 
   # Enable interactive access to nix-bitcoin features (like bitcoin-cli) for
