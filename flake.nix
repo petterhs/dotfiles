@@ -14,6 +14,10 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nix-bitcoin/nixpkgs-unstable";
     };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {

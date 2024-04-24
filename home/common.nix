@@ -74,9 +74,12 @@
     obsidian
 
     # nix related
+    nix-output-monitor
+    nvd
 
     # productivity
     glow # markdown previewer in terminal
+    super-productivity
 
     btop  # replacement of htop/nmon
     iotop # io monitoring
@@ -97,6 +100,7 @@
     udiskie
 
     obs-studio
+    gossip
   ];
 
   # starship - an customizable prompt for any shell
