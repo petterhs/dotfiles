@@ -46,6 +46,11 @@
         variant = "mocha";
       };
     };
+
+    cursorTheme = {
+      name = "Catppuccin-Mocha-Lavender-Cursors";
+      package = pkgs.catppuccin-cursors.mochaLavender;
+    };
   };
 
   xdg.configFile = {
