@@ -4,6 +4,7 @@
   imports = [
     ../common.nix
     ../programs/hyprland/hyprland.nix
+    ../programs/hyprland/hyprland-nvidia.nix
     ../programs/alacritty
     ../programs/graphical
   ];

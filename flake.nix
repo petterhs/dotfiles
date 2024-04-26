@@ -44,6 +44,26 @@
           }
         ];
       };
+      "no-kon-lx-016" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./hosts/no-kon-lx-016/configuration.nix
+          { programs.hyprland.enable = true; }
+          home-manager.nixosModules.home-manager
+          {
+            lib.homeManagerConfiguration = {
+              pkgs = nixpkgs.legacyPackages.x86_64-linux;
+              modules = [
+                hyprland.homeManagerModules.default
+                {wayland.windowManager.hyprland.enable = true;}
+              ];
+            };
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.s27731 = import ./home/users/s27731.nix;
+          }
+        ];
+      };
     };
     homeConfigurations."s27731" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
