@@ -4,7 +4,6 @@
     networkmanagerapplet
     swww
     waybar
-    dunst
     wofi
     # hyprshot
     wl-clipboard

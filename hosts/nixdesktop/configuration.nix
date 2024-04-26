@@ -149,9 +149,7 @@ in
     wget
     git
     fish
-    dunst
     libnotify
-    kitty
     pavucontrol
     playerctl
     pulsemixer

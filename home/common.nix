@@ -3,6 +3,7 @@
 {
   imports = [
     ./programs/tmux.nix
+    ./programs/dunst
   ];
 
   home.file.".config" = {
