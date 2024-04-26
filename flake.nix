@@ -45,5 +45,17 @@
         ];
       };
     };
+    homeConfigurations."s27731" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      
+      modules = [
+        hyprland.homeManagerModules.default
+        {
+          nixpkgs.config.allowUnfree = true;
+        }
+
+        ./home/users/s27731.nix
+      ];
+    };
   };
 }

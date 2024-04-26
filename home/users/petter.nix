@@ -3,6 +3,9 @@
 {
   imports = [
     ../common.nix
+    ../programs/hyprland/hyprland.nix
+    ../programs/alacritty
+    ../programs/graphical
   ];
 
 

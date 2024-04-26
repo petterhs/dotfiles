@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./programs/hyprland/hyprland.nix
     ./programs/tmux.nix
   ];
 
@@ -33,6 +32,25 @@
     package = pkgs.gnome.adwaita-icon-theme;
     name = "Adwaita";
     size = 16;
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Catppuccin-Mocha-Compact-Pink-Dark";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "pink" ];
+        size = "compact";
+        tweaks = [ "rimless" ];
+        variant = "mocha";
+      };
+    };
+  };
+
+  xdg.configFile = {
+    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
+    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
+    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
   };
 
   # Packages that should be installed to the user profile.
@@ -76,9 +94,6 @@
     which
     tree
 
-    # notes
-    obsidian
-
     # nix related
     nix-output-monitor
     nvd
@@ -104,9 +119,6 @@
     usbutils # lsusb
     psmisc # killall/pstree/prtstat/fuser/...
     udiskie
-
-    obs-studio
-    gossip
   ];
 
   programs.git = {
@@ -121,21 +133,6 @@
     enable = true;
     # custom settings
     settings = {
-    };
-  };
-
-  # alacritty - a cross-platform, GPU-accelerated terminal emulator
-  programs.alacritty = {
-    enable = true;
-    # custom settings
-    settings = {
-      env.TERM = "xterm-256color";
-      font = {
-        size = 12;
-        draw_bold_text_with_bright_colors = true;
-      };
-      scrolling.multiplier = 5;
-      selection.save_to_clipboard = true;
     };
   };
 
