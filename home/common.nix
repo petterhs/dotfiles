@@ -83,7 +83,7 @@
     #neovim config dependencies
     gcc
     gnumake
-    nodejs_21 #for copilot
+    nodejs_22 #for copilot
 
     #browsers
     firefox
