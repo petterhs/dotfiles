@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixvim-config, ... }:
 
 {
   imports = [
@@ -62,6 +62,9 @@
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
 
+    #nixvim config
+    nixvim-config.packages.${system}.default
+
     # fonts
     nerdfonts
 
@@ -69,7 +72,6 @@
     catppuccin-cursors.mochaLavender
 
     neofetch
-    neovim
 
     # archives
     zip

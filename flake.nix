@@ -14,13 +14,12 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nix-bitcoin/nixpkgs-unstable";
     };
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nixvim-config = {
+      url = "github:petterhs/nixvim-config";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, nixvim-config, ... }@inputs: {
     nixosConfigurations = {
       "nixdesktop" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -61,6 +60,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.s27731 = import ./home/users/s27731.nix;
+            home-manager.extraSpecialArgs = {inherit nixvim-config;};
           }
         ];
       };
