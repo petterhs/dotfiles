@@ -125,7 +125,7 @@ in
   users.users.s27731 = {
     isNormalUser = true;
     description = "petter";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" ];
     packages = with pkgs; [
       firefox
     ];
