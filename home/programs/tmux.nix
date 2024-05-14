@@ -11,9 +11,14 @@ in
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
-    terminal = "tmux-256color";
+    terminal = "xterm-256color";
+    mouse = true;
     historyLimit = 100000;
+    baseIndex = 1;
+    keyMode = "vi";
+    prefix = "C-Space";
     newSession = true;
+    clock24 = true;
     plugins = with pkgs;
       [
         tmuxPlugins.vim-tmux-navigator
@@ -33,44 +38,26 @@ in
         {
           plugin = tmuxPlugins.resurrect;
           extraConfig = ''
-            set -g @resurrect-strategy-vim 'session'
-            set -g @resurrect-strategy-nvim 'session'
-            set -g @resurrect-capture-pane-contents 'on'
+            resurrect_dir="$HOME/.tmux/resurrect"
+            set -g @resurrect-dir $resurrect_dir
           '';
         }
         {
           plugin = tmuxPlugins.continuum;
           extraConfig = ''
             set -g @continuum-restore 'on'
-            set -g @continuum-boot 'on'
             set -g @continuum-save-interval '10'
           '';
         }
 
       ];
     extraConfig = ''
-      set -g default-terminal "tmux-256color"
       set -ag terminal-overrides ",xterm-256color:RGB"
-
-      set-option -g prefix C-Space
-      unbind-key C-b
-      bind-key C-Space send-prefix
-
-      set -g mouse on
-
-      # Start windows and panes at 1, not 0
-      set -g base-index 1
-      setw -g pane-base-index 1
-      set-window-option -g pane-base-index 1
-      set-option -g renumber-windows on
 
       # Change splits to match nvim and easier to remember
       # Open new split at cwd of current split
       bind '"' split-window -v -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
-
-      # Use vim keybindings in copy mode
-      set-window-option -g mode-keys vi
 
       # v in copy mode starts making selection
       bind-key -T copy-mode-vi v send-keys -X begin-selection
@@ -79,9 +66,6 @@ in
 
       # Escape turns on copy mode
       bind Escape copy-mode
-
-      # Easier reload of config
-      bind r source-file ~/.config/tmux/tmux.conf
 
       # make Prefix p paste the buffer.
       unbind p
@@ -97,7 +81,8 @@ in
       bind-key -T prefix C-d switch -t dotfiles
       bind-key -T prefix C-e send-keys "tmux capture-pane -p -S - | nvim -c 'set buftype=nofile' +" Enter
 
-      bind-key "T" run-shell "sesh connect \"$(
+      unbind t
+      bind-key "t" run-shell "sesh connect \"$(
         sesh list | fzf-tmux -p 55%,60% \
           --no-sort --border-label ' sesh ' --prompt '⚡  ' \
           --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
