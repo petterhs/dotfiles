@@ -14,10 +14,10 @@
     hyprpicker
 
     slurp
-    
+
     qt5ct
     qt6ct
-    
+
     libva-utils
     pavucontrol
     pulsemixer
@@ -33,6 +33,9 @@
     enable = true;
     settings = {
       env = [
+        "BROWSER,firefox"
+        "EDITOR,nvim"
+        "TERMINAL,alacritty"
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
@@ -46,7 +49,7 @@
     };
     extraConfig = builtins.readFile ./conf/hyprland.conf;
     systemd.enable = true;
-  }; 
+  };
 
   # hyprland configs, based on https://github.com/notwidow/hyprland
   xdg.configFile = {

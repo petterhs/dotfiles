@@ -5,11 +5,14 @@
 { config, pkgs, ... }:
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-in 
+in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../nix
+      ../../nix/custom-teams-background.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
@@ -17,15 +20,14 @@ in
   # Make ready for nix flakes
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    substituters = ["https://hyprland.cachix.org"];
-    trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
+    substituters = [ "https://hyprland.cachix.org" ];
+    trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
- 
   networking.hostName = "no-kon-lx-016"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -50,8 +52,10 @@ in
   xdg.portal = {
     enable = true;
     wlr.enable = true;
+    xdgOpenUsePortal = false;
     extraPortals = with pkgs; [
       xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
     ];
   };
 
@@ -64,7 +68,7 @@ in
         default_session = {
           user = "greeter";
           command = "${tuigreet} --time --remember --cmd Hyprland";
-          };
+        };
       };
     };
   };
@@ -81,9 +85,10 @@ in
   };
 
   # fix https://github.com/ryan4yin/nix-config/issues/10
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 
   environment.sessionVariables = {
+    TERM = "alacritty";
     NIXOS_OZONE_WL = "1";
   };
 
@@ -136,9 +141,10 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
     git
+    alacritty
     fish
     libnotify
     pavucontrol
@@ -166,7 +172,7 @@ in
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  
+
   # Enable tailscale
   services.tailscale.enable = true;
 
@@ -190,8 +196,8 @@ in
 
   # Automatic Garbage Collection
   nix.gc = {
-                  automatic = true;
-                  dates = "weekly";
-                  options = "--delete-older-than 7d";
-          };
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 }

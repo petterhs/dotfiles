@@ -4,13 +4,14 @@
   imports = [
     ./programs/tmux.nix
     ./programs/dunst
+    ./xdg.nix
   ];
 
   home.file.".config" = {
     source = ../.config;
     recursive = true;
   };
-  
+
   home.file."wallpaper" = {
     source = ../wallpaper;
     recursive = true;
@@ -77,6 +78,9 @@
     zip
     unzip
     xfce.thunar
+    xfce.exo
+
+    xterm
 
     # utils
     ripgrep # recursively searches directories for a regex pattern
@@ -96,6 +100,9 @@
     #browsers
     firefox
 
+    # Simple image viewer
+    imv
+
     # misc
     cowsay
     file
@@ -105,12 +112,13 @@
     # nix related
     nix-output-monitor
     nvd
+    nixpkgs-fmt
 
     # productivity
     glow # markdown previewer in terminal
     super-productivity
 
-    btop  # replacement of htop/nmon
+    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
 
@@ -140,8 +148,7 @@
   programs.starship = {
     enable = true;
     # custom settings
-    settings = {
-    };
+    settings = { };
   };
 
   programs.bash = {
@@ -152,7 +159,7 @@
     '';
 
     shellAliases = {
-      cat = "bat"; 
+      cat = "bat";
     };
   };
 
@@ -165,17 +172,6 @@
     };
   };
 
-  programs.neovim = {
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-    extraPackages = [
-      pkgs.tailwindcss-language-server
-      pkgs.lua-language-server
-    ];
-  };
-
-  # This value determines the home Manager release that your
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
   # incompatible changes.

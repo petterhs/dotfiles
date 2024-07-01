@@ -5,7 +5,7 @@
     enable = true;
     # custom settings
     settings = {
-      env.TERM = "xterm-256color";
+      env.TERM = "alacritty";
       font = {
         size = 12;
         draw_bold_text_with_bright_colors = true;
