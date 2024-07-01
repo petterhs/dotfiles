@@ -1,4 +1,3 @@
-
 { pkgs, ... }:
 let
 in
@@ -11,7 +10,7 @@ in
   programs.tmux = {
     enable = true;
     shell = "${pkgs.fish}/bin/fish";
-    terminal = "xterm-256color";
+    terminal = "tmux-256color";
     mouse = true;
     historyLimit = 100000;
     baseIndex = 1;
@@ -52,7 +51,7 @@ in
 
       ];
     extraConfig = ''
-      set -ag terminal-overrides ",xterm-256color:RGB"
+      set -ag terminal-overrides ",alacritty:RGB"
 
       # Change splits to match nvim and easier to remember
       # Open new split at cwd of current split
