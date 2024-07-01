@@ -92,7 +92,7 @@ in
   };
 
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     nvidia.modesetting.enable = true;
     nvidia.open = false;
     bluetooth.enable = true;
