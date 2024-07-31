@@ -107,7 +107,6 @@ in
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -123,6 +122,15 @@ in
     #media-session.enable = true;
   };
 
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -130,7 +138,7 @@ in
   users.users.s27731 = {
     isNormalUser = true;
     description = "petter";
-    extraGroups = [ "networkmanager" "wheel" "dialout" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "docker" "wireshark" ];
     packages = with pkgs; [
       firefox
     ];
@@ -160,6 +168,10 @@ in
 
   programs.fish.enable = true;
 
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

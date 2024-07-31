@@ -29,28 +29,21 @@
 
   fonts.fontconfig.enable = true;
 
-  home.pointerCursor = {
-    gtk.enable = true;
-    package = pkgs.gnome.adwaita-icon-theme;
-    name = "Adwaita";
-    size = 16;
+
+  catppuccin = {
+    flavor = "mocha";
+    accent = "pink";
   };
 
   gtk = {
     enable = true;
-    theme = {
-      name = "Catppuccin-Mocha-Compact-Pink-Dark";
-      package = pkgs.catppuccin-gtk.override {
-        accents = [ "pink" ];
-        size = "compact";
-        tweaks = [ "rimless" ];
-        variant = "mocha";
+    catppuccin = {
+      enable = true;
+      cursor = {
+        enable = true;
+        flavor = "mocha";
+        accent = "lavender";
       };
-    };
-
-    cursorTheme = {
-      name = "Catppuccin-Mocha-Lavender-Cursors";
-      package = pkgs.catppuccin-cursors.mochaLavender;
     };
   };
 
@@ -170,6 +163,11 @@
       cat = "bat";
       ls = "eza -a";
     };
+  };
+
+  programs.fd = {
+    enable = true;
+    hidden = true;
   };
 
   # configuration is compatible with. This helps avoid breakage
