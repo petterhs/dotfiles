@@ -33,17 +33,17 @@
   catppuccin = {
     flavor = "mocha";
     accent = "pink";
+    pointerCursor = {
+      enable = true;
+      flavor = "mocha";
+      accent = "lavender";
+    };
   };
 
   gtk = {
     enable = true;
     catppuccin = {
       enable = true;
-      cursor = {
-        enable = true;
-        flavor = "mocha";
-        accent = "lavender";
-      };
     };
   };
 
@@ -96,6 +96,12 @@
     # Simple image viewer
     imv
 
+    # Video player
+    vlc
+
+    # Audio analyzer
+    sonic-visualiser
+
     # misc
     cowsay
     file
@@ -142,6 +148,11 @@
     enable = true;
     # custom settings
     settings = { };
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
   };
 
   programs.bash = {

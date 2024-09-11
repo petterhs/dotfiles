@@ -9,7 +9,6 @@
     "hyprland/workspaces"
   ],
   "modules-center": [
-    "custom/playerctl"
   ],
   "modules-right": [
     "mpd",

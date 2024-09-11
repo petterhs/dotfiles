@@ -18,6 +18,8 @@
     qt5ct
     qt6ct
 
+    hyprland-per-window-layout
+
     libva-utils
     pavucontrol
     pulsemixer
