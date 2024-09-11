@@ -19,9 +19,11 @@
       url = "github:petterhs/nixvim-config";
     };
 
+    zen-browser.url = "github:heywoodlh/flakes/main?dir=zen-browser";
+
   };
 
-  outputs = { nixpkgs, catppuccin, home-manager, hyprland, nixvim-config, ... }@inputs:
+  outputs = { nixpkgs, catppuccin, home-manager, hyprland, nixvim-config, zen-browser, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -42,6 +44,11 @@
             ./hosts/nixdesktop/configuration.nix
             ./nix/btc.nix
             { programs.hyprland.enable = true; }
+            {
+              environment.systemPackages = [
+                zen-browser.packages.x86_64-linux.zen-browser
+              ];
+            }
             home-manager.nixosModules.home-manager
             {
               lib.homeManagerConfiguration = {
@@ -71,6 +78,11 @@
             catppuccin.nixosModules.catppuccin
             ./hosts/no-kon-lx-016/configuration.nix
             { programs.hyprland.enable = true; }
+            {
+              environment.systemPackages = [
+                zen-browser.packages.x86_64-linux.zen-browser
+              ];
+            }
             home-manager.nixosModules.home-manager
             {
               lib.homeManagerConfiguration = {
