@@ -4,7 +4,13 @@ let
     sha256 = "sha256-6/T8h7g0s5Kp2C4yCOyuL9ssfPsZ237l2ek5Kc6r+eM=";
   };
 in
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
   imports = [
     "${nix-bitcoin}/modules/modules.nix"
   ];
@@ -18,7 +24,7 @@ in
   services.bitcoind = {
     enable = true;
     dataDir = "/node/bitcoin/";
-    
+
     # Listen to RPC connections on all interfaces
     rpc.address = "0.0.0.0";
 

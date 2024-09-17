@@ -18,38 +18,37 @@ in
     prefix = "C-Space";
     newSession = true;
     clock24 = true;
-    plugins = with pkgs;
-      [
-        tmuxPlugins.vim-tmux-navigator
-        tmuxPlugins.tmux-thumbs
-        tmuxPlugins.better-mouse-mode
-        tmuxPlugins.yank
-        tmuxPlugins.sensible
-        # must be before continuum edits right status bar
-        {
-          plugin = tmuxPlugins.catppuccin;
-          extraConfig = '' 
-            set -g @catppuccin_flavour 'mocha'
-            set -g @catppuccin_window_tabs_enabled on
-            set -g @catppuccin_date_time "%H:%M"
-          '';
-        }
-        {
-          plugin = tmuxPlugins.resurrect;
-          extraConfig = ''
-            resurrect_dir="$HOME/.tmux/resurrect"
-            set -g @resurrect-dir $resurrect_dir
-          '';
-        }
-        {
-          plugin = tmuxPlugins.continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '10'
-          '';
-        }
+    plugins = with pkgs; [
+      tmuxPlugins.vim-tmux-navigator
+      tmuxPlugins.tmux-thumbs
+      tmuxPlugins.better-mouse-mode
+      tmuxPlugins.yank
+      tmuxPlugins.sensible
+      # must be before continuum edits right status bar
+      {
+        plugin = tmuxPlugins.catppuccin;
+        extraConfig = ''
+          set -g @catppuccin_flavour 'mocha'
+          set -g @catppuccin_window_tabs_enabled on
+          set -g @catppuccin_date_time "%H:%M"
+        '';
+      }
+      {
+        plugin = tmuxPlugins.resurrect;
+        extraConfig = ''
+          resurrect_dir="$HOME/.tmux/resurrect"
+          set -g @resurrect-dir $resurrect_dir
+        '';
+      }
+      {
+        plugin = tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '10'
+        '';
+      }
 
-      ];
+    ];
     extraConfig = ''
       set -ag terminal-overrides ",alacritty:RGB"
 
@@ -96,4 +95,3 @@ in
     '';
   };
 }
-

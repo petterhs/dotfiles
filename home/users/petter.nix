@@ -9,10 +9,8 @@
     ../programs/graphical
   ];
 
-
   home.username = "petter";
   home.homeDirectory = "/home/petter";
-
 
   # basic configuration of git, please change to your own
   programs.git = {
@@ -21,10 +19,9 @@
     userEmail = "39340152+petterhs@users.noreply.github.com";
   };
 
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs; [
 
-    sparrow 
+    sparrow
   ];
 }

@@ -7,18 +7,20 @@ let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
 in
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../nix
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
   # Make ready for nix flakes
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [ "https://hyprland.cachix.org" ];
     trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
   };
@@ -129,7 +131,10 @@ in
   users.users.petter = {
     isNormalUser = true;
     description = "petter";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       firefox
     ];
@@ -137,7 +142,10 @@ in
   users.users.petter-work = {
     isNormalUser = true;
     description = "petter-work";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       firefox
     ];

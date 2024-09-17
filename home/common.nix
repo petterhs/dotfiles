@@ -55,7 +55,7 @@
     #neovim config dependencies
     gcc
     gnumake
-    nodejs_22 #for copilot
+    nodejs_22 # for copilot
 
     #browsers
     firefox
@@ -80,6 +80,7 @@
     nix-output-monitor
     nvd
     nixpkgs-fmt
+    nixfmt-rfc-style
 
     # productivity
     glow # markdown previewer in terminal
@@ -119,7 +120,6 @@
     # btop.enable = true;
   };
 
-
   # starship - an customizable prompt for any shell
   programs.starship = {
     enable = true;
@@ -148,7 +148,7 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # empty string to disable the welcome message
-    ''; 
+    '';
     shellAliases = {
       cat = "bat";
       ls = "eza -a";

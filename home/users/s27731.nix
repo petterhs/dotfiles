@@ -8,10 +8,8 @@
     ../programs/graphical
   ];
 
-
   home.username = "s27731";
   home.homeDirectory = "/home/s27731";
-
 
   # basic configuration of git, please change to your own
   programs.git = {

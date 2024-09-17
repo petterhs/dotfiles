@@ -23,12 +23,21 @@
 
   };
 
-  outputs = { nixpkgs, catppuccin, home-manager, hyprland, nixvim-config, zen-browser, ... }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      catppuccin,
+      home-manager,
+      hyprland,
+      nixvim-config,
+      zen-browser,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [];
+        overlays = [ ];
         config = {
           allowUnfree = true;
         };
@@ -38,7 +47,9 @@
       nixosConfigurations = {
         "nixdesktop" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs pkgs; };
+          specialArgs = {
+            inherit inputs pkgs;
+          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/nixdesktop/configuration.nix
@@ -61,13 +72,12 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.petter =
-                  {
-                    imports = [
-                      ./home/users/petter.nix
-                      catppuccin.homeManagerModules.catppuccin
-                    ];
-                  };
+                users.petter = {
+                  imports = [
+                    ./home/users/petter.nix
+                    catppuccin.homeManagerModules.catppuccin
+                  ];
+                };
                 extraSpecialArgs = {
                   inherit nixvim-config;
                 };
@@ -77,7 +87,9 @@
         };
         "no-kon-lx-016" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = { inherit inputs pkgs; };
+          specialArgs = {
+            inherit inputs pkgs;
+          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/no-kon-lx-016/configuration.nix
@@ -99,13 +111,12 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.s27731 =
-                  {
-                    imports = [
-                      ./home/users/s27731.nix
-                      catppuccin.homeManagerModules.catppuccin
-                    ];
-                  };
+                users.s27731 = {
+                  imports = [
+                    ./home/users/s27731.nix
+                    catppuccin.homeManagerModules.catppuccin
+                  ];
+                };
                 extraSpecialArgs = {
                   inherit nixvim-config;
                 };

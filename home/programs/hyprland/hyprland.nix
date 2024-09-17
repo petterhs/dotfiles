@@ -30,7 +30,6 @@
     obs-studio-plugins.wlrobs
   ];
 
-
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
