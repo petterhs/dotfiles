@@ -67,7 +67,6 @@
                     catppuccin.homeManagerModules.catppuccin
                   ];
                 };
-              home-manager.users.petter-work = import ./home/users/petter-work.nix;
             }
           ];
         };
