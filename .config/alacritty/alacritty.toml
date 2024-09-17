@@ -1,6 +1,0 @@
-import = [
-  "~/.config/alacritty/catppuccin-mocha.toml"
-]
-
-[font]
-normal = { family  = "JetBrainsMonoNL Nerd Font", style = "Regular" }

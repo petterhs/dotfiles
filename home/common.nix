@@ -1,56 +1,22 @@
-{ config, pkgs, nixvim-config, ... }:
+{ pkgs, nixvim-config, ... }:
 
 {
   imports = [
     ./programs/tmux.nix
     ./programs/dunst
     ./xdg.nix
+    ./theming.nix
   ];
-
-  home.file.".config" = {
-    source = ../.config;
-    recursive = true;
-  };
 
   home.file."wallpaper" = {
     source = ../wallpaper;
     recursive = true;
   };
 
-  home.file.".shell_aliases" = {
-    source = ../.shell_aliases;
-  };
-
   # set cursor size and dpi for 4k monitor
   xresources.properties = {
     "Xcursor.size" = 16;
     "Xft.dpi" = 172;
-  };
-
-  fonts.fontconfig.enable = true;
-
-
-  catppuccin = {
-    flavor = "mocha";
-    accent = "pink";
-    pointerCursor = {
-      enable = true;
-      flavor = "mocha";
-      accent = "lavender";
-    };
-  };
-
-  gtk = {
-    enable = true;
-    catppuccin = {
-      enable = true;
-    };
-  };
-
-  xdg.configFile = {
-    "gtk-4.0/assets".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/assets";
-    "gtk-4.0/gtk.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk.css";
-    "gtk-4.0/gtk-dark.css".source = "${config.gtk.theme.package}/share/themes/${config.gtk.theme.name}/gtk-4.0/gtk-dark.css";
   };
 
   # Packages that should be installed to the user profile.
@@ -83,11 +49,7 @@
     # utils
     ripgrep # recursively searches directories for a regex pattern
     eza # A modern replacement for ‘ls’
-    fzf # A command-line fuzzy finder
-    bat
-    fish
     zoxide
-    rofi
     du-dust
 
     #neovim config dependencies
@@ -123,7 +85,6 @@
     glow # markdown previewer in terminal
     super-productivity
 
-    btop # replacement of htop/nmon
     iotop # io monitoring
     iftop # network monitoring
 
@@ -148,6 +109,16 @@
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
     };
   };
+
+  # Themed with catppuccin via catppuccin/nix 
+  programs = {
+    bat.enable = true;
+    fzf.enable = true;
+    imv.enable = true;
+    rofi.enable = true;
+    # btop.enable = true;
+  };
+
 
   # starship - an customizable prompt for any shell
   programs.starship = {
@@ -175,7 +146,9 @@
 
   programs.fish = {
     enable = true;
-
+    interactiveShellInit = ''
+      set fish_greeting # empty string to disable the welcome message
+    ''; 
     shellAliases = {
       cat = "bat";
       ls = "eza -a";

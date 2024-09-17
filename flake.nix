@@ -58,15 +58,20 @@
                   { wayland.windowManager.hyprland.enable = true; }
                 ];
               };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.petter =
-                {
-                  imports = [
-                    ./home/users/petter.nix
-                    catppuccin.homeManagerModules.catppuccin
-                  ];
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.petter =
+                  {
+                    imports = [
+                      ./home/users/petter.nix
+                      catppuccin.homeManagerModules.catppuccin
+                    ];
+                  };
+                extraSpecialArgs = {
+                  inherit nixvim-config;
                 };
+              };
             }
           ];
         };
@@ -91,17 +96,19 @@
                   { wayland.windowManager.hyprland.enable = true; }
                 ];
               };
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.s27731 =
-                {
-                  imports = [
-                    ./home/users/s27731.nix
-                    catppuccin.homeManagerModules.catppuccin
-                  ];
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.s27731 =
+                  {
+                    imports = [
+                      ./home/users/s27731.nix
+                      catppuccin.homeManagerModules.catppuccin
+                    ];
+                  };
+                extraSpecialArgs = {
+                  inherit nixvim-config;
                 };
-              home-manager.extraSpecialArgs = {
-                inherit nixvim-config;
               };
             }
           ];
