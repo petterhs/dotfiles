@@ -62,6 +62,11 @@
     # fonts
     nerdfonts
 
+    # ProtonMail and friends
+    protonmail-desktop
+
+    bitwarden
+
     #cursors
     catppuccin-cursors.mochaLavender
 
@@ -92,6 +97,7 @@
 
     #browsers
     firefox
+    chromium
 
     # Simple image viewer
     imv

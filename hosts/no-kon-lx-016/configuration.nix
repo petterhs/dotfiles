@@ -137,7 +137,7 @@ in
   users.users.s27731 = {
     isNormalUser = true;
     description = "petter";
-    extraGroups = [ "networkmanager" "wheel" "dialout" "docker" "wireshark" ];
+    extraGroups = [ "networkmanager" "wheel" "dialout" "docker" "wireshark" "adbusers" ];
     packages = with pkgs; [
       firefox
     ];
@@ -166,6 +166,7 @@ in
   };
 
   programs.fish.enable = true;
+  programs.adb.enable = true;
 
   programs.wireshark = {
     enable = true;
@@ -190,6 +191,10 @@ in
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
+
+  services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

@@ -11,7 +11,7 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nix
+      ../../nix
     ];
 
   nixpkgs.config.allowUnfree = true;
