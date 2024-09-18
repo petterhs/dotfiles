@@ -85,6 +85,16 @@ in
     TTYVTDisallocate = true;
   };
 
+  # Fix https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1658731959
+  systemd.services.NetworkManager-wait-online = {
+    serviceConfig = {
+      ExecStart = [
+        ""
+        "${pkgs.networkmanager}/bin/nm-online -q"
+      ];
+    };
+  };
+
   # fix https://github.com/ryan4yin/nix-config/issues/10
   security.pam.services.swaylock = { };
 
