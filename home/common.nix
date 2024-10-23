@@ -101,6 +101,7 @@
     pciutils # lspci
     usbutils # lsusb
     psmisc # killall/pstree/prtstat/fuser/...
+    btop
     udiskie
   ];
 

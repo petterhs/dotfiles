@@ -124,6 +124,45 @@
             }
           ];
         };
+        "littleboy" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs pkgs;
+          };
+          modules = [
+            catppuccin.nixosModules.catppuccin
+            ./hosts/littleboy/configuration.nix
+            { programs.hyprland.enable = true; }
+            {
+              environment.systemPackages = [
+                zen-browser.packages.x86_64-linux.zen-browser
+              ];
+            }
+            home-manager.nixosModules.home-manager
+            {
+              lib.homeManagerConfiguration = {
+                pkgs = nixpkgs.legacyPackages.x86_64-linux;
+                modules = [
+                  hyprland.homeManagerModules.default
+                  { wayland.windowManager.hyprland.enable = true; }
+                ];
+              };
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.petter = {
+                  imports = [
+                    ./home/users/littleboy.nix
+                    catppuccin.homeManagerModules.catppuccin
+                  ];
+                };
+                extraSpecialArgs = {
+                  inherit nixvim-config;
+                };
+              };
+            }
+          ];
+        };
       };
     };
 }
