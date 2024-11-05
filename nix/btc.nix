@@ -37,6 +37,7 @@ in
   };
 
   services.electrs.enable = true;
+  services.mempool.enable = true;
 
   # Enable interactive access to nix-bitcoin features (like bitcoin-cli) for
   # your system's main user
@@ -44,6 +45,8 @@ in
     enable = true;
     name = "petter";
   };
+
+  nix-bitcoin.nodeinfo.enable = true;
 
   # Prevent garbage collection of the nix-bitcoin source
   system.extraDependencies = [ nix-bitcoin ];

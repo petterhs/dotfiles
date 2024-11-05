@@ -99,6 +99,7 @@ in
   security.pam.services.swaylock = { };
 
   environment.sessionVariables = {
+    TERM = "alacritty";
     NIXOS_OZONE_WL = "1";
   };
 
@@ -134,6 +135,15 @@ in
     #media-session.enable = true;
   };
 
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -144,22 +154,16 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
+      "dialout"
+      "docker"
+      "wireshark"
+      "adbusers"
     ];
     packages = with pkgs; [
       firefox
     ];
   };
-  users.users.petter-work = {
-    isNormalUser = true;
-    description = "petter-work";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-    ];
-    packages = with pkgs; [
-      firefox
-    ];
-  };
+
   users.defaultUserShell = pkgs.fish;
 
   # List packages installed in system profile. To search, run:
@@ -168,6 +172,7 @@ in
     vim
     wget
     git
+    alacritty
     fish
     libnotify
     pavucontrol
@@ -182,7 +187,12 @@ in
   };
 
   programs.fish.enable = true;
+  programs.adb.enable = true;
 
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -202,6 +212,10 @@ in
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
+
+  services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
