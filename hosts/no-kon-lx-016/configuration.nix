@@ -12,6 +12,7 @@ in
     ./hardware-configuration.nix
     ../../nix
     ../../nix/custom-teams-background.nix
+    ../../nix/citrix_workspace.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

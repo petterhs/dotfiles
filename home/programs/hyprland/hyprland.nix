@@ -15,7 +15,7 @@
 
     slurp
 
-    qt5ct
+    libsForQt5.qt5ct
     qt6ct
 
     hyprland-per-window-layout
