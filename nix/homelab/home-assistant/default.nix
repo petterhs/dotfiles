@@ -22,6 +22,7 @@
       "myuplink"
       "radio_browser"
       "samsungtv"
+      "systemmonitor"
       "switchbot"
       "tesla_fleet"
       "tibber"
