@@ -27,6 +27,21 @@
       "tesla_fleet"
       "tibber"
     ];
+
+    customComponents = with pkgs.home-assistant-custom-components; [
+      waste_collection_schedule
+      samsungtv-smart
+      adaptive_lighting
+    ];
+
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+      mini-graph-card
+      mini-media-player
+      hourly-weather
+      mushroom
+      universal-remote-card
+    ];
+
     config = {
       default_config = { };
       recorder.db_url = "postgresql://@/hass";
