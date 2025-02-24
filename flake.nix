@@ -87,9 +87,6 @@
         };
         "no-kon-lx-016" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs pkgs;
-          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/no-kon-lx-016/configuration.nix

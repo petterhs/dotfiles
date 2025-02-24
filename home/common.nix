@@ -25,8 +25,9 @@
     #nixvim config
     nixvim-config.packages.${system}.default
 
-    # fonts
-    nerdfonts
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
+    nerd-fonts.inconsolata
 
     # ProtonMail and friends
     protonmail-desktop
@@ -34,7 +35,6 @@
     bitwarden
 
     #cursors
-    catppuccin-cursors.mochaLavender
 
     neofetch
 
@@ -67,9 +67,6 @@
     # Video player
     vlc
 
-    # Audio analyzer
-    sonic-visualiser
-
     # misc
     cowsay
     file
@@ -81,6 +78,7 @@
     nvd
     nixpkgs-fmt
     nixfmt-rfc-style
+    devenv
 
     # productivity
     glow # markdown previewer in terminal
@@ -111,7 +109,7 @@
     };
   };
 
-  # Themed with catppuccin via catppuccin/nix 
+  # Themed with catppuccin via catppuccin/nix
   programs = {
     bat.enable = true;
     fzf.enable = true;
