@@ -16,7 +16,7 @@ in
         server = "mqtt://localhost:1883";
       };
       serial = {
-        port = "tcp://192.168.68.54:6638";
+        port = "tcp://192.168.68.56:6638";
         adapter = "ember";
         rtscts = false;
       };
