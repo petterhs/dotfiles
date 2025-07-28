@@ -12,7 +12,7 @@ in
     ./hardware-configuration.nix
     ../../nix
     ../../nix/custom-teams-background.nix
-    ../../nix/citrix_workspace.nix
+    # ../../nix/citrix_workspace.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -147,6 +147,8 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  services.flatpak.enable = true;
+
   nix.extraOptions = ''
     trusted-users = root s27731
   '';
@@ -244,6 +246,6 @@ in
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 1m";
   };
 }

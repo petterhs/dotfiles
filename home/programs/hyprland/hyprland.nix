@@ -24,7 +24,6 @@
     pavucontrol
     pulsemixer
     alsa-utils
-    ncmpcpp
     mpd
     mpc-cli
     obs-studio-plugins.wlrobs

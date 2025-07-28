@@ -115,7 +115,7 @@
     fzf.enable = true;
     imv.enable = true;
     rofi.enable = true;
-    # btop.enable = true;
+    btop.enable = true;
   };
 
   # starship - an customizable prompt for any shell

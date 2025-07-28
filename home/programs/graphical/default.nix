@@ -5,5 +5,9 @@
     obs-studio
     obsidian
     gossip
+
+    code-cursor
+    popsicle
+    rustdesk
   ];
 }

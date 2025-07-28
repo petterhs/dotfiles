@@ -75,7 +75,7 @@
                 users.petter = {
                   imports = [
                     ./home/users/petter.nix
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
                 extraSpecialArgs = {
@@ -111,7 +111,7 @@
                 users.s27731 = {
                   imports = [
                     ./home/users/s27731.nix
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
                 extraSpecialArgs = {
