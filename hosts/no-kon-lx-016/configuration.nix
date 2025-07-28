@@ -12,9 +12,11 @@ in
     ./hardware-configuration.nix
     ../../nix
     ../../nix/custom-teams-background.nix
+    # ../../nix/citrix_workspace.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   # Make ready for nix flakes
   nix.settings = {
@@ -118,7 +120,7 @@ in
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -145,6 +147,11 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  services.flatpak.enable = true;
+
+  nix.extraOptions = ''
+    trusted-users = root s27731
+  '';
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.s27731 = {
     isNormalUser = true;
@@ -216,8 +223,14 @@ in
   ];
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    1420
+    8081
+  ];
+  networking.firewall.allowedUDPPorts = [
+    1420
+    8081
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -233,6 +246,6 @@ in
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 7d";
+    options = "--delete-older-than 1m";
   };
 }

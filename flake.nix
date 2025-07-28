@@ -19,7 +19,7 @@
       url = "github:petterhs/nixvim-config";
     };
 
-    zen-browser.url = "github:heywoodlh/flakes/main?dir=zen-browser";
+    zen-browser.url = "github:ch4og/zen-browser-flake";
 
   };
 
@@ -57,7 +57,7 @@
             { programs.hyprland.enable = true; }
             {
               environment.systemPackages = [
-                zen-browser.packages.x86_64-linux.zen-browser
+                zen-browser.packages."${system}".default
               ];
             }
             home-manager.nixosModules.home-manager
@@ -75,7 +75,7 @@
                 users.petter = {
                   imports = [
                     ./home/users/petter.nix
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
                 extraSpecialArgs = {
@@ -87,16 +87,13 @@
         };
         "no-kon-lx-016" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs pkgs;
-          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/no-kon-lx-016/configuration.nix
             { programs.hyprland.enable = true; }
             {
               environment.systemPackages = [
-                zen-browser.packages.x86_64-linux.zen-browser
+                zen-browser.packages."${system}".default
               ];
             }
             home-manager.nixosModules.home-manager
@@ -114,7 +111,7 @@
                 users.s27731 = {
                   imports = [
                     ./home/users/s27731.nix
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
                 extraSpecialArgs = {

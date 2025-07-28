@@ -29,7 +29,8 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-30163cea-ed7e-4ef0-abb7-d860a687d7af".device = "/dev/disk/by-uuid/30163cea-ed7e-4ef0-abb7-d860a687d7af";
+  boot.initrd.luks.devices."luks-30163cea-ed7e-4ef0-abb7-d860a687d7af".device =
+    "/dev/disk/by-uuid/30163cea-ed7e-4ef0-abb7-d860a687d7af";
   networking.hostName = "nixdesktop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -119,7 +120,7 @@ in
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

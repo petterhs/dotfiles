@@ -5,23 +5,25 @@
     enable = true;
     flavor = "mocha";
     accent = "pink";
-    pointerCursor = {
+    cursors = {
       enable = true;
       flavor = "mocha";
       accent = "lavender";
+    };
+    gtk = {
+      enable = true;
+      accent = "lavender";
+      flavor = "mocha";
+      icon = {
+        enable = true;
+        accent = "lavender";
+        flavor = "mocha";
+      };
     };
   };
 
   gtk = {
     enable = true;
-    catppuccin = {
-      enable = true;
-      icon = {
-        enable = true;
-        accent = "lavender";
-      };
-    };
-
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = 1;
     };

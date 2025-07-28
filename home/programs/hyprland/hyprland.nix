@@ -15,7 +15,7 @@
 
     slurp
 
-    qt5ct
+    libsForQt5.qt5ct
     qt6ct
 
     hyprland-per-window-layout
@@ -24,7 +24,6 @@
     pavucontrol
     pulsemixer
     alsa-utils
-    ncmpcpp
     mpd
     mpc-cli
     obs-studio-plugins.wlrobs
