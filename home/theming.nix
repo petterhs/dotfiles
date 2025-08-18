@@ -10,16 +10,6 @@
       flavor = "mocha";
       accent = "lavender";
     };
-    gtk = {
-      enable = true;
-      accent = "lavender";
-      flavor = "mocha";
-      icon = {
-        enable = true;
-        accent = "lavender";
-        flavor = "mocha";
-      };
-    };
   };
 
   gtk = {

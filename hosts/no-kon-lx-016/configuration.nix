@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 let
-  tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
+  tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
 in
 {
   imports = [
@@ -40,7 +40,10 @@ in
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    plugins = [ pkgs.networkmanager-sstp ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Oslo";

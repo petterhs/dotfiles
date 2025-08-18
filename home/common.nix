@@ -49,7 +49,6 @@
     # utils
     ripgrep # recursively searches directories for a regex pattern
     eza # A modern replacement for ‘ls’
-    zoxide
     du-dust
 
     #neovim config dependencies
@@ -104,6 +103,10 @@
 
   programs.git = {
     enable = true;
+    difftastic = {
+      enable = true;
+    };
+
     aliases = {
       lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
     };
@@ -153,12 +156,20 @@
     shellAliases = {
       cat = "bat";
       ls = "eza -a";
+      gs = "git status";
+      cd = "z";
     };
   };
 
   programs.fd = {
     enable = true;
     hidden = true;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    enableBashIntegration = true;
   };
 
   programs.spotify-player = {
