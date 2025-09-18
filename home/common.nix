@@ -50,11 +50,18 @@
     ripgrep # recursively searches directories for a regex pattern
     eza # A modern replacement for ‘ls’
     du-dust
+    yazi
 
     #neovim config dependencies
     gcc
     gnumake
     nodejs_22 # for copilot
+
+    #programming
+    kdePackages.qtbase
+    protobuf
+    qt5.qtbase
+    gdb
 
     #browsers
     firefox

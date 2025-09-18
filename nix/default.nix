@@ -11,4 +11,5 @@
   programs.file-roller.enable = true;
 
   services.tumbler.enable = true;
+  services.flatpak.enable = true;
 }

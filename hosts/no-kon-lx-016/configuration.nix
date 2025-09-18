@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
 in
@@ -53,16 +58,35 @@ in
 
   programs.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
+    systemd.setPath.enable = true;
   };
 
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
-    xdgOpenUsePortal = false;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
+      kdePackages.xdg-desktop-portal-kde
     ];
+    config.hyprland = {
+      default = [
+        "hyprland"
+        "gtk"
+      ];
+      "org.freedesktop.impl.portal.FileChooser" = "kde";
+      "org.freedesktop.impl.portal.Print" = "kde";
+    };
+  };
+
+  # in hosts/no-kon-lx-016/configuration.nix
+  systemd.user.services.xdg-desktop-portal-gtk = {
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = 2;
+    };
   };
 
   services = {
@@ -78,6 +102,9 @@ in
       };
     };
   };
+
+  services.dbus.enable = true;
+  security.polkit.enable = true;
 
   systemd.services.greetd.serviceConfig = {
     Type = "idle";
@@ -186,6 +213,13 @@ in
     pavucontrol
     playerctl
     pulsemixer
+    # File chooser portal support
+    gtk3
+    gtk4
+    libadwaita
+    # Additional portal support packages
+    xdg-desktop-portal-gtk
+    xdg-utils
   ];
 
   environment.variables = {

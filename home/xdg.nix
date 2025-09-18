@@ -29,12 +29,33 @@
     #   ls -l /run/current-system/sw/share/applications/
     # the user-level desktop entries can be list by command(user ryan):
     #  ls /etc/profiles/per-user/ryan/share/applications/
+    desktopEntries = {
+      "zen-browser" = {
+        name = "Zen Browser";
+        genericName = "Web Browser";
+        exec = "flatpak run app.zen_browser.zen %u";
+        terminal = false;
+        categories = [
+          "Network"
+          "WebBrowser"
+        ];
+        mimeType = [
+          "x-scheme-handler/http"
+          "x-scheme-handler/https"
+          "text/html"
+          "application/xhtml+xml"
+          "application/xml"
+        ];
+      };
+    };
+
     mimeApps = {
       enable = true;
       # let `xdg-open` to open the url with the correct application.
       defaultApplications =
         let
-          browser = [ "firefox.desktop" ];
+          # Use wrapper desktop entry that runs the Flatpak zen
+          browser = [ "zen-browser.desktop" ];
           editor = [ "nvim.desktop" ];
         in
         {
