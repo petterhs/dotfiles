@@ -1,3 +1,4 @@
+# Teams customization and background configuration
 {
   services.caddy = {
     enable = true;

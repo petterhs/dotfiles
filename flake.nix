@@ -40,6 +40,19 @@
           allowUnfree = true;
         };
       };
+      
+      # Common modules for all hosts
+      commonModules = [
+        catppuccin.nixosModules.catppuccin
+        ./modules/common/nix.nix
+        ./modules/common/system.nix
+        ./modules/common/hyprland.nix
+        ./modules/common/development.nix
+        ./modules/common/graphical.nix
+        ./modules/common/teams.nix
+        ./modules/common/home-manager.nix
+        home-manager.nixosModules.home-manager
+      ];
     in
     {
       nixosConfigurations = {
@@ -48,32 +61,19 @@
           specialArgs = {
             inherit inputs pkgs;
           };
-          modules = [
-            catppuccin.nixosModules.catppuccin
-            ./hosts/nixdesktop/configuration.nix
-            ./nix/btc.nix
-            { programs.hyprland.enable = true; }
-            home-manager.nixosModules.home-manager
+          modules = commonModules ++ [
+            ./hosts/nixdesktop/hardware-configuration.nix
+            ./modules/hosts/nixdesktop.nix
+            ./modules/hosts/nixdesktop-btc.nix
             {
-              lib.homeManagerConfiguration = {
-                pkgs = nixpkgs.legacyPackages.x86_64-linux;
-                modules = [
-                  hyprland.homeManagerModules.default
-                  { wayland.windowManager.hyprland.enable = true; }
+              home-manager.users.petter = {
+                imports = [
+                  ./home/users/petter.nix
+                  catppuccin.homeModules.catppuccin
                 ];
               };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.petter = {
-                  imports = [
-                    ./home/users/petter.nix
-                    catppuccin.homeModules.catppuccin
-                  ];
-                };
-                extraSpecialArgs = {
-                  inherit nixvim-config;
-                };
+              home-manager.extraSpecialArgs = {
+                inherit nixvim-config;
               };
             }
           ];
@@ -83,33 +83,18 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = [
-            catppuccin.nixosModules.catppuccin
-            ./hosts/no-kon-lx-016/configuration.nix
+          modules = commonModules ++ [
+            ./hosts/no-kon-lx-016/hardware-configuration.nix
+            ./modules/hosts/no-kon-lx-016.nix
             {
-              nixpkgs.overlays = [
-                (import ./overlays/teams-for-linux.nix)
-              ];
-            }
-            home-manager.nixosModules.home-manager
-            {
-              lib.homeManagerConfiguration = {
-                pkgs = nixpkgs.legacyPackages.x86_64-linux;
-                modules = [
+              home-manager.users.s27731 = {
+                imports = [
+                  ./home/users/s27731.nix
+                  catppuccin.homeModules.catppuccin
                 ];
               };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.s27731 = {
-                  imports = [
-                    ./home/users/s27731.nix
-                    catppuccin.homeModules.catppuccin
-                  ];
-                };
-                extraSpecialArgs = {
-                  inherit nixvim-config;
-                };
+              home-manager.extraSpecialArgs = {
+                inherit nixvim-config;
               };
             }
           ];

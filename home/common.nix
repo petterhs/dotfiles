@@ -25,6 +25,11 @@
     #nixvim config
     nixvim-config.packages.${system}.default
 
+    # Basic system tools
+    vim
+    wget
+    alacritty
+
     nerd-fonts.jetbrains-mono
     nerd-fonts.iosevka
     nerd-fonts.inconsolata

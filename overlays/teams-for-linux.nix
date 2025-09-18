@@ -1,3 +1,3 @@
 self: super: {
-  teams-for-linux = super.callPackage ../nix/teams-for-linux.nix { };
+  teams-for-linux = super.callPackage ./teams-for-linux-package.nix { };
 }

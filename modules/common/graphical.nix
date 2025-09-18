@@ -1,3 +1,4 @@
+# Common graphical applications and file management
 { pkgs, ... }:
 {
   programs.thunar = {
