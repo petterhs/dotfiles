@@ -19,7 +19,7 @@
       "mill"
       "met"
       "mqtt"
-      "music_assistant_client"
+      "music_assistant"
       "myuplink"
       "radio_browser"
       "samsungtv"
@@ -41,7 +41,7 @@
       hourly-weather
       mushroom
       universal-remote-card
-      navbar-card
+      # navbar-card  # Temporarily commented out - build failing with bun install error
     ];
 
     config = {

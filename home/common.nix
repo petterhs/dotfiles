@@ -1,109 +1,40 @@
-{ pkgs, nixvim-config, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./programs/tmux.nix
-    ./programs/dunst
-    ./xdg.nix
-    ./theming.nix
   ];
 
-  home.file."wallpaper" = {
-    source = ../wallpaper;
-    recursive = true;
-  };
-
-  # set cursor size and dpi for 4k monitor
-  xresources.properties = {
-    "Xcursor.size" = 16;
-    "Xft.dpi" = 172;
-  };
-
-  # Packages that should be installed to the user profile.
+  # Common packages for both desktop and server
   home.packages = with pkgs; [
-
-    #nixvim config
-    nixvim-config.packages.${system}.default
-
     # Basic system tools
     vim
     wget
-    alacritty
-
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.iosevka
-    nerd-fonts.inconsolata
-
-    # ProtonMail and friends
-    protonmail-desktop
-
-    bitwarden
-
-    #cursors
-
     neofetch
 
-    # archives
+    # Archives
     zip
     unzip
-    xfce.thunar
-    xfce.exo
 
-    xterm
-
-    # utils
+    # Terminal utilities
     ripgrep # recursively searches directories for a regex pattern
-    eza # A modern replacement for ‘ls’
+    eza # A modern replacement for 'ls'
     du-dust
     yazi
 
-    #neovim config dependencies
+    # Development tools
     gcc
     gnumake
     nodejs_22 # for copilot
-
-    #programming
-    kdePackages.qtbase
     protobuf
-    qt5.qtbase
     gdb
 
-    #browsers
-    firefox
-    chromium
-
-    # Simple image viewer
-    imv
-
-    # Video player
-    vlc
-
-    # misc
-    cowsay
-    file
-    which
-    tree
-
-    # nix related
-    nix-output-monitor
-    nvd
-    nixpkgs-fmt
-    nixfmt-rfc-style
-    devenv
-
-    # productivity
-    glow # markdown previewer in terminal
-    super-productivity
-
+    # System monitoring
     iotop # io monitoring
     iftop # network monitoring
-
-    # system call monitoring
     strace # system call monitoring
     ltrace # library call monitoring
     lsof # list open files
-
-    # system tools
     sysstat
     lm_sensors # for `sensors` command
     ethtool
@@ -111,7 +42,22 @@
     usbutils # lsusb
     psmisc # killall/pstree/prtstat/fuser/...
     btop
-    udiskie
+
+    # Nix related
+    nix-output-monitor
+    nvd
+    nixpkgs-fmt
+    nixfmt-rfc-style
+    devenv
+
+    # Productivity
+    glow # markdown previewer in terminal
+
+    # Misc
+    cowsay
+    file
+    which
+    tree
   ];
 
   programs.git = {
@@ -125,12 +71,10 @@
     };
   };
 
-  # Themed with catppuccin via catppuccin/nix
+  # Common programs (no theming for server)
   programs = {
     bat.enable = true;
     fzf.enable = true;
-    imv.enable = true;
-    rofi.enable = true;
     btop.enable = true;
   };
 
@@ -185,9 +129,6 @@
     enableBashIntegration = true;
   };
 
-  programs.spotify-player = {
-    enable = true;
-  };
 
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards

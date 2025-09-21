@@ -4,10 +4,10 @@ let
 in
 {
   services.zigbee2mqtt = {
-    enable = true;
+    enable = lib.mkForce true;
     inherit dataDir;
-    package = pkgs.zigbee2mqtt_2;
-    settings = {
+    package = lib.mkForce pkgs.zigbee2mqtt_2;
+    settings = lib.mkForce {
       permit_join = true;
       homeassistant = true;
       frontend.port = 8521;

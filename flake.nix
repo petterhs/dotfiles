@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:NixOs/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     catppuccin.url = "github:catppuccin/nix";
 
@@ -62,7 +62,6 @@
 
       # Server modules (for littleboy - headless)
       serverModules = [
-        catppuccin.nixosModules.catppuccin
         ./modules/common/nix.nix
         ./modules/common/server.nix
         ./modules/common/server-development.nix
@@ -132,7 +131,6 @@
               home-manager.users.petter = {
                 imports = [
                   ./home/users/littleboy-server.nix
-                  catppuccin.homeModules.catppuccin
                 ];
               };
               home-manager.extraSpecialArgs = {
