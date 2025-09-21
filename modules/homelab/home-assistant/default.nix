@@ -40,6 +40,7 @@
       hourly-weather
       mushroom
       universal-remote-card
+      navbar-card
     ];
 
     config = {

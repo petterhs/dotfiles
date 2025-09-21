@@ -3,38 +3,24 @@
 {
   services.music-assistant = {
     enable = true;
-    settings = {
-      # Server configuration
-      host = "0.0.0.0";
-      port = 8095;
-      
-      # Database configuration
-      database_url = "sqlite:///var/lib/music-assistant/music_assistant.db";
-      
-      # Logging
-      log_level = "INFO";
-      
-      # Home Assistant integration
-      ha_token = "your_home_assistant_token_here";
-      ha_url = "http://localhost:8123";
-    };
+    
+    # Providers for music services and players
+    providers = [
+      "hass"           # Home Assistant integration
+      "hass_players"   # Home Assistant media players
+      "spotify"        # Spotify music service
+      "sonos"          # Sonos speakers
+    ];
+    
+    # Additional options
+    extraOptions = [
+      "--host" "0.0.0.0"
+      "--port" "8095"
+      "--config"
+      "/var/lib/music-assistant"
+    ];
   };
-
-  # Create data directory
-  systemd.tmpfiles.rules = [
-    "d /var/lib/music-assistant 0755 music-assistant music-assistant -"
-  ];
 
   # Firewall configuration
   networking.firewall.allowedTCPPorts = [ 8095 ];
-
-  # User for music-assistant service
-  users.users.music-assistant = {
-    isSystemUser = true;
-    group = "music-assistant";
-    home = "/var/lib/music-assistant";
-    createHome = true;
-  };
-
-  users.groups.music-assistant = {};
 }
