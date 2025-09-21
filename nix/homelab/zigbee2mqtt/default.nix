@@ -1,5 +1,4 @@
-{ pgks, ... }:
-
+{ pkgs, lib, ... }:
 let
   dataDir = "/var/lib/zigbee2mqtt";
 in
@@ -7,6 +6,7 @@ in
   services.zigbee2mqtt = {
     enable = true;
     inherit dataDir;
+    package = pkgs.zigbee2mqtt_2;
     settings = {
       permit_join = true;
       homeassistant = true;
@@ -33,8 +33,11 @@ in
     after = [
       "home-assistant.service"
       "mosquitto.service"
-      "network-online.target"
     ];
+    serviceConfig = {
+      Restart = lib.mkForce "always";
+      RestartSec = 10;
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ 8521 ];

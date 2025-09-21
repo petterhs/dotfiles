@@ -47,9 +47,6 @@
       nixosConfigurations = {
         "nixdesktop" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs pkgs;
-          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/nixdesktop/configuration.nix
@@ -123,16 +120,13 @@
         };
         "littleboy" = nixpkgs.lib.nixosSystem {
           inherit system;
-          specialArgs = {
-            inherit inputs pkgs;
-          };
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/littleboy/configuration.nix
             { programs.hyprland.enable = true; }
             {
               environment.systemPackages = [
-                zen-browser.packages.x86_64-linux.zen-browser
+                # zen-browser.packages.x86_64-linux.zen-browser
               ];
             }
             home-manager.nixosModules.home-manager
@@ -150,7 +144,7 @@
                 users.petter = {
                   imports = [
                     ./home/users/littleboy.nix
-                    catppuccin.homeManagerModules.catppuccin
+                    catppuccin.homeModules.catppuccin
                   ];
                 };
                 extraSpecialArgs = {

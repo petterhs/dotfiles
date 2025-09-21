@@ -4,6 +4,6 @@
     ./home-assistant
     ./mosquitto
     ./zigbee2mqtt
-    ./jellyfin
+    ./media
   ];
 }
