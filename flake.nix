@@ -65,7 +65,7 @@
         catppuccin.nixosModules.catppuccin
         ./modules/common/nix.nix
         ./modules/common/server.nix
-        ./modules/common/development.nix
+        ./modules/common/server-development.nix
         ./modules/common/server-home-manager.nix
         home-manager.nixosModules.home-manager
       ];
