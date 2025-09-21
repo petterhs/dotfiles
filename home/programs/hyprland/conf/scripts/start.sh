@@ -8,10 +8,6 @@ for _prs in "${_ps[@]}"; do
 	fi
 done
 
-swww-daemon &
-
-swww img $HOME/Wallpapers/nix-black-4k.png
-
 nm-applet --indicator &
 
 WAYBAR_CONFIG="$HOME/.config/hypr/waybar/config.jsonc"

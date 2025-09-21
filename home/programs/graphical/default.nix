@@ -8,6 +8,5 @@
 
     code-cursor
     popsicle
-    rustdesk
   ];
 }

@@ -12,6 +12,8 @@
     swayidle
     grim
     hyprpicker
+    hyprpaper
+    hyprpolkitagent
 
     slurp
 
@@ -29,27 +31,66 @@
     obs-studio-plugins.wlrobs
   ];
 
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+
+      preload = [ "~/wallpaper/nix-black-4k.png" ];
+      wallpaper = [
+        ",~/wallpaper/nix-black-4k.png"
+      ];
+
+    };
+  };
+
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        ignore_dbus_inhibit = false;
+        lock_cmd = "hyprlock";
+      };
+
+      listener = [
+        {
+          timeout = 900;
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 1200;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+      ];
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
       env = [
-        "BROWSER,firefox"
+        "BROWSER,xdg-open"
         "EDITOR,nvim"
         "TERMINAL,alacritty"
         "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
         "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
         "MOZ_WEBRENDER,1"
+        "GTK_USE_PORTAL,1"
         # misc
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_QPA_PLATFORM,wayland"
         "SDL_VIDEODRIVER,wayland"
-        "GDK_BACKEND,wayland"
       ];
     };
     extraConfig = builtins.readFile ./conf/hyprland.conf;
     systemd.enable = true;
+    package = null; # This is set to null because we get it from the nix module
+    portalPackage = null; # This is set to null because we get it from the nix module
   };
+
+  # XDG portal configuration is handled at the system level in hosts/no-kon-lx-016/configuration.nix
 
   # hyprland configs, based on https://github.com/notwidow/hyprland
   xdg.configFile = {
