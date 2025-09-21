@@ -20,19 +20,11 @@
       "adbusers"
     ];
     packages = with pkgs; [
-      firefox
+      # Server packages only
     ];
   };
 
-  # XDG Portal configuration (simpler for littleboy)
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    xdgOpenUsePortal = false;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-    ];
-  };
+  # No desktop environment - headless server
 
   # Garbage collection (more aggressive for homelab)
   nix.gc = {

@@ -59,6 +59,16 @@
       homelabModules = [
         ./modules/homelab/default.nix
       ];
+
+      # Server modules (for littleboy - headless)
+      serverModules = [
+        catppuccin.nixosModules.catppuccin
+        ./modules/common/nix.nix
+        ./modules/common/server.nix
+        ./modules/common/development.nix
+        ./modules/common/server-home-manager.nix
+        home-manager.nixosModules.home-manager
+      ];
     in
     {
       nixosConfigurations = {
@@ -110,18 +120,18 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = commonModules ++ homelabModules ++ [
+          modules = serverModules ++ homelabModules ++ [
             ./hosts/littleboy/hardware-configuration.nix
             ./modules/hosts/littleboy.nix
             {
               environment.systemPackages = [
-                # zen-browser.packages.x86_64-linux.zen-browser
+                # Additional server packages can be added here
               ];
             }
             {
               home-manager.users.petter = {
                 imports = [
-                  ./home/users/littleboy.nix
+                  ./home/users/littleboy-server.nix
                   catppuccin.homeModules.catppuccin
                 ];
               };
