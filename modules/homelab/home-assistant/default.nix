@@ -19,6 +19,7 @@
       "mill"
       "met"
       "mqtt"
+      "music_assistant_client"
       "myuplink"
       "radio_browser"
       "samsungtv"
