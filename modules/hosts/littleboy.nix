@@ -37,4 +37,12 @@
   nix.extraOptions = ''
     trusted-users = root petter
   '';
+
+  # Additional firewall ports for homelab services
+  networking.firewall.allowedTCPPorts = [
+    2283  # Immich
+    8095  # Music Assistant
+    5432  # PostgreSQL (local only)
+    6379  # Redis (local only)
+  ];
 }

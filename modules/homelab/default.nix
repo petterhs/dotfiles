@@ -5,5 +5,7 @@
     ./mosquitto
     ./zigbee2mqtt
     ./media
+    ./immich
+    ./music-assistant
   ];
 }
