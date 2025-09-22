@@ -7,6 +7,9 @@
 
   # Common packages for both desktop and server
   home.packages = with pkgs; [
+    # nixvim config
+    nixvim-config.packages.${system}.default
+
     # Basic system tools
     vim
     wget

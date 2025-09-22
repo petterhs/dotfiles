@@ -20,9 +20,6 @@
 
   # Desktop-specific packages
   home.packages = with pkgs; [
-    # nixvim config
-    nixvim-config.packages.${system}.default
-
     # Desktop applications
     alacritty
     protonmail-desktop
