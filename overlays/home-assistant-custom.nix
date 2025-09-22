@@ -39,7 +39,7 @@ self: super: {
 
   home-assistant-custom-components = (super.home-assistant-custom-components or {}) // {
     plant = super.callPackage (
-      { lib, buildHomeAssistantComponent, fetchFromGitHub }:
+      { lib, buildHomeAssistantComponent, fetchFromGitHub, python3Packages }:
       buildHomeAssistantComponent rec {
         owner = "Olen";
         domain = "plant";
@@ -50,6 +50,10 @@ self: super: {
           rev = "master";
           hash = "sha256-jpmfmflS2w7WoiPcIG8HR/cUisNiJwG+LBwRCAbQsZc=";
         };
+        # manifest requires async-timeout>=4.0.2
+        dependencies = [
+          python3Packages."async-timeout"
+        ];
         meta = {
           description = "Custom Plant integration for Home Assistant (Olen fork)";
           homepage = "https://github.com/Olen/homeassistant-plant";
@@ -87,19 +91,17 @@ self: super: {
   };
 
   home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or {}) // {
-    "flower-card" = super.callPackage (
-      { lib, buildNpmPackage, fetchFromGitHub }:
-      buildNpmPackage rec {
+    flower-card = super.callPackage (
+      { lib, stdenvNoCC, fetchFromGitHub }:
+      stdenvNoCC.mkDerivation rec {
         pname = "flower-card";
         version = "2025-09-22";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "lovelace-flower-card";
           rev = "master";
-          hash = "sha256-IwhhORWpKjR9APyeuWwvJ8H9pLhMelqXrnJRfQQQz8I";
+          sha256 = "sha256-IwhhORWpKjR9APyeuWwvJ8H9pLhMelqXrnJRfQQQz8I=";
         };
-        # If deps needed, provide a real lock hash; if prebuilt JS exists, we can skip
-        npmDepsHash = null;
         installPhase = ''
           runHook preInstall
           mkdir -p $out

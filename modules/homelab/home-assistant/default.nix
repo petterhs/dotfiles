@@ -45,7 +45,7 @@
       hourly-weather
       mushroom
       universal-remote-card
-      ."flower-card"
+      flower-card
     ];
 
     config = {
