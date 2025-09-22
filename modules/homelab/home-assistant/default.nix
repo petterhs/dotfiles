@@ -2,13 +2,6 @@
 {
   services.home-assistant = {
     enable = true;
-    package =
-      (pkgs.home-assistant.override {
-        extraPackages = py: with py; [ psycopg2 ];
-      }).overrideAttrs
-        (oldAttrs: {
-          doInstallCheck = false;
-        });
     extraComponents = [
       "airthings_ble"
       "airthings"
@@ -35,10 +28,15 @@
       "xiaomi_ble"
     ];
 
+    # Add Python deps needed by HA (e.g., PostgreSQL driver)
+    extraPackages = ps: with ps; [ psycopg2 ];
+
     customComponents = with pkgs.home-assistant-custom-components; [
       waste_collection_schedule
       samsungtv-smart
       adaptive_lighting
+      plant
+      openplantbook
     ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
@@ -47,7 +45,7 @@
       hourly-weather
       mushroom
       universal-remote-card
-      # navbar-card  # Temporarily commented out - build failing with bun install error
+      ."flower-card"
     ];
 
     config = {

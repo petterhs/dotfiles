@@ -36,6 +36,7 @@
         inherit system;
         overlays = [
           (import ./overlays/teams-for-linux.nix)
+          (import ./overlays/home-assistant-custom.nix)
         ];
         config = {
           allowUnfree = true;
@@ -45,6 +46,12 @@
       # Common modules for all hosts
       commonModules = [
         catppuccin.nixosModules.catppuccin
+        # Ensure overlays are applied inside NixOS evaluation
+        { nixpkgs.overlays = [
+            (import ./overlays/teams-for-linux.nix)
+            (import ./overlays/home-assistant-custom.nix)
+          ];
+        }
         ./modules/common/nix.nix
         ./modules/common/system.nix
         ./modules/common/hyprland.nix
@@ -62,6 +69,11 @@
 
       # Server modules (for littleboy - headless)
       serverModules = [
+        # Ensure overlays are applied inside NixOS evaluation
+        { nixpkgs.overlays = [
+            (import ./overlays/home-assistant-custom.nix)
+          ];
+        }
         ./modules/common/nix.nix
         ./modules/common/server.nix
         ./modules/common/server-development.nix
