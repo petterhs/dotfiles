@@ -32,7 +32,7 @@
       "switchbot"
       "tesla_fleet"
       "tibber"
-      "xiamoi_ble"
+      "xiaomi_ble"
     ];
 
     customComponents = with pkgs.home-assistant-custom-components; [
