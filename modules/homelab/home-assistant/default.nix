@@ -12,10 +12,13 @@
     extraComponents = [
       "airthings_ble"
       "airthings"
+      "androidtv"
+      "cast"
       "esphome"
       "daikin"
       "google_translate"
       "ibeacon"
+      "immich"
       "mill"
       "met"
       "mqtt"
@@ -23,10 +26,13 @@
       "myuplink"
       "radio_browser"
       "samsungtv"
+      "smlight"
+      "sonos"
       "systemmonitor"
       "switchbot"
       "tesla_fleet"
       "tibber"
+      "xiamoi_ble"
     ];
 
     customComponents = with pkgs.home-assistant-custom-components; [
