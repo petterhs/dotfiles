@@ -64,6 +64,7 @@
     pavucontrol
     playerctl
     pulsemixer
+    avahi
     # File chooser portal support
     gtk3
     gtk4
