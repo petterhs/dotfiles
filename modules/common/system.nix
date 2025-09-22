@@ -46,6 +46,13 @@
   services.gvfs.enable = true;
   services.udisks2.enable = true;
 
+  # Avahi (mDNS) for .local resolution and mDNS service discovery
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
+
   # Default user shell
   users.defaultUserShell = pkgs.fish;
 
