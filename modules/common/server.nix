@@ -49,7 +49,7 @@
   # Avahi (mDNS) for .local resolution and mDNS service discovery
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 

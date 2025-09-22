@@ -44,7 +44,7 @@
 
   # Redis for caching
   services.redis = {
-    enable = true;
+    servers."".enable = true;
   };
 
   # Create upload directory
