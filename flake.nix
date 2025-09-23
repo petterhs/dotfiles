@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     catppuccin.url = "github:catppuccin/nix";
 
@@ -37,17 +37,19 @@
         overlays = [
           (import ./overlays/teams-for-linux.nix)
           (import ./overlays/home-assistant-custom.nix)
+          (import ./overlays/librespot-ma.nix)
         ];
         config = {
           allowUnfree = true;
         };
       };
-      
+
       # Common modules for all hosts
       commonModules = [
         catppuccin.nixosModules.catppuccin
         # Ensure overlays are applied inside NixOS evaluation
-        { nixpkgs.overlays = [
+        {
+          nixpkgs.overlays = [
             (import ./overlays/teams-for-linux.nix)
             (import ./overlays/home-assistant-custom.nix)
           ];
@@ -70,8 +72,11 @@
       # Server modules (for littleboy - headless)
       serverModules = [
         # Ensure overlays are applied inside NixOS evaluation
-        { nixpkgs.overlays = [
+        {
+          nixpkgs.overlays = [
             (import ./overlays/home-assistant-custom.nix)
+            (import ./overlays/music-assistant.nix)
+            (import ./overlays/librespot-ma.nix)
           ];
         }
         ./modules/common/nix.nix
@@ -131,25 +136,28 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = serverModules ++ homelabModules ++ [
-            ./hosts/littleboy/hardware-configuration.nix
-            ./modules/hosts/littleboy.nix
-            {
-              environment.systemPackages = [
-                # Additional server packages can be added here
-              ];
-            }
-            {
-              home-manager.users.petter = {
-                imports = [
-                  ./home/users/littleboy-server.nix
+          modules =
+            serverModules
+            ++ homelabModules
+            ++ [
+              ./hosts/littleboy/hardware-configuration.nix
+              ./modules/hosts/littleboy.nix
+              {
+                environment.systemPackages = [
+                  # Additional server packages can be added here
                 ];
-              };
-              home-manager.extraSpecialArgs = {
-                inherit nixvim-config;
-              };
-            }
-          ];
+              }
+              {
+                home-manager.users.petter = {
+                  imports = [
+                    ./home/users/littleboy-server.nix
+                  ];
+                };
+                home-manager.extraSpecialArgs = {
+                  inherit nixvim-config;
+                };
+              }
+            ];
         };
       };
     };

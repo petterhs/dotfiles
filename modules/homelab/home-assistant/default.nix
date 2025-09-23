@@ -46,6 +46,7 @@
       mushroom
       universal-remote-card
       flower-card
+      #navbar-card
     ];
 
     config = {
