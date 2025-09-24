@@ -9,7 +9,11 @@ self: super: {
         sha256 = "sha256-Eq3esU2KN0/O96sFaYucxDiA5wfCm8gxA9gEFOKbYCw=";
       };
       format = "pyproject";
-      nativeBuildInputs = with super.python3Packages; [ setuptools wheel setuptools-scm ];
+      nativeBuildInputs = with super.python3Packages; [
+        setuptools
+        wheel
+        setuptools-scm
+      ];
       propagatedBuildInputs = with super.python3Packages; [ python-dateutil ];
       meta = with super.lib; {
         description = "Simple JSON time series helpers";
@@ -21,9 +25,16 @@ self: super: {
     openplantbook_sdk = super.python3Packages.buildPythonPackage rec {
       pname = "openplantbook_sdk";
       version = "0.4.7";
-      src = super.fetchPypi { inherit pname version; sha256 = "sha256-Pp0lfGnPfy6QZOScU39j/YACLumNJyeHKdbpdFHhdm0="; };
+      src = super.fetchPypi {
+        inherit pname version;
+        sha256 = "sha256-Pp0lfGnPfy6QZOScU39j/YACLumNJyeHKdbpdFHhdm0=";
+      };
       format = "pyproject";
-      nativeBuildInputs = with self.python3Packages; [ setuptools wheel setuptools-scm ];
+      nativeBuildInputs = with self.python3Packages; [
+        setuptools
+        wheel
+        setuptools-scm
+      ];
       propagatedBuildInputs = with self.python3Packages; [
         requests
         aiohttp
@@ -37,9 +48,14 @@ self: super: {
     };
   };
 
-  home-assistant-custom-components = (super.home-assistant-custom-components or {}) // {
+  home-assistant-custom-components = (super.home-assistant-custom-components or { }) // {
     plant = super.callPackage (
-      { lib, buildHomeAssistantComponent, fetchFromGitHub, python3Packages }:
+      {
+        lib,
+        buildHomeAssistantComponent,
+        fetchFromGitHub,
+        python3Packages,
+      }:
       buildHomeAssistantComponent rec {
         owner = "Olen";
         domain = "plant";
@@ -64,7 +80,12 @@ self: super: {
     ) { };
 
     openplantbook = super.callPackage (
-      { lib, buildHomeAssistantComponent, fetchFromGitHub, python3Packages }:
+      {
+        lib,
+        buildHomeAssistantComponent,
+        fetchFromGitHub,
+        python3Packages,
+      }:
       buildHomeAssistantComponent rec {
         owner = "Olen";
         domain = "openplantbook";
@@ -90,9 +111,13 @@ self: super: {
     ) { };
   };
 
-  home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or {}) // {
-    flower-card = super.callPackage (
-      { lib, stdenvNoCC, fetchFromGitHub }:
+  home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or { }) // {
+    "flower-card" = super.callPackage (
+      {
+        lib,
+        stdenvNoCC,
+        fetchFromGitHub,
+      }:
       stdenvNoCC.mkDerivation rec {
         pname = "flower-card";
         version = "2025-09-22";
@@ -122,5 +147,7 @@ self: super: {
         };
       }
     ) { };
+
+    "navbar-card" = super.callPackage ./navbar-card-package.nix { };
   };
 }
