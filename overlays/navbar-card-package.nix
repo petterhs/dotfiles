@@ -9,7 +9,7 @@
 
 let
   pname = "navbar-card";
-  version = "0.18.1";
+  version = "1.1.0";
 
   src = fetchFromGitHub {
     owner = "joseluis9595";

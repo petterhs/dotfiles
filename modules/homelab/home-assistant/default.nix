@@ -6,12 +6,14 @@
       "airthings_ble"
       "airthings"
       "androidtv"
+      "androidtv_remote"
       "cast"
       "esphome"
       "daikin"
       "google_translate"
       "ibeacon"
       "immich"
+      "isal"
       "mill"
       "met"
       "mqtt"
@@ -46,11 +48,25 @@
       mushroom
       universal-remote-card
       flower-card
+      decluttering-card
+      weather-card
+      auto-entities
+      bubble-card
+      button-card
+      card-mod
+
+      #from overlays
       navbar-card
+      swipe-card
+      my-cards-bundle
+
     ];
 
     config = {
       default_config = { };
+      frontend = {
+        themes = "!include_dir_merge_named themes";
+      };
       recorder.db_url = "postgresql://@/hass";
       "automation nixos" = [
         # YAML automations go here

@@ -149,5 +149,72 @@ self: super: {
     ) { };
 
     "navbar-card" = super.callPackage ./navbar-card-package.nix { };
+
+    "swipe-card" = super.callPackage (
+      {
+        lib,
+        stdenvNoCC,
+        fetchFromGitHub,
+      }:
+      stdenvNoCC.mkDerivation rec {
+        pname = "swipe-card";
+        version = "5.0.0";
+        src = fetchFromGitHub {
+          owner = "bramkragten";
+          repo = "swipe-card";
+          rev = "v5.0.0";
+          sha256 = "sha256-UC4Oz+2pRdZsNSwjb21jNrTBa+txtXf0CAoJKi2SLXo=";
+        };
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out
+          if [ -f dist/swipe-card.js ]; then
+            install -m0644 dist/swipe-card.js $out
+          elif [ -f swipe-card.js ]; then
+            install -m0644 swipe-card.js $out
+          elif [ -f src/swipe-card.js ]; then
+            install -m0644 src/swipe-card.js $out
+          fi
+          runHook postInstall
+        '';
+        meta = with lib; {
+          description = "Lovelace swipe card";
+          homepage = "https://gitub.com/bramkragten/swipe-card";
+          platforms = platforms.all;
+        };
+      }
+    ) { };
+
+    "my-cards-bundle" = super.callPackage (
+      {
+        lib,
+        stdenvNoCC,
+        fetchFromGitHub,
+      }:
+      stdenvNoCC.mkDerivation rec {
+        pname = "my-cards-bundle";
+        version = "1.0.6";
+        src = fetchFromGitHub {
+          owner = "AnthonMS";
+          repo = "my-cards";
+          rev = "v1.0.6";
+          sha256 = "sha256-x0vOq87P1uOq5ILB4CSAowaAtUo4Nu9m6DFRiqa/Sw4=";
+        };
+        installPhase = ''
+          runHook preInstall
+          mkdir -p $out
+          install -m0644 dist/my-slider-v2.js $out
+          install -m0644 dist/my-slider.js $out
+          install -m0644 dist/my-cards.js $out
+          runHook postInstall
+        '';
+        meta = with lib; {
+          description = "Bundle of custom Lovelace cards";
+          homepage = "https://github.com/AnthonMS/my-cards";
+          license = licenses.mit;
+          platforms = platforms.all;
+        };
+      }
+    ) { };
   };
 }
