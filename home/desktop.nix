@@ -31,6 +31,7 @@
     super-productivity
 
     # Desktop file managers and utilities
+    file-roller
     xfce.thunar
     xfce.exo
     xterm
