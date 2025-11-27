@@ -9,6 +9,7 @@
     "hyprland/workspaces"
   ],
   "modules-center": [
+    "clock"
   ],
   "modules-right": [
     "mpd",
@@ -17,7 +18,7 @@
     "memory",
     "cpu",
     "network",
-    "clock",
+    "custom/date",
     "idle_inhibitor",
     "custom/powermenu",
     "tray"
@@ -46,8 +47,13 @@
     "align": 0,
     "rotate": 0,
     "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
-    "format": " {:%H:%M}",
-    "format-alt": " {:%a %b %d, %G}"
+    "format": " {:%H:%M}"
+  },
+  "custom/date": {
+    "exec": "date '+%a %b %d, %G'",
+    "interval": 60,
+    "format": " {}",
+    "tooltip": false
   },
   "cpu": {
     "format": "\udb80\udf5b {usage}%",
