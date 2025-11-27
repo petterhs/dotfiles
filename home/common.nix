@@ -22,8 +22,10 @@
     # Terminal utilities
     ripgrep # recursively searches directories for a regex pattern
     eza # A modern replacement for 'ls'
-    du-dust
+    dust
     yazi
+    lsd
+    isd
 
     # Development tools
     gcc
@@ -65,12 +67,10 @@
 
   programs.git = {
     enable = true;
-    difftastic = {
-      enable = true;
-    };
-
-    aliases = {
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+    settings = {
+      aliases = {
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+      };
     };
   };
 
@@ -79,6 +79,10 @@
     bat.enable = true;
     fzf.enable = true;
     btop.enable = true;
+    difftastic = {
+      enable = true;
+      git.enable = true;
+    };
   };
 
   # starship - an customizable prompt for any shell
@@ -131,7 +135,6 @@
     enableFishIntegration = true;
     enableBashIntegration = true;
   };
-
 
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards

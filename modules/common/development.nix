@@ -20,11 +20,6 @@
     package = pkgs.wireshark;
   };
 
-  # Android udev rules
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
-
   # Nix trusted users (host-specific, moved to individual host modules)
 
   # Firewall ports for development

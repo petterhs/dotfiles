@@ -32,7 +32,6 @@
 
   # Hardware
   hardware = {
-    graphics.enable = true;
     bluetooth.enable = true;
     bluetooth.powerOnBoot = true;
   };
@@ -69,8 +68,6 @@
     gtk3
     gtk4
     libadwaita
-    # Additional portal support packages
-    xdg-desktop-portal-gtk
     xdg-utils
   ];
 
@@ -82,6 +79,7 @@
   };
 
   # Common programs
+  programs.nix-ld.enable = true;
   programs.fish.enable = true;
 
   # System state version

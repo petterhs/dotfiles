@@ -8,6 +8,19 @@
     ];
   };
 
+  programs = {
+    steam = {
+      enable = true;
+    };
+  };
+
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+  };
+
   programs.xfconf.enable = true;
   programs.file-roller.enable = true;
 

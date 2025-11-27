@@ -4,7 +4,7 @@
   home.packages = with pkgs; [
     obs-studio
     obsidian
-    gossip
+    # gossip
 
     code-cursor
     popsicle

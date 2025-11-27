@@ -1,5 +1,10 @@
 # Common Hyprland configuration
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   tuigreet = "${pkgs.tuigreet}/bin/tuigreet";
 in
@@ -8,7 +13,8 @@ in
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     xwayland.enable = true;
     systemd.setPath.enable = true;
   };
@@ -32,7 +38,7 @@ in
 
   # Greetd configuration
   services = {
-    xserver.enable = false; # disable xorg server
+    xserver.enable = true;
     greetd = {
       enable = true;
       settings = {

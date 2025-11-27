@@ -18,7 +18,7 @@
     slurp
 
     libsForQt5.qt5ct
-    qt6ct
+    qt6Packages.qt6ct
 
     hyprland-per-window-layout
 
@@ -27,7 +27,7 @@
     pulsemixer
     alsa-utils
     mpd
-    mpc-cli
+    mpc
     obs-studio-plugins.wlrobs
   ];
 
@@ -81,7 +81,6 @@
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_QPA_PLATFORM,wayland"
-        "SDL_VIDEODRIVER,wayland"
       ];
     };
     extraConfig = builtins.readFile ./conf/hyprland.conf;

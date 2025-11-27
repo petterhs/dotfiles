@@ -23,7 +23,7 @@
     # Desktop applications
     alacritty
     protonmail-desktop
-    bitwarden
+    proton-pass
     firefox
     chromium
     imv

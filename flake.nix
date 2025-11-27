@@ -13,7 +13,6 @@
     };
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim-config = {
       url = "github:petterhs/nixvim-config";
@@ -35,7 +34,7 @@
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
-          (import ./overlays/teams-for-linux.nix)
+          # (import ./overlays/teams-for-linux.nix)
           (import ./overlays/home-assistant-custom.nix)
           (import ./overlays/librespot-ma.nix)
         ];
@@ -50,7 +49,7 @@
         # Ensure overlays are applied inside NixOS evaluation
         {
           nixpkgs.overlays = [
-            (import ./overlays/teams-for-linux.nix)
+            # (import ./overlays/teams-for-linux.nix)
             (import ./overlays/home-assistant-custom.nix)
           ];
         }

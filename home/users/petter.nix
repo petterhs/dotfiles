@@ -16,8 +16,10 @@
   # basic configuration of git, please change to your own
   programs.git = {
     enable = true;
-    userName = "petterhs";
-    userEmail = "39340152+petterhs@users.noreply.github.com";
+    settings = {
+      user.name = "petterhs";
+      user.email = "39340152+petterhs@users.noreply.github.com";
+    };
   };
 
   # Packages that should be installed to the user profile.

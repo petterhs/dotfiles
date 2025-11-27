@@ -17,11 +17,6 @@
     package = pkgs.wireshark;
   };
 
-  # Android udev rules
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
-
   # Firewall ports for development
   networking.firewall.allowedTCPPorts = [
     1420
