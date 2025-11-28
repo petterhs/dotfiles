@@ -8,7 +8,7 @@
   # Common packages for both desktop and server
   home.packages = with pkgs; [
     # nixvim config
-    nixvim-config.packages.${system}.default
+    nixvim-config.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Basic system tools
     vim
@@ -26,6 +26,7 @@
     yazi
     lsd
     isd
+    duf
 
     # Development tools
     gcc
