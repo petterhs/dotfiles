@@ -87,15 +87,15 @@
     in
     {
       nixosConfigurations = {
-        "nixdesktop" = nixpkgs.lib.nixosSystem {
+        "fatman" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs pkgs;
           };
           modules = commonModules ++ [
-            ./hosts/nixdesktop/hardware-configuration.nix
-            ./modules/hosts/nixdesktop.nix
-            ./modules/hosts/nixdesktop-btc.nix
+            ./hosts/fatman/hardware-configuration.nix
+            ./modules/hosts/fatman.nix
+            ./modules/hosts/fatman-btc.nix
             {
               home-manager.users.petter = {
                 imports = [

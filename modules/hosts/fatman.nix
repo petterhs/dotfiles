@@ -1,8 +1,8 @@
-# nixdesktop specific configuration
+# fatman specific configuration
 { config, pkgs, ... }:
 {
   # Hostname
-  networking.hostName = "nixdesktop";
+  networking.hostName = "fatman";
 
   # LUKS encryption
   boot.initrd.luks.devices."luks-30163cea-ed7e-4ef0-abb7-d860a687d7af".device =
@@ -36,7 +36,7 @@
     ];
   };
 
-  # XDG Portal configuration (simpler for nixdesktop)
+  # XDG Portal configuration (simpler for fatman)
   xdg.portal = {
     enable = true;
     wlr.enable = true;

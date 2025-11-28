@@ -18,11 +18,13 @@ dotfiles/
 │   │   ├── teams.nix     # Teams customization
 │   │   └── home-manager.nix # Home-manager configuration
 │   └── hosts/            # Host-specific configurations
-│       ├── nixdesktop.nix
-│       ├── nixdesktop-btc.nix # Bitcoin node (nixdesktop only)
+│       ├── fatman.nix
+│       ├── fatman-btc.nix # Bitcoin node (fatman only)
+│       ├── littleboy.nix
 │       └── no-kon-lx-016.nix
 ├── hosts/                # Hardware-specific configurations
-│   ├── nixdesktop/
+│   ├── fatman/
+│   ├── littleboy/
 │   └── no-kon-lx-016/
 ├── home/                 # Home-manager user configurations
 │   ├── common.nix        # Shared user packages and programs
@@ -33,13 +35,21 @@ dotfiles/
 
 ## 🖥️ Hosts
 
-### nixdesktop
+### fatman
 - **Purpose**: Desktop workstation
 - **Features**: 
   - NVIDIA graphics support
   - Bitcoin node (Bitcoind + Electrs)
   - LUKS encryption
   - Users: `petter`, `petter-work`
+
+### littleboy
+- **Purpose**: Headless homelab server
+- **Features**:
+  - Homelab services (Immich, Music Assistant, Home Assistant etc.)
+  - PostgreSQL and Redis
+  - Docker support
+  - User: `petter`
 
 ### no-kon-lx-016
 - **Purpose**: Laptop/portable workstation
@@ -52,9 +62,14 @@ dotfiles/
 
 ### Build and switch configuration
 
-For nixdesktop:
+For fatman:
 ```bash
-sudo nixos-rebuild switch --flake '.#nixdesktop'
+sudo nixos-rebuild switch --flake '.#fatman'
+```
+
+For littleboy:
+```bash
+sudo nixos-rebuild switch --flake '.#littleboy'
 ```
 
 For no-kon-lx-016:
@@ -85,7 +100,7 @@ nix flake update
 ### Audio & Graphics
 - **Pipewire** for audio
 - **Bluetooth** support
-- **NVIDIA** support (nixdesktop)
+- **NVIDIA** support (fatman)
 - **Portal** support for file dialogs
 
 ### Home Manager Configuration
@@ -141,7 +156,7 @@ Caddy server configuration for custom Teams backgrounds in `modules/common/teams
 
 - **Trusted users** configured per host
 - **Firewall** rules for development ports
-- **LUKS** encryption on nixdesktop
+- **LUKS** encryption on fatman
 - **SSH** access enabled
 
 ## 📝 Maintenance

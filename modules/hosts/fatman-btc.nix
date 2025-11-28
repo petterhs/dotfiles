@@ -1,4 +1,4 @@
-# Bitcoin node configuration for nixdesktop
+# Bitcoin node configuration for fatman
 let
   nix-bitcoin = builtins.fetchTarball {
     url = "https://github.com/fort-nix/nix-bitcoin/archive/v0.0.100.tar.gz";
