@@ -81,6 +81,7 @@
         "_JAVA_AWT_WM_NONREPARENTING,1"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_QPA_PLATFORM,wayland"
+        "QT_QPA_PLATFORMTHEME,qt5ct" # Use qt5ct for QT theming
       ];
     };
     extraConfig = builtins.readFile ./conf/hyprland.conf;
