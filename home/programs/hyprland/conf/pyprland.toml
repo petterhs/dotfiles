@@ -1,0 +1,16 @@
+[pyprland]
+plugins = ["scratchpads"]
+
+[scratchpads.teams]
+animation = "fromTop"
+command = "teams-for-linux"
+class = "teams-for-linux"
+size = "50% 80%"
+
+[scratchpads.term]
+animation = "fromTop"
+command = "alacritty --class alacritty-dropterm"
+class = "alacritty-dropterm"
+size = "75% 60%"
+max_size = "1920px 100%"
+margin = 50

@@ -29,6 +29,8 @@
     mpd
     mpc
     obs-studio-plugins.wlrobs
+
+    pyprland
   ];
 
   services.hyprpaper = {
@@ -120,6 +122,10 @@
     "mpd" = {
       source = ./conf/mpd;
       recursive = true;
+    };
+    # pyprland configuration
+    "hypr/pyprland.toml" = {
+      source = ./conf/pyprland.toml;
     };
   };
 }
