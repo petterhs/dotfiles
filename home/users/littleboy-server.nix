@@ -10,10 +10,9 @@
   home.username = "petter";
   home.homeDirectory = "/home/petter";
 
-  programs.git = {
-    enable = true;
-    userName = "petterhs";
-    userEmail = "39340152+petterhs@users.noreply.github.com";
+  programs.git.settings = {
+    user.name = "petterhs";
+    user.email = "39340152+petterhs@users.noreply.github.com";
   };
 
   # Server-specific packages
