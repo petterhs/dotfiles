@@ -38,6 +38,15 @@ in
         extraConfig = ''
           resurrect_dir="$HOME/.tmux/resurrect"
           set -g @resurrect-dir $resurrect_dir
+          
+          # Restore running processes
+          set -g @resurrect-processes 'nvim vim vi'
+          
+          # Use proper strategy for nvim (restores with session files if available)
+          set -g @resurrect-strategy-nvim 'session'
+          
+          # Save shell history
+          set -g @resurrect-save-shell-history 'on'
         '';
       }
       {
