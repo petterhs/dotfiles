@@ -137,6 +137,10 @@
     enableBashIntegration = true;
   };
 
+  programs.gpg = {
+    enable = true;
+  };
+
   # configuration is compatible with. This helps avoid breakage
   # when a new home Manager release introduces backwards
   # incompatible changes.
