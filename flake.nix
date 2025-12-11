@@ -54,7 +54,7 @@
           modules = [
             catppuccin.nixosModules.catppuccin
             ./hosts/nixdesktop/configuration.nix
-            ./nix/btc.nix
+            # ./nix/btc.nix
             { programs.hyprland.enable = true; }
             {
               environment.systemPackages = [

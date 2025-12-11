@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   tuigreet = "${pkgs.greetd.tuigreet}/bin/tuigreet";
 in
@@ -107,6 +112,13 @@ in
     graphics.enable = true;
     nvidia.modesetting.enable = true;
     nvidia.open = false;
+    nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "555.58";
+      sha256_64bit = "";
+      openSha256 = "";
+      settingsSha256 = "";
+      persistancedSha256 = lib.fakeHash;
+    };
     bluetooth.enable = true;
     bluetooth.powerOnBoot = true;
   };
