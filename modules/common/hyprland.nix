@@ -44,7 +44,7 @@ in
       settings = {
         default_session = {
           user = "greeter";
-          command = "${tuigreet} --time --remember --cmd Hyprland";
+          command = "${tuigreet} --time --remember --cmd start-hyprland";
         };
       };
     };

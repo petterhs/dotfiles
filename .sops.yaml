@@ -1,0 +1,10 @@
+keys:
+  - &no-kon-lx-016: age107e6x6v7x2zg4jjm5a6wu4ymp04vwsgh4u7a5hm8zee0yjdmsevquzw7qx
+  - &littleboy: age1x9yx4t4fgvk4n4qd6fjm7c3eunvryn79w65mavxlnrv0rvf399qqm5a6es
+  - &fatman: age140scfxll56038kcvpxelttddhw9k0tmqm6tf724up5368h7wc56s454v06
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    age:
+      - age107e6x6v7x2zg4jjm5a6wu4ymp04vwsgh4u7a5hm8zee0yjdmsevquzw7qx
+      - age1x9yx4t4fgvk4n4qd6fjm7c3eunvryn79w65mavxlnrv0rvf399qqm5a6es
+      - age140scfxll56038kcvpxelttddhw9k0tmqm6tf724up5368h7wc56s454v06

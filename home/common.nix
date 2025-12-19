@@ -69,8 +69,14 @@
   programs.git = {
     enable = true;
     settings = {
-      aliases = {
+      gpg.format = "ssh";
+      user.signingkey = "~/.ssh/id_ed25519.pub";
+      commit.gpgsign = true;
+      alias = {
         lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+      };
+      push = {
+        autoSetupRemote = true;
       };
     };
   };
@@ -135,10 +141,6 @@
     enable = true;
     enableFishIntegration = true;
     enableBashIntegration = true;
-  };
-
-  programs.gpg = {
-    enable = true;
   };
 
   # configuration is compatible with. This helps avoid breakage

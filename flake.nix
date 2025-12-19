@@ -17,6 +17,10 @@
     nixvim-config = {
       url = "github:petterhs/nixvim-config";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
@@ -27,6 +31,7 @@
       home-manager,
       hyprland,
       nixvim-config,
+      sops-nix,
       ...
     }@inputs:
     let
@@ -46,6 +51,7 @@
       # Common modules for all hosts
       commonModules = [
         catppuccin.nixosModules.catppuccin
+        sops-nix.nixosModules.sops
         # Ensure overlays are applied inside NixOS evaluation
         {
           nixpkgs.overlays = [
@@ -60,6 +66,7 @@
         ./modules/common/graphical.nix
         ./modules/common/teams.nix
         ./modules/common/home-manager.nix
+        ./modules/common/secrets.nix
         home-manager.nixosModules.home-manager
       ];
 
@@ -70,6 +77,7 @@
 
       # Server modules (for littleboy - headless)
       serverModules = [
+        sops-nix.nixosModules.sops
         # Ensure overlays are applied inside NixOS evaluation
         {
           nixpkgs.overlays = [
@@ -82,6 +90,7 @@
         ./modules/common/server.nix
         ./modules/common/server-development.nix
         ./modules/common/server-home-manager.nix
+        ./modules/common/secrets.nix
         home-manager.nixosModules.home-manager
       ];
     in

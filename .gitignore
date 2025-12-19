@@ -1,1 +1,7 @@
 result
+
+# Secrets directory - allow encrypted .yaml files and public keys, ignore everything else
+secrets/*
+!secrets/*.yaml
+!secrets/*.pub
+!.sops.yaml
