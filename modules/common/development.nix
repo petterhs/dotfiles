@@ -14,7 +14,9 @@
   services.flatpak.enable = true;
 
   # Development tools
-  programs.adb.enable = true;
+  environment.systemPackages = with pkgs; [
+    android-tools
+  ];
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;

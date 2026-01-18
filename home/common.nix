@@ -53,7 +53,7 @@
     nix-output-monitor
     nvd
     nixpkgs-fmt
-    nixfmt-rfc-style
+    nixfmt
     devenv
 
     # Productivity

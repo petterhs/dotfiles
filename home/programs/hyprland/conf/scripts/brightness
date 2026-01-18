@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Brightness control script for Hyprland
+# Usage: brightness --inc | --dec
+
+# Get current brightness for notification
+get_brightness() {
+    if command -v brightnessctl &> /dev/null; then
+        brightnessctl get 2>/dev/null || echo "0"
+    elif command -v light &> /dev/null; then
+        light -G 2>/dev/null | cut -d. -f1 || echo "0"
+    else
+        echo "0"
+    fi
+}
+
+# Show notification with brightness level
+show_notification() {
+    local level=$(get_brightness)
+    if command -v brightnessctl &> /dev/null; then
+        local max=$(brightnessctl max 2>/dev/null || echo "100")
+        local percent=$((level * 100 / max))
+        notify-send -h string:x-canonical-private-synchronous:brightness -u low -t 1000 "Brightness" "${percent}%"
+    elif command -v light &> /dev/null; then
+        notify-send -h string:x-canonical-private-synchronous:brightness -u low -t 1000 "Brightness" "${level}%"
+    fi
+}
+
+case "$1" in
+    --inc)
+        if command -v brightnessctl &> /dev/null; then
+            brightnessctl set +5% 2>&1 || notify-send "Brightness Error" "Failed to increase brightness. Check permissions (may need to be in video group)."
+        elif command -v light &> /dev/null; then
+            light -A 5 2>&1 || notify-send "Brightness Error" "Failed to increase brightness. Check permissions."
+        else
+            notify-send "Brightness" "brightnessctl or light not found"
+            exit 1
+        fi
+        show_notification
+        ;;
+    --dec)
+        if command -v brightnessctl &> /dev/null; then
+            brightnessctl set 5%- 2>&1 || notify-send "Brightness Error" "Failed to decrease brightness. Check permissions (may need to be in video group)."
+        elif command -v light &> /dev/null; then
+            light -U 5 2>&1 || notify-send "Brightness Error" "Failed to decrease brightness. Check permissions."
+        else
+            notify-send "Brightness" "brightnessctl or light not found"
+            exit 1
+        fi
+        show_notification
+        ;;
+    *)
+        echo "Usage: $0 --inc | --dec"
+        exit 1
+        ;;
+esac
+
+
+

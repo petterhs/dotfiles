@@ -32,8 +32,8 @@
 
     # Desktop file managers and utilities
     file-roller
-    xfce.thunar
-    xfce.exo
+    thunar
+    xfce4-exo
     xterm
     udiskie
 

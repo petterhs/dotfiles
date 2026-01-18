@@ -25,12 +25,15 @@
     libva-utils
     pavucontrol
     pulsemixer
+    pamixer
+    brightnessctl
     alsa-utils
     mpd
     mpc
     obs-studio-plugins.wlrobs
 
     pyprland
+    wev
   ];
 
   services.hyprpaper = {

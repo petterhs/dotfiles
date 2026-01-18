@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+
+# Volume control script for Hyprland
+# Usage: volume --inc | --dec | --toggle | --toggle-mic
+
+# Get volume level for notification
+get_volume() {
+    if command -v pamixer &> /dev/null; then
+        pamixer --get-volume 2>/dev/null || echo "0"
+    else
+        echo "0"
+    fi
+}
+
+# Get mute status
+is_muted() {
+    if command -v pamixer &> /dev/null; then
+        pamixer --get-mute 2>/dev/null | grep -q "true"
+    else
+        false
+    fi
+}
+
+# Show notification
+show_notification() {
+    if is_muted; then
+        notify-send -h string:x-canonical-private-synchronous:volume -u low -t 1000 "Volume" "Muted"
+    else
+        local vol=$(get_volume)
+        notify-send -h string:x-canonical-private-synchronous:volume -u low -t 1000 "Volume" "${vol}%"
+    fi
+}
+
+case "$1" in
+    --inc)
+        if command -v pamixer &> /dev/null; then
+            pamixer -i 5 2>&1 || notify-send "Volume Error" "Failed to increase volume"
+        elif command -v pulsemixer &> /dev/null; then
+            pulsemixer --change-volume +5 2>&1 || notify-send "Volume Error" "Failed to increase volume"
+        else
+            notify-send "Volume" "pamixer or pulsemixer not found"
+            exit 1
+        fi
+        show_notification
+        ;;
+    --dec)
+        if command -v pamixer &> /dev/null; then
+            pamixer -d 5 2>&1 || notify-send "Volume Error" "Failed to decrease volume"
+        elif command -v pulsemixer &> /dev/null; then
+            pulsemixer --change-volume -5 2>&1 || notify-send "Volume Error" "Failed to decrease volume"
+        else
+            notify-send "Volume" "pamixer or pulsemixer not found"
+            exit 1
+        fi
+        show_notification
+        ;;
+    --toggle)
+        if command -v pamixer &> /dev/null; then
+            pamixer -t 2>&1 || notify-send "Volume Error" "Failed to toggle mute"
+        elif command -v pulsemixer &> /dev/null; then
+            pulsemixer --toggle-mute 2>&1 || notify-send "Volume Error" "Failed to toggle mute"
+        else
+            notify-send "Volume" "pamixer or pulsemixer not found"
+            exit 1
+        fi
+        show_notification
+        ;;
+    --toggle-mic)
+        if command -v pamixer &> /dev/null; then
+            pamixer --default-source -t 2>&1 || notify-send "Volume Error" "Failed to toggle microphone"
+        elif command -v pulsemixer &> /dev/null; then
+            pulsemixer --toggle-mute --id $(pulsemixer --list-sources | grep -i input | head -1 | awk '{print $3}' | tr -d ',') 2>&1 || notify-send "Volume Error" "Failed to toggle microphone"
+        else
+            notify-send "Volume" "pamixer or pulsemixer not found"
+            exit 1
+        fi
+        notify-send -h string:x-canonical-private-synchronous:volume -u low -t 1000 "Microphone" "$(pamixer --default-source --get-mute 2>/dev/null | grep -q "true" && echo "Muted" || echo "Unmuted")"
+        ;;
+    *)
+        echo "Usage: $0 --inc | --dec | --toggle | --toggle-mic"
+        exit 1
+        ;;
+esac
+
+
+
