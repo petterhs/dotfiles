@@ -11,7 +11,6 @@
   };
 
   # Development tools (server-appropriate)
-  programs.adb.enable = true;
   programs.wireshark = {
     enable = true;
     package = pkgs.wireshark;
