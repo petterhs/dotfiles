@@ -16,6 +16,7 @@
   # Development tools
   environment.systemPackages = with pkgs; [
     android-tools
+    opencode
   ];
   programs.wireshark = {
     enable = true;

@@ -36,17 +36,7 @@
     wev
   ];
 
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-
-      preload = [ "~/wallpaper/nix-black-4k.png" ];
-      wallpaper = [
-        ",~/wallpaper/nix-black-4k.png"
-      ];
-
-    };
-  };
+  services.hyprpaper.enable = true;
 
   services.hypridle = {
     enable = true;
@@ -120,6 +110,21 @@
     };
     "hypr/mocha.conf" = {
       source = ./conf/mocha.conf;
+    };
+    # hyprpaper configuration (new format for v0.8+)
+    "hypr/hyprpaper.conf" = {
+      text = ''
+        # Misc options
+        splash = false 
+        ipc = on
+
+        # Fallback wallpaper for all monitors
+        wallpaper {
+            monitor = 
+            path = ${config.home.homeDirectory}/wallpaper/nix-black-4k.png
+            fit_mode = cover
+        }
+      '';
     };
     # music player - mpd
     "mpd" = {
