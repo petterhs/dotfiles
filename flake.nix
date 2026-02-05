@@ -82,8 +82,6 @@
         {
           nixpkgs.overlays = [
             (import ./overlays/home-assistant-custom.nix)
-            (import ./overlays/music-assistant.nix)
-            (import ./overlays/librespot-ma.nix)
           ];
         }
         ./modules/common/nix.nix
