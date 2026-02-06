@@ -15,6 +15,11 @@ let
   # Get usernames from home-manager users
   homeManagerUsers = lib.attrNames config.home-manager.users;
 
+  # Get the first home-manager user (or fallback to a system user)
+  # This is used as the owner for the sops secret file
+  # The actual per-aser access is handled via symlinks
+  firstUser = if homeManagerUsers != [] then lib.head homeManagerUsers else "root";
+
   # Path to the plain text SSH public key (safe to commit to git)
   sshPublicKeyPath = ../../secrets/id_ed25519.pub;
 
@@ -29,7 +34,7 @@ let
         config.sops.secrets ? ssh-private-key
       ) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
       # Copy public key (plain text, safe to read during evaluation)
-      "C+ /home/${username}/.ssh/id_ed25519.pub 0644 ${username} users - ${toString sshPublicKeyPath}"
+      "C /home/${username}/.ssh/id_ed25519.pub 0644 ${username} users - ${toString sshPublicKeyPath}"
     ];
 in
 {
@@ -46,7 +51,7 @@ in
       ssh-private-key = {
         key = "ssh_private_key";  # Key name in secrets.yaml
         path = "/run/secrets/ssh-private-key";
-        owner = "s27731";  # Will be adjusted per user via symlinks
+        owner = firstUser;  # Will be adjusted per user via symlinks
         group = "users";
         mode = "0600";  # Read/write for owner only
         # Will be symlinked to ~/.ssh/id_ed25519 by tmpfiles rules below
