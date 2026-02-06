@@ -59,12 +59,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "Olen";
         domain = "plant";
-        version = "2025-09-22";
+        version = "v2026.1.1";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "homeassistant-plant";
-          rev = "master";
-          hash = "sha256-jpmfmflS2w7WoiPcIG8HR/cUisNiJwG+LBwRCAbQsZc=";
+          rev = "v2026.1.1";
+          hash = "sha256-a3fcl4xhH4itVBmwCTIde/+8m/Q8eS8jSxeaEcDhHwQ=";
         };
         # manifest requires async-timeout>=4.0.2
         dependencies = [
@@ -88,12 +88,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "Olen";
         domain = "openplantbook";
-        version = "2025-09-22";
+        version = "v1.3.2";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "home-assistant-openplantbook";
-          rev = "master";
-          hash = "sha256-PSax6WFUSEouJL1jes9T+nWdVh8ix5Ue5NE8TeScNfM";
+          rev = "v1.3.2";
+          hash = "sha256-5AhVnn7umpJ7r68e7FCkaT6E9pG4bNOg1O32PWS5WrI=";
         };
         # Provide Python deps required by manifest.json
         dependencies = [
@@ -123,7 +123,7 @@ self: super: {
           owner = "Olen";
           repo = "lovelace-flower-card";
           rev = "v2026.1.1";
-          sha256 = "sha256-IwhhORWpKjR9APyeuWwvJ8H9pLhMelqXrnJRfQQQz8I=";
+          sha256 = "sha256-X3bdYkdm72ptix69gTmJ3TS4cwAU6HTEUM+m5OmHN/c=";
         };
         installPhase = ''
           runHook preInstall
