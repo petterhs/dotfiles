@@ -56,7 +56,7 @@ self: super: {
         fetchFromGitHub,
         python3Packages,
       }:
-      buildHomeAssistantComponent rec {
+      buildHomeAssistantComponent {
         owner = "Olen";
         domain = "plant";
         version = "2025-09-22";
@@ -74,7 +74,6 @@ self: super: {
           description = "Custom Plant integration for Home Assistant (Olen fork)";
           homepage = "https://github.com/Olen/homeassistant-plant";
           license = lib.licenses.mit;
-          maintainers = with lib.maintainers; [ ];
         };
       }
     ) { };
@@ -86,7 +85,7 @@ self: super: {
         fetchFromGitHub,
         python3Packages,
       }:
-      buildHomeAssistantComponent rec {
+      buildHomeAssistantComponent {
         owner = "Olen";
         domain = "openplantbook";
         version = "2025-09-22";
@@ -105,7 +104,6 @@ self: super: {
           description = "OpenPlantBook custom integration for Home Assistant";
           homepage = "https://github.com/Olen/home-assistant-openplantbook";
           license = lib.licenses.gpl3Only;
-          maintainers = with lib.maintainers; [ ];
         };
       }
     ) { };
@@ -118,13 +116,13 @@ self: super: {
         stdenvNoCC,
         fetchFromGitHub,
       }:
-      stdenvNoCC.mkDerivation rec {
+      stdenvNoCC.mkDerivation {
         pname = "flower-card";
-        version = "2025-09-22";
+        version = "v2026.1.1";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "lovelace-flower-card";
-          rev = "master";
+          rev = "v2026.1.1";
           sha256 = "sha256-IwhhORWpKjR9APyeuWwvJ8H9pLhMelqXrnJRfQQQz8I=";
         };
         installPhase = ''
@@ -156,7 +154,7 @@ self: super: {
         stdenvNoCC,
         fetchFromGitHub,
       }:
-      stdenvNoCC.mkDerivation rec {
+      stdenvNoCC.mkDerivation {
         pname = "swipe-card";
         version = "5.0.0";
         src = fetchFromGitHub {
@@ -191,7 +189,7 @@ self: super: {
         stdenvNoCC,
         fetchFromGitHub,
       }:
-      stdenvNoCC.mkDerivation rec {
+      stdenvNoCC.mkDerivation {
         pname = "my-cards-bundle";
         version = "1.0.6";
         src = fetchFromGitHub {
