@@ -19,6 +19,7 @@
       "mqtt"
       "music_assistant"
       "myuplink"
+      "qbittorrent"
       "radio_browser"
       "samsungtv"
       "smlight"
