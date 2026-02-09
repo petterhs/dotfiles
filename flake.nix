@@ -39,9 +39,7 @@
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
-          # (import ./overlays/teams-for-linux.nix)
           (import ./overlays/home-assistant-custom.nix)
-          (import ./overlays/librespot-ma.nix)
         ];
         config = {
           allowUnfree = true;
@@ -55,8 +53,8 @@
         # Ensure overlays are applied inside NixOS evaluation
         {
           nixpkgs.overlays = [
-            # (import ./overlays/teams-for-linux.nix)
             (import ./overlays/home-assistant-custom.nix)
+            (import ./overlays/aioaudiobookshelf.nix)
           ];
         }
         ./modules/common/nix.nix
@@ -82,6 +80,7 @@
         {
           nixpkgs.overlays = [
             (import ./overlays/home-assistant-custom.nix)
+            (import ./overlays/aioaudiobookshelf.nix)
           ];
         }
         ./modules/common/nix.nix
