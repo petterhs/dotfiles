@@ -72,7 +72,10 @@
         genericName = "Text Editor";
         exec = "alacritty -e nvim %F";
         terminal = false;
-        categories = [ "TextEditor" "Utility" ];
+        categories = [
+          "TextEditor"
+          "Utility"
+        ];
         mimeType = [
           "text/plain"
           "text/x-chdr"
@@ -103,7 +106,10 @@
         let
           # Use Flatpak's desktop entry for Zen browser (preferred) or fallback to our wrapper
           # Flatpak desktop entries are typically: app.zen_browser.zen.desktop
-          browser = [ "app.zen_browser.zen.desktop" "zen-browser.desktop" ];
+          browser = [
+            "app.zen_browser.zen.desktop"
+            "zen-browser.desktop"
+          ];
           editor = [ "nvim.desktop" ];
         in
         {
@@ -151,7 +157,7 @@
       enable = true;
       createDirectories = true;
       extraConfig = {
-        XDG_SCREENSHOTS_DIR = "${config.xdg.userDirs.pictures}/Screenshots";
+        SCREENSHOTS = "${config.xdg.userDirs.pictures}/Screenshots";
       };
     };
   };
