@@ -64,6 +64,9 @@
     file
     which
     tree
+
+    # VPN
+    proton-vpn-cli
   ];
 
   programs.git = {
