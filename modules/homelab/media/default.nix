@@ -32,6 +32,12 @@ in
       openFirewall = true;
       user = "${user.name}";
     };
+    audiobookshelf = {
+      enable = true;
+      host = "0.0.0.0";
+      openFirewall = true;
+      user = "${user.name}";
+    };
   };
 
   systemd.services.qbittorrent = {

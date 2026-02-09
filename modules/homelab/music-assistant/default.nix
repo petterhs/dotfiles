@@ -14,6 +14,7 @@
       "hass" # Home Assistant integration
       "hass_players" # Home Assistant media players
       "jellyfin"
+      "sendspin"
       "spotify" # Spotify music service
       "spotify_connect"
       "sonos" # Sonos speakers

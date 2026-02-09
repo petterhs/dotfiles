@@ -3,6 +3,8 @@
 {
   services.immich = {
     enable = true;
+    host = "0.0.0.0";
+    openFirewall = true;
     settings = {
       # Database configuration
       DB_HOSTNAME = "localhost";
@@ -51,7 +53,4 @@
   systemd.tmpfiles.rules = [
     "d /var/lib/immich/upload 0755 immich immich -"
   ];
-
-  # Firewall configuration
-  networking.firewall.allowedTCPPorts = [ 2283 ];
 }
