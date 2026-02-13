@@ -38,6 +38,11 @@ in
       openFirewall = true;
       user = "${user.name}";
     };
+    calibre-web = {
+      enable = true;
+      openFirewall = true;
+      user = "${user.name}";
+    };
   };
 
   systemd.services.qbittorrent = {
