@@ -40,6 +40,7 @@ in
     };
     calibre-web = {
       enable = true;
+      listen.ip = "0.0.0.0";
       openFirewall = true;
       user = "${user.name}";
     };

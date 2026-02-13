@@ -107,6 +107,34 @@ self: super: {
         };
       }
     ) { };
+
+    ha_washdata = super.callPackage (
+      {
+        lib,
+        buildHomeAssistantComponent,
+        fetchFromGitHub,
+        python3Packages,
+      }:
+      buildHomeAssistantComponent {
+        owner = "3dg1luk43";
+        domain = "ha_washdata";
+        version = "v0.4.2";
+        src = fetchFromGitHub {
+          owner = "3dg1luk43";
+          repo = "ha_washdata";
+          rev = "v0.4.2";
+          hash = "sha256-9THYWgTZFjCUOS2rliaBzvvPyyBq/Y22BLJUTWNR06k=";
+        };
+        # Provide Python deps required by manifest.json
+        dependencies = [
+          python3Packages.numpy
+        ];
+        meta = {
+          description = "A Home Assistant custom component to monitor washing machines via smart sockets, learn power profiles, and estimate completion time using shape-correlation matching.";
+          homepage = "https://github.com/3dg1luk43/ha_washdata";
+        };
+      }
+    ) { };
   };
 
   home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or { }) // {

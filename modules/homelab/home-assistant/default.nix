@@ -40,6 +40,7 @@
       adaptive_lighting
       plant
       openplantbook
+      ha_washdata
     ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
