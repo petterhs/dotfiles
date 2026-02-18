@@ -22,11 +22,13 @@
       "qbittorrent"
       "radio_browser"
       "samsungtv"
+      "smartthings"
       "smlight"
       "sonos"
       "systemmonitor"
       "switchbot"
       "tesla_fleet"
+      "teslemetry"
       "tibber"
       "xiaomi_ble"
     ];
