@@ -75,6 +75,16 @@
         themes = "!include_dir_merge_named themes";
       };
       recorder.db_url = "postgresql://@/hass";
+      notify = [
+        {
+          platform = "group";
+          name = "phones";
+          services = [
+            { action = "mobile_app_pixel_10_pro"; }
+            { action = "mobile_app_elida_sofie_sin_iphone"; }
+          ];
+        }
+      ];
       "automation nixos" = [
         # YAML automations go here
       ];
