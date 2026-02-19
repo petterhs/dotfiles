@@ -59,6 +59,7 @@ in
     pkgs.jellyfin-web
     pkgs.jellyfin-ffmpeg
 
+    pkgs.calibre
 
     # Publish to home assistant when torrent finishes
     (pkgs.writeShellScriptBin "qb-on-finish" ''
