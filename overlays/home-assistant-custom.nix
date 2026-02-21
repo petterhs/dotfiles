@@ -59,11 +59,11 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "Olen";
         domain = "plant";
-        version = "v2026.1.1";
+        version = "v2026.2.1";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "homeassistant-plant";
-          rev = "v2026.1.1";
+          rev = "v2026.2.1";
           hash = "sha256-a3fcl4xhH4itVBmwCTIde/+8m/Q8eS8jSxeaEcDhHwQ=";
         };
         # manifest requires async-timeout>=4.0.2
@@ -173,8 +173,6 @@ self: super: {
         };
       }
     ) { };
-
-    "navbar-card" = super.callPackage ./navbar-card-package.nix { };
 
     "swipe-card" = super.callPackage (
       {
