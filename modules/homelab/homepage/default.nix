@@ -41,6 +41,7 @@ in
     enable = true;
     listenPort = 8082;
     openFirewall = false;
+    allowedHosts = "home.${base},127.0.0.1,localhost";
 
     bookmarks = [
       {
