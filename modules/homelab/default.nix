@@ -7,5 +7,8 @@
     ./media
     # ./immich
     ./music-assistant
+    ./nextcloud
+    ./syncthing
+    ./homepage
   ];
 }
