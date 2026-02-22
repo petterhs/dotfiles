@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
+    ./lab-domain
     ./home-assistant
     ./mosquitto
     ./zigbee2mqtt

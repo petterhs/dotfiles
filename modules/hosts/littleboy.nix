@@ -4,6 +4,8 @@
   # Hostname
   networking.hostName = "littleboy";
 
+  homelab.labDomain = "lab.hoem.tech";
+
   # Boot configuration
   boot.supportedFilesystems = [ "ntfs" ];
 

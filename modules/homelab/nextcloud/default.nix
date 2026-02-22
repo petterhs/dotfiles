@@ -13,7 +13,7 @@
 
   services.nextcloud = {
     enable = true;
-    hostName = "cloud.littleboy";
+    hostName = "cloud.${if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName}";
     https = false;
     maxUploadSize = "512M";
     package = pkgs.nextcloud31;
@@ -30,8 +30,10 @@
       defaultPhoneRegion = "NO";
     };
 
-    settings = {
-      trusted_domains = [ "cloud.littleboy" "littleboy" ];
+    settings = let
+      base = if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName;
+    in {
+      trusted_domains = [ "cloud.${base}" base config.networking.hostName ];
       overwriteprotocol = "http";
     };
   };
