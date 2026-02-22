@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }:
 {
   systemd.services.nextcloud-setup = {
-    after = [ "postgresql.service" ];
-    requires = [ "postgresql.service" ];
+    after = [ "postgresql-setup.service" ];
+    requires = [ "postgresql-setup.service" ];
   };
 
   services.postgresql.authentication = lib.mkOverride 10 ''
@@ -36,9 +36,9 @@
     };
   };
 
-  # Reuse existing Postgres: add nextcloud DB and user (peer auth via socket)
-  services.postgresql.ensureDatabases = [ "nextcloud" ];
-  services.postgresql.ensureUsers = [
+  # Append to existing Postgres config (home-assistant etc. set ensureDatabases/ensureUsers too)
+  services.postgresql.ensureDatabases = lib.mkAfter [ "nextcloud" ];
+  services.postgresql.ensureUsers = lib.mkAfter [
     { name = "nextcloud"; ensureDBOwnership = true; }
   ];
 
