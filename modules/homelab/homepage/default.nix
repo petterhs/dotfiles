@@ -1,38 +1,77 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
-  base = if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName;
-  proxy = port: {
-    proxyPass = "http://127.0.0.1:${toString port}";
-    proxyWebsockets = true;
-    extraConfig = "proxy_set_header Host $host; proxy_set_header X-Real-IP $remote_addr; proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; proxy_set_header X-Forwarded-Proto $scheme;";
-  };
-  vhost = name: port: {
-    serverName = name;
-    locations."/" = proxy port;
-  };
-  vhosts = {
-    "home.${base}" = vhost "home.${base}" 8082;
-    "qb.${base}" = vhost "qb.${base}" 8080;
-    "syncthing.${base}" = vhost "syncthing.${base}" 8384;
-    "immich.${base}" = vhost "immich.${base}" 2283;
-    "hass.${base}" = vhost "hass.${base}" 8123;
-    "z2m.${base}" = vhost "z2m.${base}" 8521;
-    "radarr.${base}" = vhost "radarr.${base}" 7878;
-    "sonarr.${base}" = vhost "sonarr.${base}" 8989;
-    "prowlarr.${base}" = vhost "prowlarr.${base}" 9696;
-    "bazarr.${base}" = vhost "bazarr.${base}" 6767;
-    "jellyfin.${base}" = vhost "jellyfin.${base}" 8096;
-    "audiobookshelf.${base}" = vhost "audiobookshelf.${base}" 13378;
-    "calibre.${base}" = vhost "calibre.${base}" 8083;
-    "music.${base}" = vhost "music.${base}" 8095;
-  };
+  base =
+    if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName;
   url = path: "http://${path}";
 in
 {
-  services.nginx = {
+  # Nextcloud module enables nginx and adds cloud.* vhost. Override that vhost to listen only on 81
+  # so Caddy can bind to 80 and proxy cloud.* to nginx.
+  services.nginx.virtualHosts."cloud.${base}" = {
+    listen = [
+      {
+        port = 81;
+        addr = "127.0.0.1";
+      }
+    ];
+  };
+
+  services.caddy = {
     enable = true;
-    recommendedProxySettings = true;
-    virtualHosts = vhosts;
+    globalConfig = "auto_https off";
+    virtualHosts = {
+      "http://home.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8082";
+      };
+      "http://qb.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8080";
+      };
+      "http://syncthing.${base}" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:8384 {
+            header_up Host 127.0.0.1
+          }
+        '';
+      };
+      "http://hass.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8123";
+      };
+      "http://z2m.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8521";
+      };
+      "http://radarr.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:7878";
+      };
+      "http://sonarr.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8989";
+      };
+      "http://prowlarr.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:9696";
+      };
+      "http://bazarr.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:6767";
+      };
+      "http://jellyfin.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8096";
+      };
+      "http://audiobookshelf.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8000";
+      };
+      "http://calibre.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8083";
+      };
+      "http://music.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8095";
+      };
+      "http://cloud.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:81";
+      };
+    };
   };
 
   networking.firewall.allowedTCPPorts = [ 80 ];
@@ -43,24 +82,135 @@ in
     openFirewall = false;
     allowedHosts = "home.${base},127.0.0.1,localhost";
 
-    bookmarks = [
+    services = [
       {
         Homelab = [
-          { "Dashboard" = [ { abbr = "Home"; href = url "home.${base}"; } ]; }
-          { "Nextcloud" = [ { abbr = "NC"; href = url "cloud.${base}"; } ]; }
-          { "Syncthing" = [ { abbr = "Sync"; href = url "syncthing.${base}"; } ]; }
-          { "qBittorrent" = [ { abbr = "qB"; href = url "qb.${base}"; } ]; }
-          { "Home Assistant" = [ { abbr = "HASS"; href = url "hass.${base}"; } ]; }
-          { "Zigbee2MQTT" = [ { abbr = "Z2M"; href = url "z2m.${base}"; } ]; }
-          { "Immich" = [ { abbr = "Imm"; href = url "immich.${base}"; } ]; }
-          { "Jellyfin" = [ { abbr = "Jelly"; href = url "jellyfin.${base}"; } ]; }
-          { "Audiobookshelf" = [ { abbr = "ABS"; href = url "audiobookshelf.${base}"; } ]; }
-          { "Calibre" = [ { abbr = "Cal"; href = url "calibre.${base}"; } ]; }
-          { "Music Assistant" = [ { abbr = "MASS"; href = url "music.${base}"; } ]; }
-          { "Radarr" = [ { abbr = "Rad"; href = url "radarr.${base}"; } ]; }
-          { "Sonarr" = [ { abbr = "Son"; href = url "sonarr.${base}"; } ]; }
-          { "Prowlarr" = [ { abbr = "Pro"; href = url "prowlarr.${base}"; } ]; }
-          { "Bazarr" = [ { abbr = "Baz"; href = url "bazarr.${base}"; } ]; }
+          {
+            "Dashboard" = [
+              {
+                abbr = "Home";
+                href = url "home.${base}";
+                icon = "home";
+              }
+            ];
+          }
+          {
+            "Nextcloud" = [
+              {
+                abbr = "NC";
+                href = url "cloud.${base}";
+                icon = "cloud";
+              }
+            ];
+          }
+          {
+            "Syncthing" = [
+              {
+                abbr = "Sync";
+                href = url "syncthing.${base}";
+                icon = "sync";
+              }
+            ];
+          }
+          {
+            "qBittorrent" = [
+              {
+                abbr = "qB";
+                href = url "qb.${base}";
+                icon = "download";
+              }
+            ];
+          }
+          {
+            "Home Assistant" = [
+              {
+                abbr = "HASS";
+                href = url "hass.${base}";
+                icon = "home-assistant";
+              }
+            ];
+          }
+          {
+            "Zigbee2MQTT" = [
+              {
+                abbr = "Z2M";
+                href = url "z2m.${base}";
+                icon = "zigbee";
+              }
+            ];
+          }
+          {
+            "Jellyfin" = [
+              {
+                abbr = "Jelly";
+                href = url "jellyfin.${base}";
+                icon = "jellyfin";
+              }
+            ];
+          }
+          {
+            "Audiobookshelf" = [
+              {
+                abbr = "ABS";
+                href = url "audiobookshelf.${base}";
+                icon = "audiobookshelf";
+              }
+            ];
+          }
+          {
+            "Calibre" = [
+              {
+                abbr = "Cal";
+                href = url "calibre.${base}";
+                icon = "calibre";
+              }
+            ];
+          }
+          {
+            "Music Assistant" = [
+              {
+                abbr = "MASS";
+                href = url "music.${base}";
+                icon = "music-assistant";
+              }
+            ];
+          }
+          {
+            "Radarr" = [
+              {
+                abbr = "Rad";
+                href = url "radarr.${base}";
+                icon = "radarr";
+              }
+            ];
+          }
+          {
+            "Sonarr" = [
+              {
+                abbr = "Son";
+                href = url "sonarr.${base}";
+                icon = "sonarr";
+              }
+            ];
+          }
+          {
+            "Prowlarr" = [
+              {
+                abbr = "Pro";
+                href = url "prowlarr.${base}";
+                icon = "prowlarr";
+              }
+            ];
+          }
+          {
+            "Bazarr" = [
+              {
+                abbr = "Baz";
+                href = url "bazarr.${base}";
+                icon = "bazarr";
+              }
+            ];
+          }
         ];
       }
     ];

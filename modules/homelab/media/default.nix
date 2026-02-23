@@ -34,15 +34,12 @@ in
     };
     audiobookshelf = {
       enable = true;
-      host = "0.0.0.0";
-      openFirewall = true;
       user = "${user.name}";
     };
     calibre-web = {
       enable = true;
-      listen.ip = "0.0.0.0";
-      openFirewall = true;
       user = "${user.name}";
+      listen.ip = "127.0.0.1";
     };
   };
 
