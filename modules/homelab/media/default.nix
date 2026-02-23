@@ -43,11 +43,35 @@ in
     };
   };
 
-  systemd.services.qbittorrent = {
-    serviceConfig = {
-      NoNewPrivileges = lib.mkForce false;
-      ProtectHome = lib.mkForce false; # allows access to /home
-      ReadWritePaths = [ "/home/petter/Media/Downloads" ]; # explicit write access
+  systemd.services = {
+    qbittorrent = {
+      serviceConfig = {
+        NoNewPrivileges = lib.mkForce false;
+        ProtectHome = lib.mkForce false; # allows access to /home
+        ReadWritePaths = [ "/home/petter/Media/Downloads" ]; # explicit write access
+      };
+    };
+
+    sonarr = {
+      serviceConfig = {
+        NoNewPrivileges = lib.mkForce false;
+        ProtectHome = lib.mkForce false; # avoid /home being remounted as tmpfs
+        ReadWritePaths = [
+          "/home/petter/Media/Series"
+          "/home/petter/Media/Downloads"
+        ];
+      };
+    };
+
+    radarr = {
+      serviceConfig = {
+        NoNewPrivileges = lib.mkForce false;
+        ProtectHome = lib.mkForce false;
+        ReadWritePaths = [
+          "/home/petter/Media/Movies"
+          "/home/petter/Media/Downloads"
+        ];
+      };
     };
   };
 
