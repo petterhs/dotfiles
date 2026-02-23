@@ -84,135 +84,189 @@ in
 
     services = [
       {
-        Homelab = [
+        "Overview" = [
           {
-            "Dashboard" = [
-              {
-                abbr = "Home";
-                href = url "home.${base}";
-                icon = "home";
-              }
-            ];
+            "Home" = {
+              href = url "home.${base}";
+              icon = "house";
+              description = "This dashboard";
+            };
+          }
+        ];
+      }
+      {
+        "Cloud & Sync" = [
+          {
+            "Nextcloud" = {
+              href = url "cloud.${base}";
+              icon = "nextcloud";
+              description = "Cloud storage";
+            };
           }
           {
-            "Nextcloud" = [
-              {
-                abbr = "NC";
-                href = url "cloud.${base}";
-                icon = "cloud";
-              }
-            ];
+            "Syncthing" = {
+              href = url "syncthing.${base}";
+              icon = "syncthing";
+              description = "File sync";
+            };
+          }
+        ];
+      }
+      {
+        "Downloads" = [
+          {
+            "qBittorrent" = {
+              href = url "qb.${base}";
+              icon = "qbittorrent";
+              description = "Torrent client";
+            };
+          }
+        ];
+      }
+      {
+        "Smart Home" = [
+          {
+            "Home Assistant" = {
+              href = url "hass.${base}";
+              icon = "home-assistant";
+              description = "Home automation";
+            };
           }
           {
-            "Syncthing" = [
-              {
-                abbr = "Sync";
-                href = url "syncthing.${base}";
-                icon = "sync";
-              }
-            ];
+            "Zigbee2MQTT" = {
+              href = url "z2m.${base}";
+              icon = "zigbee2mqtt";
+              description = "Zigbee bridge";
+            };
+          }
+        ];
+      }
+      {
+        "Media" = [
+          {
+            "Jellyfin" = {
+              href = url "jellyfin.${base}";
+              icon = "jellyfin";
+              description = "Movies & TV";
+            };
           }
           {
-            "qBittorrent" = [
-              {
-                abbr = "qB";
-                href = url "qb.${base}";
-                icon = "download";
-              }
-            ];
+            "Audiobookshelf" = {
+              href = url "audiobookshelf.${base}";
+              icon = "audiobookshelf";
+              description = "Audiobooks";
+            };
           }
           {
-            "Home Assistant" = [
-              {
-                abbr = "HASS";
-                href = url "hass.${base}";
-                icon = "home-assistant";
-              }
-            ];
+            "Calibre" = {
+              href = url "calibre.${base}";
+              icon = "calibre-web";
+              description = "E-books";
+            };
           }
           {
-            "Zigbee2MQTT" = [
-              {
-                abbr = "Z2M";
-                href = url "z2m.${base}";
-                icon = "zigbee";
-              }
-            ];
+            "Music Assistant" = {
+              href = url "music.${base}";
+              icon = "music-assistant";
+              description = "Music library";
+            };
+          }
+        ];
+      }
+      {
+        "*arr Stack" = [
+          {
+            "Radarr" = {
+              href = url "radarr.${base}";
+              icon = "radarr";
+              description = "Movies";
+            };
           }
           {
-            "Jellyfin" = [
-              {
-                abbr = "Jelly";
-                href = url "jellyfin.${base}";
-                icon = "jellyfin";
-              }
-            ];
+            "Sonarr" = {
+              href = url "sonarr.${base}";
+              icon = "sonarr";
+              description = "TV series";
+            };
           }
           {
-            "Audiobookshelf" = [
-              {
-                abbr = "ABS";
-                href = url "audiobookshelf.${base}";
-                icon = "audiobookshelf";
-              }
-            ];
+            "Prowlarr" = {
+              href = url "prowlarr.${base}";
+              icon = "prowlarr";
+              description = "Indexer manager";
+            };
           }
           {
-            "Calibre" = [
-              {
-                abbr = "Cal";
-                href = url "calibre.${base}";
-                icon = "calibre";
-              }
-            ];
-          }
-          {
-            "Music Assistant" = [
-              {
-                abbr = "MASS";
-                href = url "music.${base}";
-                icon = "music-assistant";
-              }
-            ];
-          }
-          {
-            "Radarr" = [
-              {
-                abbr = "Rad";
-                href = url "radarr.${base}";
-                icon = "radarr";
-              }
-            ];
-          }
-          {
-            "Sonarr" = [
-              {
-                abbr = "Son";
-                href = url "sonarr.${base}";
-                icon = "sonarr";
-              }
-            ];
-          }
-          {
-            "Prowlarr" = [
-              {
-                abbr = "Pro";
-                href = url "prowlarr.${base}";
-                icon = "prowlarr";
-              }
-            ];
-          }
-          {
-            "Bazarr" = [
-              {
-                abbr = "Baz";
-                href = url "bazarr.${base}";
-                icon = "bazarr";
-              }
-            ];
+            "Bazarr" = {
+              href = url "bazarr.${base}";
+              icon = "bazarr";
+              description = "Subtitles";
+            };
           }
         ];
       }
     ];
+
+    # Dark theme and layout for grouped sections
+    settings = {
+      theme = "dark";
+      color = "slate";
+      layout = {
+        "Overview" = { style = "row"; columns = 4; };
+        "Cloud & Sync" = { style = "row"; columns = 4; };
+        "Downloads" = { style = "row"; columns = 4; };
+        "Smart Home" = { style = "row"; columns = 4; };
+        "Media" = { style = "row"; columns = 4; };
+        "*arr Stack" = { style = "row"; columns = 4; };
+      };
+    };
+
+    # Catppuccin Mocha–inspired custom CSS (base, surface, text, accents)
+    customCSS = ''
+      :root {
+        --ctp-rosewater: #f5e0dc;
+        --ctp-flamingo: #f2cdcd;
+        --ctp-pink: #f5c2e7;
+        --ctp-mauve: #cba6f7;
+        --ctp-red: #f38ba8;
+        --ctp-maroon: #eba0ac;
+        --ctp-peach: #fab387;
+        --ctp-yellow: #f9e2af;
+        --ctp-green: #a6e3a1;
+        --ctp-teal: #94e2d5;
+        --ctp-sky: #89dceb;
+        --ctp-sapphire: #74c7ec;
+        --ctp-blue: #89b4fa;
+        --ctp-lavender: #b4befe;
+        --ctp-text: #cdd6f4;
+        --ctp-subtext1: #bac2de;
+        --ctp-subtext0: #a6adc8;
+        --ctp-overlay2: #9399b2;
+        --ctp-overlay1: #7f849c;
+        --ctp-overlay0: #6c7086;
+        --ctp-surface2: #585b70;
+        --ctp-surface1: #45475a;
+        --ctp-surface0: #313244;
+        --ctp-base: #1e1e2e;
+        --ctp-mantle: #181825;
+        --ctp-crust: #11111b;
+      }
+      [data-theme="dark"], .dark {
+        --bg-primary: var(--ctp-base) !important;
+        --bg-secondary: var(--ctp-mantle) !important;
+        --bg-tertiary: var(--ctp-crust) !important;
+        --text-primary: var(--ctp-text) !important;
+        --text-secondary: var(--ctp-subtext1) !important;
+        --accent: var(--ctp-blue) !important;
+        --accent-hover: var(--ctp-sapphire) !important;
+      }
+      body { background-color: var(--ctp-base) !important; }
+      [class*="bg-"].dark\\:bg-gray-800 { background-color: var(--ctp-surface0) !important; }
+      [class*="bg-"].dark\\:bg-gray-900 { background-color: var(--ctp-mantle) !important; }
+      .rounded-xl { border-radius: 12px; }
+      a[class*="rounded"]:hover { background-color: var(--ctp-surface1) !important; }
+      h1, h2, [class*="text-gray"] { color: var(--ctp-text) !important; }
+      p, span[class*="text-gray"] { color: var(--ctp-subtext1) !important; }
+    '';
   };
 }
