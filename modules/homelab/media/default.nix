@@ -38,8 +38,11 @@ in
     };
     calibre-web = {
       enable = true;
+      openFirewall = true;
       user = "${user.name}";
-      listen.ip = "127.0.0.1";
+      group = "users";
+      listen.ip = "0.0.0.0";
+      options.calibreLibrary = "/home/petter/Media/Books";
     };
   };
 
