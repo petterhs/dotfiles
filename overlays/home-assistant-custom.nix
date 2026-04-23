@@ -1,55 +1,58 @@
 self: super: {
-  # Extend python packages with missing deps used by custom HA integrations
-  python3Packages = super.python3Packages // {
-    json_timeseries = super.python3Packages.buildPythonPackage rec {
-      pname = "json_timeseries";
-      version = "0.1.7";
-      src = super.fetchPypi {
-        inherit pname version;
-        sha256 = "sha256-Eq3esU2KN0/O96sFaYucxDiA5wfCm8gxA9gEFOKbYCw=";
+  # Extra Python libs for custom components must live in home-assistant.python.pkgs (same
+  # interpreter as HA), not in top-level python3Packages, which is often a different version.
+  home-assistant = super.home-assistant.override {
+    packageOverrides = ps: pysuper: {
+      json_timeseries = ps.buildPythonPackage rec {
+        pname = "json_timeseries";
+        version = "0.1.7";
+        src = self.fetchPypi {
+          inherit pname version;
+          sha256 = "sha256-Eq3esU2KN0/O96sFaYucxDiA5wfCm8gxA9gEFOKbYCw=";
+        };
+        format = "pyproject";
+        nativeBuildInputs = with ps; [
+          setuptools
+          wheel
+          setuptools-scm
+        ];
+        propagatedBuildInputs = with ps; [ python-dateutil ];
+        meta = with self.lib; {
+          description = "Simple JSON time series helpers";
+          homepage = "https://pypi.org/project/json-timeseries/";
+          license = licenses.mit;
+        };
       };
-      format = "pyproject";
-      nativeBuildInputs = with super.python3Packages; [
-        setuptools
-        wheel
-        setuptools-scm
-      ];
-      propagatedBuildInputs = with super.python3Packages; [ python-dateutil ];
-      meta = with super.lib; {
-        description = "Simple JSON time series helpers";
-        homepage = "https://pypi.org/project/json-timeseries/";
-        license = licenses.mit;
-      };
-    };
 
-    openplantbook_sdk = super.python3Packages.buildPythonPackage rec {
-      pname = "openplantbook_sdk";
-      version = "0.4.7";
-      src = super.fetchPypi {
-        inherit pname version;
-        sha256 = "sha256-Pp0lfGnPfy6QZOScU39j/YACLumNJyeHKdbpdFHhdm0=";
-      };
-      format = "pyproject";
-      nativeBuildInputs = with self.python3Packages; [
-        setuptools
-        wheel
-        setuptools-scm
-      ];
-      propagatedBuildInputs = with self.python3Packages; [
-        requests
-        aiohttp
-        json_timeseries
-      ];
-      meta = with super.lib; {
-        description = "SDK for OpenPlantBook API";
-        homepage = "https://pypi.org/project/openplantbook-sdk/";
-        license = licenses.mit;
+      openplantbook_sdk = ps.buildPythonPackage rec {
+        pname = "openplantbook_sdk";
+        version = "0.4.7";
+        src = self.fetchPypi {
+          inherit pname version;
+          sha256 = "sha256-Pp0lfGnPfy6QZOScU39j/YACLumNJyeHKdbpdFHhdm0=";
+        };
+        format = "pyproject";
+        nativeBuildInputs = with ps; [
+          setuptools
+          wheel
+          setuptools-scm
+        ];
+        propagatedBuildInputs = with ps; [
+          requests
+          aiohttp
+          json_timeseries
+        ];
+        meta = with self.lib; {
+          description = "SDK for OpenPlantBook API";
+          homepage = "https://pypi.org/project/openplantbook-sdk/";
+          license = licenses.mit;
+        };
       };
     };
   };
 
   home-assistant-custom-components = (super.home-assistant-custom-components or { }) // {
-    plant = super.callPackage (
+    plant = self.callPackage (
       {
         lib,
         buildHomeAssistantComponent,
@@ -76,9 +79,9 @@ self: super: {
           license = lib.licenses.mit;
         };
       }
-    ) { };
+    ) { python3Packages = self.home-assistant.python.pkgs; };
 
-    openplantbook = super.callPackage (
+    openplantbook = self.callPackage (
       {
         lib,
         buildHomeAssistantComponent,
@@ -106,9 +109,9 @@ self: super: {
           license = lib.licenses.gpl3Only;
         };
       }
-    ) { };
+    ) { python3Packages = self.home-assistant.python.pkgs; };
 
-    ha_washdata = super.callPackage (
+    ha_washdata = self.callPackage (
       {
         lib,
         buildHomeAssistantComponent,
@@ -134,7 +137,7 @@ self: super: {
           homepage = "https://github.com/3dg1luk43/ha_washdata";
         };
       }
-    ) { };
+    ) { python3Packages = self.home-assistant.python.pkgs; };
   };
 
   home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or { }) // {
