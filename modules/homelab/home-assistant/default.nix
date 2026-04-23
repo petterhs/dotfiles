@@ -16,6 +16,7 @@
       "isal"
       "local_calendar"
       "local_todo"
+      "matter"
       "mill"
       "met"
       "mqtt"
@@ -34,6 +35,7 @@
       "teslemetry"
       "tibber"
       "xiaomi_ble"
+      "zha"
     ];
 
     # Add Python deps needed by HA (e.g., PostgreSQL driver)
@@ -73,7 +75,10 @@
       default_config = { };
       http = {
         use_x_forwarded_for = true;
-        trusted_proxies = [ "127.0.0.1" "::1" ];
+        trusted_proxies = [
+          "127.0.0.1"
+          "::1"
+        ];
       };
       frontend = {
         themes = "!include_dir_merge_named themes";
