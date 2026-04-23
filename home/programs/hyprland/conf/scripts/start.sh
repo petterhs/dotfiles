@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Kill already running process
-_ps=(waybar mpd dunst udiskie nm-applet swww-daemon)
+_ps=(waybar mpd dunst udiskie nm-applet awww-daemon)
 for _prs in "${_ps[@]}"; do
 	if [[ $(pidof ${_prs}) ]]; then
 		pkill -9 ${_prs}

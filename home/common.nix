@@ -13,7 +13,7 @@
     # Basic system tools
     vim
     wget
-    neofetch
+    fastfetch
 
     # Archives
     zip
@@ -71,6 +71,7 @@
 
   programs.git = {
     enable = true;
+    signing.format = null;
     settings = {
       gpg.format = "ssh";
       user.signingkey = "~/.ssh/id_ed25519.pub";

@@ -2,7 +2,7 @@
 {
   home.packages = with pkgs; [
     networkmanagerapplet
-    swww
+    awww
     waybar
     wofi
     # hyprshot
