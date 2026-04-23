@@ -17,6 +17,8 @@
       "local_calendar"
       "local_todo"
       "matter"
+      "otbr"
+      "thread"
       "mill"
       "met"
       "mqtt"

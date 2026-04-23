@@ -44,6 +44,9 @@ in
       "http://z2m.${base}" = {
         extraConfig = "reverse_proxy 127.0.0.1:8521";
       };
+      "http://otbr.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:8081";
+      };
       "http://radarr.${base}" = {
         extraConfig = "reverse_proxy 127.0.0.1:7878";
       };
@@ -137,6 +140,13 @@ in
               href = url "z2m.${base}";
               icon = "zigbee2mqtt";
               description = "Zigbee bridge";
+            };
+          }
+          {
+            "OpenThread BR" = {
+              href = url "otbr.${base}";
+              icon = "router";
+              description = "Thread border router";
             };
           }
         ];
