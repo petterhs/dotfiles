@@ -20,8 +20,19 @@ in
     radio.url =
       "spinel+hdlc+uart:///run/otbr-spinel-proxy/spinel?uart-baudrate=460800";
 
-    web.enable = true;
+    web = {
+      enable = true;
+      listenAddress = "127.0.0.1";
+      listenPort = 8094;
+    };
+
+    rest = {
+      listenAddress = "0.0.0.0";
+      listenPort = 8081;
+    };
   };
+
+  networking.firewall.allowedTCPPorts = [ 8081 ];
 
   systemd.services.otbr-spinel-tcp-proxy = {
     description = "TCP → PTY bridge for SLZB Thread RCP (otbr-agent)";

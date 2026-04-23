@@ -45,7 +45,7 @@ in
         extraConfig = "reverse_proxy 127.0.0.1:8521";
       };
       "http://otbr.${base}" = {
-        extraConfig = "reverse_proxy 127.0.0.1:8081";
+        extraConfig = "reverse_proxy 127.0.0.1:8094";
       };
       "http://radarr.${base}" = {
         extraConfig = "reverse_proxy 127.0.0.1:7878";
