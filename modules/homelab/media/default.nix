@@ -76,6 +76,12 @@ in
         ];
       };
     };
+
+    calibre-web = {
+      serviceConfig = {
+        ProtectHome = lib.mkForce false;
+      };
+    };
   };
 
   environment.systemPackages = [
