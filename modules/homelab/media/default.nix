@@ -2,27 +2,38 @@
 let
   user = {
     name = "petter";
+    group = "users";
+  };
+  mediaUMask = "0002";
+  mediaPaths = {
+    downloads = "/home/petter/Media/Downloads";
+    series = "/home/petter/Media/Series";
+    movies = "/home/petter/Media/Movies";
   };
 in
 {
   services = {
     qbittorrent = {
       enable = true;
-      user = "${user.name}";
+      user = user.name;
+      group = user.group;
     };
     radarr = {
       enable = true;
-      user = "${user.name}";
+      user = user.name;
+      group = user.group;
       dataDir = "/mediaconfs/radarr";
     };
     sonarr = {
       enable = true;
-      user = "${user.name}";
+      user = user.name;
+      group = user.group;
       dataDir = "/mediaconfs/sonarr";
     };
     bazarr = {
       enable = true;
-      user = "${user.name}";
+      user = user.name;
+      group = user.group;
     };
     prowlarr = {
       enable = true;
@@ -30,17 +41,18 @@ in
     jellyfin = {
       enable = true;
       openFirewall = true;
-      user = "${user.name}";
+      user = user.name;
+      group = user.group;
     };
     audiobookshelf = {
       enable = true;
-      user = "${user.name}";
+      user = user.name;
     };
     calibre-web = {
       enable = true;
       openFirewall = true;
-      user = "${user.name}";
-      group = "users";
+      user = user.name;
+      group = user.group;
       listen.ip = "0.0.0.0";
       options.calibreLibrary = "/home/petter/Media/Books";
     };
@@ -49,30 +61,44 @@ in
   systemd.services = {
     qbittorrent = {
       serviceConfig = {
+        UMask = lib.mkForce mediaUMask;
         NoNewPrivileges = lib.mkForce false;
         ProtectHome = lib.mkForce false; # allows access to /home
-        ReadWritePaths = [ "/home/petter/Media/Downloads" ]; # explicit write access
+        ReadWritePaths = [ mediaPaths.downloads ];
       };
     };
 
     sonarr = {
       serviceConfig = {
+        UMask = lib.mkForce mediaUMask;
         NoNewPrivileges = lib.mkForce false;
         ProtectHome = lib.mkForce false; # avoid /home being remounted as tmpfs
         ReadWritePaths = [
-          "/home/petter/Media/Series"
-          "/home/petter/Media/Downloads"
+          mediaPaths.series
+          mediaPaths.downloads
         ];
       };
     };
 
     radarr = {
       serviceConfig = {
+        UMask = lib.mkForce mediaUMask;
         NoNewPrivileges = lib.mkForce false;
         ProtectHome = lib.mkForce false;
         ReadWritePaths = [
-          "/home/petter/Media/Movies"
-          "/home/petter/Media/Downloads"
+          mediaPaths.movies
+          mediaPaths.downloads
+        ];
+      };
+    };
+
+    jellyfin = {
+      serviceConfig = {
+        UMask = lib.mkForce mediaUMask;
+        ProtectHome = lib.mkForce false;
+        ReadWritePaths = [
+          mediaPaths.series
+          mediaPaths.movies
         ];
       };
     };
