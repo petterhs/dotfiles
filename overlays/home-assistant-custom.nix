@@ -111,6 +111,34 @@ self: super: {
       }
     ) { python3Packages = self.home-assistant.python.pkgs; };
 
+    pax_ble = self.callPackage (
+      {
+        lib,
+        buildHomeAssistantComponent,
+        fetchFromGitHub,
+        python3Packages,
+      }:
+      buildHomeAssistantComponent {
+        owner = "eriknn";
+        domain = "pax_ble";
+        version = "v1.1.23";
+        src = fetchFromGitHub {
+          owner = "eriknn";
+          repo = "ha-pax_ble";
+          rev = "v1.1.23";
+          hash = "sha256-/Do3ejOnKeMpHi4jxECukaJEIxX8o6RVmstIr4CJ3wI=";
+        };
+        dependencies = [
+          python3Packages."bleak-retry-connector"
+        ];
+        meta = {
+          description = "Home Assistant integration for Pax Calima and other Bluetooth-enabled fans";
+          homepage = "https://github.com/eriknn/ha-pax_ble";
+          license = lib.licenses.asl20;
+        };
+      }
+    ) { python3Packages = self.home-assistant.python.pkgs; };
+
     ha_washdata = self.callPackage (
       {
         lib,

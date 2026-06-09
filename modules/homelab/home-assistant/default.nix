@@ -3,6 +3,7 @@
   services.home-assistant = {
     enable = true;
     extraComponents = [
+      "bluetooth"
       "airthings_ble"
       "airthings"
       "androidtv"
@@ -50,6 +51,7 @@
       plant
       openplantbook
       ha_washdata
+      pax_ble
     ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
