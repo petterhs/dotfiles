@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     networkmanagerapplet
@@ -63,23 +63,30 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    # Hyprland >= 0.55 uses Lua; hyprlang (.conf) is no longer loaded by default
+    configType = "lua";
     settings = {
-      env = [
-        "BROWSER,xdg-open"
-        "EDITOR,nvim"
-        "TERMINAL,alacritty"
-        "NIXOS_OZONE_WL,1" # for any ozone-based browser & electron apps to run on wayland
-        "MOZ_ENABLE_WAYLAND,1" # for firefox to run on wayland
-        "MOZ_WEBRENDER,1"
-        "GTK_USE_PORTAL,1"
-        # misc
-        "_JAVA_AWT_WM_NONREPARENTING,1"
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-        "QT_QPA_PLATFORM,wayland"
-        "QT_QPA_PLATFORMTHEME,qt5ct" # Use qt5ct for QT theming
-      ];
+      # Lua API is hl.env(name, value); HM needs _args for multi-arg calls
+      env = lib.mapAttrsToList (name: value: {
+        _args = [
+          name
+          value
+        ];
+      }) {
+        BROWSER = "xdg-open";
+        EDITOR = "nvim";
+        TERMINAL = "alacritty";
+        NIXOS_OZONE_WL = "1";
+        MOZ_ENABLE_WAYLAND = "1";
+        MOZ_WEBRENDER = "1";
+        GTK_USE_PORTAL = "1";
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+        QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+        QT_QPA_PLATFORM = "wayland";
+        QT_QPA_PLATFORMTHEME = "qt5ct";
+      };
     };
-    extraConfig = builtins.readFile ./conf/hyprland.conf;
+    extraConfig = builtins.readFile ./conf/hyprland.lua;
     systemd.enable = true;
     package = null; # This is set to null because we get it from the nix module
     portalPackage = null; # This is set to null because we get it from the nix module
@@ -131,8 +138,7 @@
       source = ./conf/mpd;
       recursive = true;
     };
-    # pyprland configuration
-    "hypr/pyprland.toml" = {
+    "pypr/config.toml" = {
       source = ./conf/pyprland.toml;
     };
   };

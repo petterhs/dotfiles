@@ -86,4 +86,10 @@
 
   # System state version
   system.stateVersion = "23.05";
+
+  # Silence catppuccin migration warning; desktop theming is configured in home-manager
+  catppuccin = {
+    enable = true;
+    autoEnable = false;
+  };
 }

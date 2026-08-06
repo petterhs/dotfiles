@@ -11,12 +11,4 @@ self: super: {
     });
   };
 
-  python3 = super.python3.override {
-    packageOverrides = _pySelf: _pySuper: {
-      aioaudiobookshelf = self.python3Packages.aioaudiobookshelf;
-    };
-  };
-
-  # Force music-assistant to use our python3 (with bumped aioaudiobookshelf)
-  music-assistant = super.music-assistant.override { python3 = self.python3; };
 }

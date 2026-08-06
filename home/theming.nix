@@ -8,8 +8,12 @@
 {
   fonts.fontconfig.enable = true;
 
+  # Explicitly enable; catppuccin sets name/package but not enable (deprecated implicit enable)
+  home.pointerCursor.enable = true;
+
   catppuccin = {
     enable = true;
+    autoEnable = true;
     flavor = "mocha";
     accent = "pink";
     cursors = {
@@ -17,6 +21,8 @@
       flavor = "mocha";
       accent = "lavender";
     };
+    # Border colors are set explicitly in hyprland.lua; avoid unused theme inject
+    hyprland.enable = false;
   };
 
   gtk = {
