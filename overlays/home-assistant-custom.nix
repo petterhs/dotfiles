@@ -1,5 +1,5 @@
 self: super: {
-  # Extra Python libs for custom components must live in home-assistant.python.pkgs (same
+  # Extra Python libs for custom components must live in home-assistant.python3Packages (same
   # interpreter as HA), not in top-level python3Packages, which is often a different version.
   home-assistant = super.home-assistant.override {
     packageOverrides = ps: pysuper: {
@@ -79,7 +79,7 @@ self: super: {
           license = lib.licenses.mit;
         };
       }
-    ) { python3Packages = self.home-assistant.python.pkgs; };
+    ) { python3Packages = self.home-assistant.python3Packages; };
 
     openplantbook = self.callPackage (
       {
@@ -109,7 +109,7 @@ self: super: {
           license = lib.licenses.gpl3Only;
         };
       }
-    ) { python3Packages = self.home-assistant.python.pkgs; };
+    ) { python3Packages = self.home-assistant.python3Packages; };
 
     pax_ble = self.callPackage (
       {
@@ -137,7 +137,7 @@ self: super: {
           license = lib.licenses.asl20;
         };
       }
-    ) { python3Packages = self.home-assistant.python.pkgs; };
+    ) { python3Packages = self.home-assistant.python3Packages; };
 
     ha_washdata = self.callPackage (
       {
@@ -165,7 +165,7 @@ self: super: {
           homepage = "https://github.com/3dg1luk43/ha_washdata";
         };
       }
-    ) { python3Packages = self.home-assistant.python.pkgs; };
+    ) { python3Packages = self.home-assistant.python3Packages; };
   };
 
   home-assistant-custom-lovelace-modules = (super.home-assistant-custom-lovelace-modules or { }) // {
