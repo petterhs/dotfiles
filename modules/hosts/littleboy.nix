@@ -6,6 +6,12 @@
 
   homelab.labDomain = "lab.hoem.tech";
 
+  homelab.audiobookshelfPublic = {
+    enable = true;
+    domain = "audio.hoem.app";
+    tunnelId = "51b6452b-e758-456f-9b8c-e28b40d4636c";
+  };
+
   # Boot configuration
   boot.supportedFilesystems = [ "ntfs" ];
 

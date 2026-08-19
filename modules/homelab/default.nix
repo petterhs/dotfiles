@@ -12,5 +12,6 @@
     ./nextcloud
     ./syncthing
     ./homepage
+    ./audiobookshelf-public
   ];
 }
