@@ -16,7 +16,7 @@
     hostName = "cloud.${if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName}";
     https = false;
     maxUploadSize = "512M";
-    package = pkgs.nextcloud32;
+    package = pkgs.nextcloud33;
 
     database.createLocally = false;
     config = {
@@ -27,7 +27,6 @@
       dbpassFile = config.sops.secrets."nextcloud-db-pass".path;
       adminuser = "admin";
       adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
-      defaultPhoneRegion = "NO";
     };
 
     settings = let
@@ -35,6 +34,7 @@
     in {
       trusted_domains = [ "cloud.${base}" base config.networking.hostName ];
       overwriteprotocol = "http";
+      default_phone_region = "NO";
     };
   };
 
