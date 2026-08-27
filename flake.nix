@@ -54,7 +54,6 @@
         {
           nixpkgs.overlays = [
             (import ./overlays/home-assistant-custom.nix)
-            (import ./overlays/aioaudiobookshelf.nix)
           ];
         }
         ./modules/common/nix.nix
@@ -80,7 +79,6 @@
         {
           nixpkgs.overlays = [
             (import ./overlays/home-assistant-custom.nix)
-            (import ./overlays/aioaudiobookshelf.nix)
           ];
         }
         ./modules/common/nix.nix
