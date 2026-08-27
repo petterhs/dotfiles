@@ -16,7 +16,7 @@
     hostName = "cloud.${if config.homelab.labDomain != null then config.homelab.labDomain else config.networking.hostName}";
     https = false;
     maxUploadSize = "512M";
-    package = pkgs.nextcloud33;
+    package = pkgs.nextcloud34;
 
     database.createLocally = false;
     config = {
