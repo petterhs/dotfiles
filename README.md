@@ -25,11 +25,13 @@ dotfiles/
 ├── hosts/                # Hardware-specific configurations
 │   ├── fatman/
 │   ├── littleboy/
+│   ├── travis/
 │   └── no-kon-lx-016/
 ├── home/                 # Home-manager user configurations
 │   ├── common.nix        # Shared user packages and programs
 │   ├── users/            # User-specific configurations
 │   └── programs/         # Program-specific configurations
+├── docs/                 # Host bring-up notes (e.g. travis)
 └── overlays/             # Custom package definitions
 ```
 
@@ -51,6 +53,15 @@ dotfiles/
   - Docker support
   - User: `petter`
 
+### travis
+- **Purpose**: Raspberry Pi 4 Hermes / Signal agent
+- **Features**:
+  - aarch64 lean headless image
+  - Hermes Agent + `signal-cli`
+  - Travis-only SSH identity (shared key still authorized for login)
+  - Bring-up guide: [docs/travis.md](docs/travis.md)
+  - User: `petter`
+
 ### no-kon-lx-016
 - **Purpose**: Laptop/portable workstation
 - **Features**:
@@ -70,6 +81,11 @@ sudo nixos-rebuild switch --flake '.#fatman'
 For littleboy:
 ```bash
 sudo nixos-rebuild switch --flake '.#littleboy'
+```
+
+For travis (on the Pi, or remotely with binfmt — see [docs/travis.md](docs/travis.md)):
+```bash
+sudo nixos-rebuild switch --flake '.#travis'
 ```
 
 For no-kon-lx-016:

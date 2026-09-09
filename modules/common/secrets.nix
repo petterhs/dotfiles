@@ -2,78 +2,83 @@
 # This file handles both sops configuration and deploying secrets to users
 #
 # IMPORTANT: Only the private key is encrypted. The public key is stored as plain text.
-# See SECRETS_SETUP.md for detailed instructions
+# See docs/travis.md for host-key onboarding; shared hosts use the default identity below.
 
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 
 let
-  # Get usernames from home-manager users
+  cfg = config.dotfiles.sshIdentity;
+
   homeManagerUsers = lib.attrNames config.home-manager.users;
+  firstUser = if homeManagerUsers != [ ] then lib.head homeManagerUsers else "root";
 
-  # Get the first home-manager user (or fallback to a system user)
-  # This is used as the owner for the sops secret file
-  # The actual per-aser access is handled via symlinks
-  firstUser = if homeManagerUsers != [] then lib.head homeManagerUsers else "root";
-
-  # Path to the plain text SSH public key (safe to commit to git)
-  sshPublicKeyPath = ../../secrets/id_ed25519.pub;
-
-  # Helper to create tmpfiles rules for a user
   makeUserRules =
     username:
     lib.flatten [
-      # Create SSH directory
       "d /home/${username}/.ssh 0700 ${username} users -"
-      # Symlink private key (decrypted from sops)
-      (lib.optional (
-        config.sops.secrets ? ssh-private-key
-      ) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
-      # Copy public key (plain text, safe to read during evaluation)
-      "C /home/${username}/.ssh/id_ed25519.pub 0644 ${username} users - ${toString sshPublicKeyPath}"
+      (lib.optional (config.sops.secrets ? ssh-private-key) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
+      "C /home/${username}/.ssh/id_ed25519.pub 0644 ${username} users - ${toString cfg.publicKeyPath}"
     ];
 in
 {
-  # Enable sops and configure secrets
-  sops = {
-    defaultSopsFile = ../../secrets/secrets.yaml;
-    # Use SSH host keys for decryption - each host uses its own host key
-    # This is simpler and more secure than dedicated age keys
-    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  options.dotfiles.sshIdentity = {
+    privateKeySopsKey = lib.mkOption {
+      type = lib.types.str;
+      default = "ssh_private_key";
+      description = "Key name inside the sops file for the outbound SSH private key.";
+    };
 
-    # Only encrypt the private key - public key is stored as plain text
-    secrets = {
-      # SSH private key - same key on all hosts (ENCRYPTED)
-      ssh-private-key = {
-        key = "ssh_private_key";  # Key name in secrets.yaml
-        path = "/run/secrets/ssh-private-key";
-        owner = firstUser;  # Will be adjusted per user via symlinks
-        group = "users";
-        mode = "0600";  # Read/write for owner only
-        # Will be symlinked to ~/.ssh/id_ed25519 by tmpfiles rules below
-      };
+    publicKeyPath = lib.mkOption {
+      type = lib.types.path;
+      default = ../../secrets/id_ed25519.pub;
+      description = "Plaintext public key deployed as ~/.ssh/id_ed25519.pub.";
+    };
+
+    sopsFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      default = null;
+      description = "Optional sops file for the SSH private key. Null uses sops.defaultSopsFile.";
+    };
+
+    authorizedKeyFiles = lib.mkOption {
+      type = lib.types.listOf lib.types.path;
+      default = [ ../../secrets/id_ed25519.pub ];
+      description = "Public keys allowed to SSH in (login). Defaults to the shared key so existing machines keep access.";
     };
   };
 
-  # Ensure directories exist and deploy keys to user home directories
-  systemd.tmpfiles.rules = lib.flatten (map makeUserRules homeManagerUsers);
+  config = {
+    sops = {
+      defaultSopsFile = ../../secrets/secrets.yaml;
+      age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  # Add SSH public key to authorized_keys for passwordless SSH
-  # Using keyFiles to point directly to the plain text public key file
-  users.users = lib.mkMerge (
-    [
-      (lib.listToAttrs (
-        map
-          (username:
-            lib.nameValuePair username {
-              openssh.authorizedKeys.keyFiles = [ sshPublicKeyPath ];
-            })
-          homeManagerUsers
-      ))
-    ]
-  );
+      secrets = {
+        ssh-private-key = {
+          key = cfg.privateKeySopsKey;
+          path = "/run/secrets/ssh-private-key";
+          owner = firstUser;
+          group = "users";
+          mode = "0600";
+        }
+        // lib.optionalAttrs (cfg.sopsFile != null) {
+          sopsFile = cfg.sopsFile;
+        };
+      };
+    };
+
+    systemd.tmpfiles.rules = lib.flatten (map makeUserRules homeManagerUsers);
+
+    users.users = lib.listToAttrs (
+      map (
+        username:
+        lib.nameValuePair username {
+          openssh.authorizedKeys.keyFiles = cfg.authorizedKeyFiles;
+        }
+      ) homeManagerUsers
+    );
+  };
 }

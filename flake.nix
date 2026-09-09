@@ -6,6 +6,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
     catppuccin.url = "github:catppuccin/nix";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    hermes-agent.url = "github:NousResearch/hermes-agent";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -32,6 +34,8 @@
       hyprland,
       nixvim-config,
       sops-nix,
+      nixos-hardware,
+      hermes-agent,
       ...
     }@inputs:
     let
@@ -84,6 +88,16 @@
         ./modules/common/nix.nix
         ./modules/common/server.nix
         ./modules/common/server-development.nix
+        ./modules/common/server-home-manager.nix
+        ./modules/common/secrets.nix
+        home-manager.nixosModules.home-manager
+      ];
+
+      # Lean modules for Raspberry Pi hosts (no EFI / Docker / PipeWire)
+      piServerModules = [
+        sops-nix.nixosModules.sops
+        ./modules/common/nix.nix
+        ./modules/common/rpi-server.nix
         ./modules/common/server-home-manager.nix
         ./modules/common/secrets.nix
         home-manager.nixosModules.home-manager
@@ -154,6 +168,31 @@
                 home-manager.users.petter = {
                   imports = [
                     ./home/users/littleboy-server.nix
+                  ];
+                };
+                home-manager.extraSpecialArgs = {
+                  inherit nixvim-config;
+                };
+              }
+            ];
+        };
+        "travis" = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules =
+            piServerModules
+            ++ [
+              nixos-hardware.nixosModules.raspberry-pi-4
+              hermes-agent.nixosModules.default
+              ./hosts/travis/hardware-configuration.nix
+              ./modules/hosts/travis.nix
+              ./modules/hosts/travis/hermes.nix
+              {
+                home-manager.users.petter = {
+                  imports = [
+                    ./home/users/travis-server.nix
                   ];
                 };
                 home-manager.extraSpecialArgs = {
