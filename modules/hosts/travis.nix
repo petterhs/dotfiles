@@ -1,5 +1,5 @@
 # travis — Raspberry Pi 4 Hermes host
-{ ... }:
+{ pkgs, ... }:
 {
   networking.hostName = "travis";
 
@@ -18,6 +18,10 @@
       "wheel"
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    git
+  ];
 
   nix.extraOptions = ''
     trusted-users = root petter
