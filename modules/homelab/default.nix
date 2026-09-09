@@ -9,6 +9,7 @@
     ./media
     # ./immich
     ./music-assistant
+    ./mealie
     ./nextcloud
     ./syncthing
     ./homepage

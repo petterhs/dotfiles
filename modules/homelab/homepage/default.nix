@@ -74,6 +74,9 @@ in
       "http://cloud.${base}" = {
         extraConfig = "reverse_proxy 127.0.0.1:81";
       };
+      "http://mealie.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:9000";
+      };
     };
   };
 
@@ -215,6 +218,17 @@ in
           }
         ];
       }
+      {
+        "Food" = [
+          {
+            "Mealie" = {
+              href = url "mealie.${base}";
+              icon = "mealie";
+              description = "Recipes & meal plans";
+            };
+          }
+        ];
+      }
     ];
 
     # Dark theme and layout for grouped sections
@@ -228,6 +242,7 @@ in
         "Smart Home" = { style = "row"; columns = 4; };
         "Media" = { style = "row"; columns = 4; };
         "*arr Stack" = { style = "row"; columns = 4; };
+        "Food" = { style = "row"; columns = 4; };
       };
     };
 
