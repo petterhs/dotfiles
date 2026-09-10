@@ -36,6 +36,7 @@
       sops-nix,
       nixos-hardware,
       hermes-agent,
+      nix-bitcoin,
       ...
     }@inputs:
     let
