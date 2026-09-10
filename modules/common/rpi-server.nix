@@ -18,6 +18,15 @@
 
   users.defaultUserShell = pkgs.fish;
 
+  # flashrom unit tests fail on aarch64 (nixpkgs#558302); skip if still pulled in
+  nixpkgs.overlays = [
+    (final: prev: {
+      flashrom = prev.flashrom.overrideAttrs (_: {
+        doCheck = false;
+      });
+    })
+  ];
+
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -35,7 +44,7 @@
     usbutils
     psmisc
     libraspberrypi
-    raspberrypi-eeprom
+    # raspberrypi-eeprom depends on flashrom; omit on this lean Hermes image
   ];
 
   environment.variables = {
