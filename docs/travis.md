@@ -100,25 +100,39 @@ Edit:
 
 Travis keeps the **shared** `secrets/id_ed25519.pub` in `authorizedKeys`, so your existing machines can still SSH in. Outbound `~/.ssh/id_ed25519` on travis is the travis-only key.
 
-## 4. Switch to this flake
+## 4. Deploy / update travis (do not build on the Pi)
 
-On the Pi (native build — slow but simple):
+The Pi 4 (4GB) will OOM compiling the kernel. **Always build on fatman** (or another beefy NixOS box) and push the result.
+
+Why it was so slow: `nixos-hardware`’s downstream `linux-rpi` is often **not** on `cache.nixos.org`, so flake updates trigger a multi-hour kernel compile. Travis is set to **mainline** `pkgs.linuxPackages` (cached) for headless use; fatman has `boot.binfmt.emulatedSystems = [ "aarch64-linux" ]`.
+
+1. On the Pi: **stop** any local `nixos-rebuild` (Ctrl-C). Leave it reachable on the LAN.
+2. Rebuild fatman once so binfmt is active: `sudo nixos-rebuild switch --flake '.#fatman'`
+3. From fatman (interactive terminal — SSH/sudo will prompt for passwords):
+
+**First deploy** (still on the stock SD image, before `petter` exists):
 
 ```bash
 cd ~/dotfiles
-sudo nixos-rebuild switch --flake '.#travis'
+# optional if pubkey auth is not set up on the installer image:
+# export NIX_SSHOPTS="-o PreferredAuthentications=password -o PubkeyAuthentication=no"
+
+nixos-rebuild switch --flake '.#travis' \
+  --target-host nixos@192.168.68.74 \
+  --use-remote-sudo
 ```
 
-Or from an x86_64 NixOS box with emulation (e.g. fatman):
+You will be prompted for the `nixos` SSH password, then again for sudo (same password if that is how the image is set up). After this succeeds, hostname becomes `travis`, user `petter` exists, and the shared SSH pubkey is authorized.
 
-```nix
-# on the build machine
-boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-```
+**Later updates** (after first successful switch):
 
 ```bash
-nixos-rebuild switch --flake '.#travis' --target-host petter@travis --use-remote-sudo
+nixos-rebuild switch --flake '.#travis' \
+  --target-host petter@travis \
+  --use-remote-sudo
 ```
+
+(`petter@192.168.68.74` or the Tailscale name also work once Tailscale is up.)
 
 ## 5. Link signal-cli (once)
 

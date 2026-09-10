@@ -1,7 +1,18 @@
 # travis — Raspberry Pi 4 Hermes host
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   networking.hostName = "travis";
+
+  # Downstream linux-rpi from nixos-hardware is no longer on cache.nixos.org —
+  # building it OOMs a 4GB Pi. Mainline is fine for headless Hermes + Tailscale.
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
+
+  # Absorb memory spikes if anything still builds locally
+  zramSwap.enable = true;
+  nix.settings = {
+    max-jobs = 1;
+    cores = 2;
+  };
 
   # Travis-only outbound SSH identity; shared pub stays in authorizedKeys for login
   dotfiles.sshIdentity = {

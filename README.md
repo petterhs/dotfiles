@@ -83,9 +83,10 @@ For littleboy:
 sudo nixos-rebuild switch --flake '.#littleboy'
 ```
 
-For travis (on the Pi, or remotely with binfmt — see [docs/travis.md](docs/travis.md)):
+For travis (build on fatman, deploy to the Pi — see [docs/travis.md](docs/travis.md)):
 ```bash
-sudo nixos-rebuild switch --flake '.#travis'
+# on fatman, after binfmt is enabled
+nixos-rebuild switch --flake '.#travis' --target-host petter@travis --use-remote-sudo
 ```
 
 For no-kon-lx-016:

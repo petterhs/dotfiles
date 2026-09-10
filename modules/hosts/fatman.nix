@@ -4,6 +4,9 @@
   # Hostname
   networking.hostName = "fatman";
 
+  # Build aarch64 (travis) closures here instead of on the Pi
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # LUKS encryption
   boot.initrd.luks.devices."luks-30163cea-ed7e-4ef0-abb7-d860a687d7af".device =
     "/dev/disk/by-uuid/30163cea-ed7e-4ef0-abb7-d860a687d7af";
