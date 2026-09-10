@@ -133,7 +133,6 @@ nixos-rebuild switch --flake '.#travis' \
 ```
 
 (`petter@192.168.68.74` or the Tailscale name also work once Tailscale is up.)
-
 ## 5. Link signal-cli (once)
 
 `signal-cli` runs as user `signal-cli` with `HOME=/var/lib/signal-cli`. Link it as a secondary Signal device:

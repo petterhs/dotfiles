@@ -30,6 +30,11 @@
     ];
   };
 
+  # Remote nixos-rebuild from fatman: --target-host root@travis
+  users.users.root.openssh.authorizedKeys.keyFiles = [
+    ../../secrets/id_ed25519.pub
+  ];
+
   environment.systemPackages = with pkgs; [
     git
   ];
