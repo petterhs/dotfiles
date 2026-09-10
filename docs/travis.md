@@ -93,8 +93,9 @@ Edit:
 - `hermes_env` — dotenv block, at least:
   - `OPENROUTER_API_KEY=…` (or `ANTHROPIC_API_KEY=…`)
   - `SIGNAL_HTTP_URL=http://127.0.0.1:8080`
-  - `SIGNAL_ACCOUNT=+47…` (E.164)
-  - `SIGNAL_ALLOWED_USERS=+47…,+47…` (you + spouse)
+  - `SIGNAL_ACCOUNT=+47…` (E.164) — bot number
+  - `SIGNAL_ALLOWED_USERS=…` — DM allowlist (sender UUIDs and/or E.164; match what `journalctl -u hermes-agent` shows)
+  - `SIGNAL_GROUP_ALLOWED_USERS=…` — which groups Hermes reads/replies in (omit = groups off; specific base64 group IDs; or `*` for every group the bot is in)
 - `signal_cli_account` — same E.164 as `SIGNAL_ACCOUNT`
 - `travis_ssh_private_key` — already seeded (travis-only outbound identity)
 
@@ -152,7 +153,51 @@ systemctl status signal-cli hermes-agent
 journalctl -u hermes-agent -f
 ```
 
-Send a Signal DM from an allowlisted number to smoke-test.
+Send a Signal DM from an allowlisted sender to smoke-test.
+
+`SIGNAL_ALLOWED_USERS` must match the **sender id Hermes logs** — often a Signal UUID, not the phone number. Prefer UUIDs from `journalctl -u hermes-agent` when DMs show as unauthorized.
+
+### Signal groups
+
+Without `SIGNAL_GROUP_ALLOWED_USERS` in `hermes_env`, Hermes **ignores all group messages**.
+
+| Value | Effect |
+|-------|--------|
+| unset | groups disabled |
+| `groupId1,groupId2` | only those groups |
+| `*` | every group the bot account is in |
+
+List group IDs (base64) on travis after linking:
+
+```bash
+sudo -u signal-cli -H signal-cli -a "$(sudo tr -d '[:space:]' </run/secrets/signal-cli-account)" listGroups -d
+```
+
+(If the sops path differs, use whatever `systemctl cat signal-cli` shows for the account file.)
+
+Add to `hermes_env` (no quotes), e.g. one trusted group or everything:
+
+```bash
+SIGNAL_GROUP_ALLOWED_USERS=*
+# or:
+# SIGNAL_GROUP_ALLOWED_USERS=<base64-id>,<base64-id>
+```
+
+Then redeploy (or re-run sops + activation) and `sudo systemctl restart hermes-agent`.
+
+DM allowlist still applies to **who** may talk; group allowlist only chooses **which chats** are monitored.
+
+### Interactive CLI / TUI
+
+`addToSystemPackages` sets `HERMES_HOME=/var/lib/hermes/.hermes` system-wide so the CLI shares gateway state. That directory is owned by user/group `hermes`; `petter` is in the `hermes` group for access.
+
+After adding the group (or first deploy), **re-login** (or `newgrp hermes`), then:
+
+```bash
+hermes --tui
+```
+
+Without group membership you get `PermissionError` on `/var/lib/hermes/.hermes/.env`. Workaround: `sudo -u hermes -H hermes --tui`.
 
 ## 6. Mealie (later)
 
