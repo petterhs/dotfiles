@@ -49,12 +49,6 @@
     ];
   };
 
-  # Garbage collection (more aggressive for desktop)
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
 
   # Nix trusted users
   nix.extraOptions = ''
