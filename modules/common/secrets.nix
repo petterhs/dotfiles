@@ -21,7 +21,7 @@ let
     lib.flatten [
       "d /home/${username}/.ssh 0700 ${username} users -"
       (lib.optional (config.sops.secrets ? ssh-private-key) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
-      "C /home/${username}/.ssh/id_ed25519.pub 0644 ${username} users - ${toString cfg.publicKeyPath}"
+      "L+ /home/${username}/.ssh/id_ed25519.pub - - - - ${toString cfg.publicKeyPath}"
     ];
 in
 {
