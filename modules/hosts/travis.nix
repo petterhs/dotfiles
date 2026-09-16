@@ -38,6 +38,7 @@
 
   environment.systemPackages = with pkgs; [
     git
+    gh
     (python3.withPackages (ps: [
       ps.recipe-scrapers
     ]))
