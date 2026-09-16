@@ -38,6 +38,9 @@
 
   environment.systemPackages = with pkgs; [
     git
+    (python3.withPackages (ps: [
+      ps.recipe-scrapers
+    ]))
   ];
 
   nix.extraOptions = ''
