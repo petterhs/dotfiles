@@ -145,7 +145,7 @@ hl.window_rule({
   name = "thunar",
   match = { class = "thunar" },
   float = true,
-  size = "30% 50%",
+  size = "60% 70%",
 })
 
 hl.window_rule({

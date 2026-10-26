@@ -34,6 +34,7 @@
     nodejs_22 # for copilot
     protobuf
     gdb
+    codex
 
     # System monitoring
     iotop # io monitoring

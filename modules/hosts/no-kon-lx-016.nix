@@ -7,6 +7,13 @@
   # Allow unsupported system
   nixpkgs.config.allowUnsupportedSystem = true;
 
+  # Needed for work SSTP VPN until networkmanager-sstp is patched (CVE-2026-91838:
+  # local privilege escalation via unsanitized VPN profile fields → root pppd).
+  # Only meaningful if an untrusted local user can create/edit VPN profiles.
+  nixpkgs.config.permittedInsecurePackages = [
+    "NetworkManager-sstp-gnome-1.3.2"
+  ];
+
   # NetworkManager with SSTP plugin
   networking.networkmanager = {
     enable = true;

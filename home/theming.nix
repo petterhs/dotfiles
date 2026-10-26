@@ -28,7 +28,7 @@
   gtk = {
     enable = true;
     theme = lib.mkForce {
-      name = "Catppuccin-Mocha-Compact-Pink-Dark";
+      name = "catppuccin-mocha-pink-compact";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "pink" ];
         variant = "mocha";
@@ -45,11 +45,18 @@
     };
   };
 
+  xfconf.settings = {
+    xsettings = {
+      "Net/ThemeName" = "catppuccin-mocha-pink-compact";
+      "Net/IconThemeName" = "Papirus-Dark";
+    };
+  };
+
   # dconf settings for GNOME apps (like file-roller)
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      gtk-theme = "Catppuccin-Mocha-Compact-Pink-Dark";
+      gtk-theme = "catppuccin-mocha-pink-compact";
     };
   };
 
