@@ -26,10 +26,10 @@ self: super: {
 
       openplantbook_sdk = ps.buildPythonPackage rec {
         pname = "openplantbook_sdk";
-        version = "0.4.7";
+        version = "0.6.1";
         src = self.fetchPypi {
           inherit pname version;
-          sha256 = "sha256-Pp0lfGnPfy6QZOScU39j/YACLumNJyeHKdbpdFHhdm0=";
+          sha256 = "sha256-OI8Y91SA3kIOJnqdRi7tKUgC0TnW4WUQGSAjL9JkBt4=";
         };
         format = "pyproject";
         nativeBuildInputs = with ps; [
@@ -62,12 +62,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "Olen";
         domain = "plant";
-        version = "v2026.2.1";
+        version = "v2026.9.0";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "homeassistant-plant";
-          rev = "v2026.2.1";
-          hash = "sha256-a3fcl4xhH4itVBmwCTIde/+8m/Q8eS8jSxeaEcDhHwQ=";
+          rev = "v2026.9.0";
+          hash = "sha256-8V+90Onh3MLN8G4CjenzZWznwnGiWfhz17KZhGd1qYk=";
         };
         # manifest requires async-timeout>=4.0.2
         dependencies = [
@@ -91,12 +91,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "Olen";
         domain = "openplantbook";
-        version = "v1.3.2";
+        version = "v1.6.0";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "home-assistant-openplantbook";
-          rev = "v1.3.2";
-          hash = "sha256-5AhVnn7umpJ7r68e7FCkaT6E9pG4bNOg1O32PWS5WrI=";
+          rev = "v1.6.0";
+          hash = "sha256-Lk+dyrBwTqRil64fVm28bhN+q57bA5U9FpX2wFf/g8I=";
         };
         # Provide Python deps required by manifest.json
         dependencies = [
@@ -121,12 +121,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "eriknn";
         domain = "pax_ble";
-        version = "v1.1.23";
+        version = "v1.1.31";
         src = fetchFromGitHub {
           owner = "eriknn";
           repo = "ha-pax_ble";
-          rev = "v1.1.23";
-          hash = "sha256-/Do3ejOnKeMpHi4jxECukaJEIxX8o6RVmstIr4CJ3wI=";
+          rev = "v1.1.31";
+          hash = "sha256-5u4a0GvIaV0m5E+qaZKMPQQ1DTupufmWec72z2XlXKI=";
         };
         dependencies = [
           python3Packages."bleak-retry-connector"
@@ -149,12 +149,12 @@ self: super: {
       buildHomeAssistantComponent {
         owner = "3dg1luk43";
         domain = "ha_washdata";
-        version = "v0.4.2";
+        version = "v0.5.8";
         src = fetchFromGitHub {
           owner = "3dg1luk43";
           repo = "ha_washdata";
-          rev = "v0.4.2";
-          hash = "sha256-9THYWgTZFjCUOS2rliaBzvvPyyBq/Y22BLJUTWNR06k=";
+          rev = "v0.5.8";
+          hash = "sha256-j4FRBdvXZW3hni+OVGLSZ4yZnbgeyzmoxOLBEn89r0Q=";
         };
         # Provide Python deps required by manifest.json
         dependencies = [
@@ -177,12 +177,12 @@ self: super: {
       }:
       stdenvNoCC.mkDerivation {
         pname = "flower-card";
-        version = "v2026.1.1";
+        version = "v2026.8.0";
         src = fetchFromGitHub {
           owner = "Olen";
           repo = "lovelace-flower-card";
-          rev = "v2026.1.1";
-          sha256 = "sha256-X3bdYkdm72ptix69gTmJ3TS4cwAU6HTEUM+m5OmHN/c=";
+          rev = "v2026.8.0";
+          sha256 = "sha256-9VnoImrKiPhxk5mtEw57TQfZdIphF7pUrLrgTi2Z7LY=";
         };
         installPhase = ''
           runHook preInstall
@@ -248,12 +248,12 @@ self: super: {
       }:
       stdenvNoCC.mkDerivation {
         pname = "my-cards-bundle";
-        version = "1.0.6";
+        version = "2.3.1";
         src = fetchFromGitHub {
           owner = "AnthonMS";
           repo = "my-cards";
-          rev = "v1.0.6";
-          sha256 = "sha256-x0vOq87P1uOq5ILB4CSAowaAtUo4Nu9m6DFRiqa/Sw4=";
+          rev = "v2.3.1";
+          sha256 = "sha256-H67EA8zDGNZ9EK+w3Vgb/0NvTdqxmUL177ggS8D8Cz8=";
         };
         installPhase = ''
           runHook preInstall
