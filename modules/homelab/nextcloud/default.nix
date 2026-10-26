@@ -25,8 +25,6 @@
       dbuser = "nextcloud";
       dbhost = "/run/postgresql";
       dbpassFile = config.sops.secrets."nextcloud-db-pass".path;
-      adminuser = "admin";
-      adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
     };
 
     settings = let
@@ -44,12 +42,6 @@
     { name = "nextcloud"; ensureDBOwnership = true; }
   ];
 
-  # Secrets: add nextcloud_admin_pass and nextcloud_db_pass to secrets/secrets.yaml for littleboy
-  sops.secrets."nextcloud-admin-pass" = {
-    key = "nextcloud_admin_pass";
-    owner = "root";
-    mode = "0600";
-  };
   sops.secrets."nextcloud-db-pass" = {
     key = "nextcloud_db_pass";
     owner = "nextcloud";
