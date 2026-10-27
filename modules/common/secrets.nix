@@ -7,6 +7,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -23,6 +24,31 @@ let
       (lib.optional (config.sops.secrets ? ssh-private-key) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
       "L+ /home/${username}/.ssh/id_ed25519.pub - - - - ${toString cfg.publicKeyPath}"
     ];
+
+  # sops looks at ~/.config/sops/age/keys.txt (and root's, under sudo).
+  # The identity is the SSH host key, same as sops.age.sshKeyPaths.
+  installSopsAgeIdentity = pkgs.writeShellScript "install-sops-age-identity" ''
+    set -euo pipefail
+    host_key=/etc/ssh/ssh_host_ed25519_key
+    if [[ ! -r "$host_key" ]]; then
+      echo "sops age identity: $host_key not readable yet, skipping" >&2
+      exit 0
+    fi
+    key="$(${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i "$host_key")"
+    install_one() {
+      local dest="$1" owner="$2" group="$3"
+      mkdir -p -- "$(dirname "$dest")"
+      printf '%s\n' "$key" > "$dest"
+      chown "$owner:$group" "$dest"
+      chmod 600 "$dest"
+    }
+    install_one /root/.config/sops/age/keys.txt root root
+    ${lib.concatMapStrings (username: ''
+      if [[ -d /home/${username} ]]; then
+        install_one /home/${username}/.config/sops/age/keys.txt ${username} users
+      fi
+    '') homeManagerUsers}
+  '';
 in
 {
   options.dotfiles.sshIdentity = {
@@ -52,6 +78,30 @@ in
   };
 
   config = {
+    environment.systemPackages = with pkgs; [
+      sops
+      jq
+      ssh-to-age
+    ];
+
+    # Immediate install on switch, and again at boot after host keys exist.
+    system.activationScripts.sops-age-identity = {
+      deps = [ "users" ];
+      text = ''
+        ${installSopsAgeIdentity}
+      '';
+    };
+    systemd.services.sops-age-identity = {
+      description = "Install sops age identity from the SSH host key";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "sshd-keygen.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = "exec ${installSopsAgeIdentity}";
+    };
+
     sops = {
       defaultSopsFile = ../../secrets/secrets.yaml;
       age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];

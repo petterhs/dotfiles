@@ -9,6 +9,7 @@ let
     downloads = "/home/petter/Media/Downloads";
     series = "/home/petter/Media/Series";
     movies = "/home/petter/Media/Movies";
+    audiobooks = "/home/petter/Media/Audiobooks";
   };
 in
 {
@@ -108,6 +109,13 @@ in
         ProtectHome = lib.mkForce false;
       };
     };
+
+    audiobookshelf = {
+      serviceConfig = {
+        ProtectHome = lib.mkForce false;
+        ReadWritePaths = [ mediaPaths.audiobooks ];
+      };
+    };
   };
 
   environment.systemPackages = [
@@ -117,12 +125,14 @@ in
 
     pkgs.calibre
 
-    # Publish to home assistant when torrent finishes
+    # Publish to home assistant when torrent finishes.
+    # Runs inside the Proton namespace, so this must be littleboy's LAN address
+    # (allowedEgress in modules/homelab/qbittorrent-vpn), not 127.0.0.1.
     (pkgs.writeShellScriptBin "qb-on-finish" ''
       exec ${pkgs.curl}/bin/curl \
         -H "Content-Type: application/json" \
         --data "$(printf '{"torrent":"%s"}' "$1")" \
-        http://127.0.0.1:8123/api/webhook/qbittorrent
+        http://192.168.68.58:8123/api/webhook/qbittorrent
     '')
   ];
 }

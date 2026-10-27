@@ -55,38 +55,19 @@ nix run nixpkgs#ssh-to-age -- < /path/to/travis_ssh_host_ed25519_key.pub
 2. Uncomment / add `*travis` under the `secrets/travis.yaml` creation rule (and optionally `secrets/secrets.yaml` if travis should read shared secrets later).
 3. Re-encrypt travis secrets so travis can decrypt them.
 
-   Sops in this repo uses each machine’s **SSH host key** as the age identity (`age.sshKeyPaths`), not `~/.ssh/id_ed25519` (that is only for SSH login).
-
-   On no-kon / littleboy / fatman, **do not** rely on `SOPS_AGE_SSH_PRIVATE_KEY_FILE` alone under sudo — it often fails. Convert the host private key to a native age identity (`SOPS_AGE_KEY`), and clear leftover `SOPS_AGE_*` env vars (empty values or a stray `SOPS_AGE_RECIPIENTS` can break decryption):
+   Sops in this repo uses each machine’s **SSH host key** as the age identity (`sops.age.sshKeyPaths`), not `~/.ssh/id_ed25519` (that is only for SSH login). A switch installs that identity at `~/.config/sops/age/keys.txt` and `/root/.config/sops/age/keys.txt`, which is where the `sops` command looks. After that, `sops` and `sudo sops` work with no `SOPS_AGE_*` variables. Do not set `SOPS_AGE_SSH_PRIVATE_KEY_FILE` or `SOPS_AGE_RECIPIENTS`; empty values there make sops ignore the key file.
 
 ```bash
 cd ~/dotfiles
-sudo bash -lc '
-  unset SOPS_AGE_KEY_FILE SOPS_AGE_RECIPIENTS SOPS_AGE_SSH_PRIVATE_KEY_FILE
-  export SOPS_AGE_KEY="$(nix run nixpkgs#ssh-to-age -- -private-key -i /etc/ssh/ssh_host_ed25519_key)"
-  cd /home/s27731/dotfiles
-  sudo -u s27731 -E env SOPS_AGE_KEY="$SOPS_AGE_KEY" \
-    nix run nixpkgs#sops -- updatekeys secrets/travis.yaml
-'
+sops updatekeys secrets/travis.yaml
 ```
-
-   Diagnostic (same as the audiobookshelf script): `sudo ./scripts/setup-audiobookshelf-public.sh --check-sops`
 
 4. Fill real values (API key + Signal numbers):
 
 ```bash
-sudo bash -lc '
-  unset SOPS_AGE_KEY_FILE SOPS_AGE_RECIPIENTS SOPS_AGE_SSH_PRIVATE_KEY_FILE
-  export SOPS_AGE_KEY="$(nix run nixpkgs#ssh-to-age -- -private-key -i /etc/ssh/ssh_host_ed25519_key)"
-  cd /home/s27731/dotfiles
-  sudo -u s27731 -E env \
-    SOPS_AGE_KEY="$SOPS_AGE_KEY" \
-    EDITOR=/etc/profiles/per-user/s27731/bin/nvim \
-    nix run nixpkgs#sops -- secrets/travis.yaml
-'
+cd ~/dotfiles
+sops secrets/travis.yaml
 ```
-
-(`EDITOR=nano` also works if you prefer not to point at the user profile binary.)
 
 Edit:
 

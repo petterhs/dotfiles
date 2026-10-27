@@ -14,5 +14,7 @@
     ./syncthing
     ./homepage
     ./audiobookshelf-public
+    ./readmeabook
+    ./qbittorrent-vpn
   ];
 }

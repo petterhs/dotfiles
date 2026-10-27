@@ -29,7 +29,8 @@ in
         extraConfig = "reverse_proxy 127.0.0.1:8082";
       };
       "http://qb.${base}" = {
-        extraConfig = "reverse_proxy 127.0.0.1:8080";
+        # Namespace address, not the LAN address. See modules/homelab/qbittorrent-vpn.
+        extraConfig = "reverse_proxy ${config.vpnNamespaces.proton.namespaceAddress}:8080";
       };
       "http://syncthing.${base}" = {
         extraConfig = ''
@@ -76,6 +77,9 @@ in
       };
       "http://mealie.${base}" = {
         extraConfig = "reverse_proxy 127.0.0.1:9000";
+      };
+      "http://readmeabook.${base}" = {
+        extraConfig = "reverse_proxy 127.0.0.1:3030";
       };
     };
   };
@@ -214,6 +218,13 @@ in
               href = url "bazarr.${base}";
               icon = "bazarr";
               description = "Subtitles";
+            };
+          }
+          {
+            "ReadMeABook" = {
+              href = url "readmeabook.${base}";
+              icon = "sh-readmeabook.svg";
+              description = "Audiobook requests";
             };
           }
         ];

@@ -175,6 +175,7 @@ Caddy server configuration for custom Teams backgrounds in `modules/common/teams
 - **Firewall** rules for development ports
 - **LUKS** encryption on fatman
 - **SSH** access enabled
+- **sops** decrypts with the machine SSH host key. A switch installs that key as `~/.config/sops/age/keys.txt` (and root's copy), so `sops` and `sudo sops` need no extra environment variables. `sops` and `jq` are installed on every host.
 
 ## 📝 Maintenance
 
