@@ -1,6 +1,7 @@
 # Hermes Agent + signal-cli for travis
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -11,8 +12,8 @@ in
   sops.secrets."hermes-env" = {
     sopsFile = travisSecrets;
     key = "hermes_env";
-    owner = "hermes";
-    group = "hermes";
+    owner = "petter";
+    group = "users";
     mode = "0400";
   };
 
@@ -61,12 +62,26 @@ in
 
   services.hermes-agent = {
     enable = true;
+    user = "petter";
+    group = "users";
+    createUser = false;
     addToSystemPackages = true;
     environmentFiles = [ config.sops.secrets."hermes-env".path ];
     settings = {
       model.default = "deepseek/deepseek-v4.1-flash";
     };
   };
+
+  # Hermes keeps state.db and its control socket owner-only. Run the gateway
+  # as the interactive user so the CLI and service share the same state.
+  users.users.petter.linger = true;
+
+  # Migrate state created by the former dedicated service account.
+  system.activationScripts."hermes-agent-state-owner" =
+    lib.stringAfter [ "hermes-agent-setup" ] ''
+      find /var/lib/hermes \( \! -user petter -o \! -group users \) \
+        -exec chown petter:users {} +
+    '';
 
   # Start Hermes after signal-cli is up
   systemd.services.hermes-agent = {
