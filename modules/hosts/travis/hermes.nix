@@ -64,7 +64,7 @@ in
     addToSystemPackages = true;
     environmentFiles = [ config.sops.secrets."hermes-env".path ];
     settings = {
-      model.default = "anthropic/claude-sonnet-4";
+      model.default = "deepseek/deepseek-v4.1-flash";
     };
   };
 
