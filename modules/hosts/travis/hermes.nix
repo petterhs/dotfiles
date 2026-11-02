@@ -79,8 +79,9 @@ in
   # Migrate state created by the former dedicated service account.
   system.activationScripts."hermes-agent-state-owner" =
     lib.stringAfter [ "hermes-agent-setup" ] ''
-      find /var/lib/hermes \( \! -user petter -o \! -group users \) \
-        -exec chown petter:users {} +
+      find /var/lib/hermes/.hermes -xdev \
+        \( \! -user petter -o \! -group users \) \
+        -exec chown -h petter:users {} +
     '';
 
   # Start Hermes after signal-cli is up
