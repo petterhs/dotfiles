@@ -82,11 +82,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1793709790,
-        "narHash": "sha256-/ZxevnW20IRtXZK5kZ2Jvr5Mz58vMZRaj9dmwdT7IiY=",
+        "lastModified": 1793709947,
+        "narHash": "sha256-kv3cDNfIEL/hzkMxNF/4LaHAuTwiIA6/otvp6rWW+xI=",
         "ref": "main",
-        "rev": "0331996157ef128ec4028993db245b74b031ecb6",
-        "revCount": 10,
+        "rev": "9d841d45d60d686d0067bd83ed10a5512c7afa35",
+        "revCount": 11,
         "type": "git",
         "url": "ssh://git@github.com/petterhs/family-recipe-importer"
       },
