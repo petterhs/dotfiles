@@ -82,6 +82,7 @@ in
       find /var/lib/hermes/.hermes -xdev \
         \( \! -user petter -o \! -group users \) \
         -exec chown -h petter:users {} +
+      chmod 0700 /var/lib/hermes/.hermes
     '';
 
   # Start Hermes after signal-cli is up
