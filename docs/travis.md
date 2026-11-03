@@ -73,6 +73,8 @@ Edit:
 
 - `hermes_env` — dotenv block, at least:
   - `OPENROUTER_API_KEY=…` (or `ANTHROPIC_API_KEY=…`)
+  - `RECIPE_QUEUE_URL=http://littleboy:8088`
+  - `RECIPE_QUEUE_TOKEN=…` — the same queue token configured for littleboy; keep it only in this encrypted dotenv and never in chat or Git
   - `SIGNAL_HTTP_URL=http://127.0.0.1:8080`
   - `SIGNAL_ACCOUNT=+47…` (E.164) — bot number
   - `SIGNAL_ALLOWED_USERS=…` — DM allowlist (sender UUIDs and/or E.164; match what `journalctl -u hermes-agent` shows)
