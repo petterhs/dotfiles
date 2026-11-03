@@ -8,6 +8,7 @@
     catppuccin.url = "github:catppuccin/nix";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     hermes-agent.url = "github:NousResearch/hermes-agent";
+    family-recipe-importer.url = "git+ssh://git@github.com/petterhs/family-recipe-importer?ref=main";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -38,6 +39,7 @@
       nixos-hardware,
       hermes-agent,
       nix-bitcoin,
+      family-recipe-importer,
       ...
     }@inputs:
     let
@@ -159,6 +161,7 @@
             serverModules
             ++ homelabModules
             ++ [
+              family-recipe-importer.nixosModules.default
               ./hosts/littleboy/hardware-configuration.nix
               ./modules/hosts/littleboy.nix
               {
