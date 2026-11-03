@@ -12,8 +12,16 @@
     tunnelId = "51b6452b-e758-456f-9b8c-e28b40d4636c";
   };
 
-  # Queue for video recipe imports. Create this environment file with
-  # sops before enabling the service; it must contain QUEUE_TOKEN=....
+  # Queue for video recipe imports. Add the encrypted
+  # family_recipe_importer_env value before switching littleboy.
+  sops.secrets."family-recipe-importer.env" = {
+    key = "family_recipe_importer_env";
+    path = "/run/secrets/family-recipe-importer.env";
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
+
   services.familyRecipeImporter = {
     enable = true;
     host = "0.0.0.0";
