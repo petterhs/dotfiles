@@ -12,6 +12,16 @@
     tunnelId = "51b6452b-e758-456f-9b8c-e28b40d4636c";
   };
 
+  # Queue for video recipe imports. Create this environment file with
+  # sops before enabling the service; it must contain QUEUE_TOKEN=....
+  services.familyRecipeImporter = {
+    enable = true;
+    host = "0.0.0.0";
+    port = 8088;
+    environmentFile = "/run/secrets/family-recipe-importer.env";
+    openFirewall = true;
+  };
+
   # Boot configuration
   boot.supportedFilesystems = [ "ntfs" ];
 
