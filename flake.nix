@@ -2,20 +2,26 @@
   description = "My personal configuration flake";
 
   inputs = {
-
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nix-bitcoin.url = "github:fort-nix/nix-bitcoin/release";
-    catppuccin.url = "github:catppuccin/nix";
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    hyprland.url = "github:hyprwm/Hyprland";
     hermes-agent.url = "github:NousResearch/hermes-agent";
-    family-recipe-importer.url = "git+ssh://git@github.com/petterhs/family-recipe-importer?ref=main";
-
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    family-recipe-importer = {
+      url = "git+ssh://git@github.com/petterhs/family-recipe-importer?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
     };
     nixvim-config = {
       url = "github:petterhs/nixvim-config";
@@ -24,7 +30,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
 
   };
 
@@ -44,15 +49,6 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          (import ./overlays/home-assistant-custom.nix)
-        ];
-        config = {
-          allowUnfree = true;
-        };
-      };
 
       # Common modules for all hosts
       commonModules = [
@@ -112,7 +108,7 @@
         "fatman" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgs;
+            inherit inputs;
           };
           modules = commonModules ++ [
             ./hosts/fatman/hardware-configuration.nix
@@ -186,25 +182,23 @@
           specialArgs = {
             inherit inputs;
           };
-          modules =
-            piServerModules
-            ++ [
-              nixos-hardware.nixosModules.raspberry-pi-4
-              hermes-agent.nixosModules.default
-              ./hosts/travis/hardware-configuration.nix
-              ./modules/hosts/travis.nix
-              ./modules/hosts/travis/hermes.nix
-              {
-                home-manager.users.petter = {
-                  imports = [
-                    ./home/users/travis-server.nix
-                  ];
-                };
-                home-manager.extraSpecialArgs = {
-                  inherit nixvim-config;
-                };
-              }
-            ];
+          modules = piServerModules ++ [
+            nixos-hardware.nixosModules.raspberry-pi-4
+            hermes-agent.nixosModules.default
+            ./hosts/travis/hardware-configuration.nix
+            ./modules/hosts/travis.nix
+            ./modules/hosts/travis/hermes.nix
+            {
+              home-manager.users.petter = {
+                imports = [
+                  ./home/users/travis-server.nix
+                ];
+              };
+              home-manager.extraSpecialArgs = {
+                inherit nixvim-config;
+              };
+            }
+          ];
         };
       };
     };
