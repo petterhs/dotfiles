@@ -20,10 +20,10 @@
     plugins = [ pkgs.networkmanager-sstp ];
   };
 
-  # Queue worker. Add the encrypted family_recipe_importer_worker_env value
-  # before switching this host; it must contain QUEUE_TOKEN.
+  # Queue worker. Reuse the encrypted queue environment; it must contain
+  # QUEUE_TOKEN, as configured for littleboy.
   sops.secrets."family-recipe-importer-worker.env" = {
-    key = "family_recipe_importer_worker_env";
+    key = "family_recipe_importer_env";
     path = "/run/secrets/family-recipe-importer-worker.env";
     owner = "s27731";
     group = "users";
