@@ -17,12 +17,16 @@ let
   homeManagerUsers = lib.attrNames config.home-manager.users;
   firstUser = if homeManagerUsers != [ ] then lib.head homeManagerUsers else "root";
 
+  # Dedicated store object (not a path into the flake `-source` tree). Symlinking
+  # the flake source made ~/.ssh/id_ed25519.pub go dangling after nix GC.
+  publicKeyFile = pkgs.writeText "id_ed25519.pub" (builtins.readFile cfg.publicKeyPath);
+
   makeUserRules =
     username:
     lib.flatten [
       "d /home/${username}/.ssh 0700 ${username} users -"
       (lib.optional (config.sops.secrets ? ssh-private-key) "L+ /home/${username}/.ssh/id_ed25519 - - - - ${config.sops.secrets.ssh-private-key.path}")
-      "L+ /home/${username}/.ssh/id_ed25519.pub - - - - ${toString cfg.publicKeyPath}"
+      "L+ /home/${username}/.ssh/id_ed25519.pub - - - - ${publicKeyFile}"
     ];
 
   # sops looks at ~/.config/sops/age/keys.txt (and root's, under sudo).
