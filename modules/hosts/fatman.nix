@@ -1,5 +1,5 @@
 # fatman specific configuration
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   # Hostname
   networking.hostName = "fatman";
@@ -14,6 +14,32 @@
   # NVIDIA configuration
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.open = false;
+
+  # Queue worker. Add the encrypted family_recipe_importer_worker_env value
+  # before switching this host; it must contain QUEUE_TOKEN.
+  sops.secrets."family-recipe-importer-worker.env" = {
+    key = "family_recipe_importer_worker_env";
+    path = "/run/secrets/family-recipe-importer-worker.env";
+    owner = "petter";
+    group = "users";
+    mode = "0400";
+  };
+
+  systemd.services.recipe-video-worker = {
+    description = "Family recipe video import worker";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      User = "petter";
+      Group = "users";
+      EnvironmentFile = "/run/secrets/family-recipe-importer-worker.env";
+      ExecStart = "${inputs.family-recipe-importer.packages.${pkgs.system}.default}/bin/recipe-video-worker --queue http://littleboy:8088 --worker-id fatman";
+      Restart = "on-failure";
+      RestartSec = 30;
+      TimeoutStopSec = 30;
+    };
+  };
 
   # Users
   users.users.petter = {

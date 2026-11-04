@@ -1,5 +1,5 @@
 # no-kon-lx-016 specific configuration
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   # Hostname
   networking.hostName = "no-kon-lx-016";
@@ -18,6 +18,32 @@
   networking.networkmanager = {
     enable = true;
     plugins = [ pkgs.networkmanager-sstp ];
+  };
+
+  # Queue worker. Add the encrypted family_recipe_importer_worker_env value
+  # before switching this host; it must contain QUEUE_TOKEN.
+  sops.secrets."family-recipe-importer-worker.env" = {
+    key = "family_recipe_importer_worker_env";
+    path = "/run/secrets/family-recipe-importer-worker.env";
+    owner = "s27731";
+    group = "users";
+    mode = "0400";
+  };
+
+  systemd.services.recipe-video-worker = {
+    description = "Family recipe video import worker";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      User = "s27731";
+      Group = "users";
+      EnvironmentFile = "/run/secrets/family-recipe-importer-worker.env";
+      ExecStart = "${inputs.family-recipe-importer.packages.${pkgs.system}.default}/bin/recipe-video-worker --queue http://littleboy:8088 --worker-id no-kon-lx-016";
+      Restart = "on-failure";
+      RestartSec = 30;
+      TimeoutStopSec = 30;
+    };
   };
 
   # User configuration
