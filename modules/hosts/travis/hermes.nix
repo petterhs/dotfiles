@@ -89,5 +89,8 @@ in
   systemd.services.hermes-agent = {
     after = [ "signal-cli.service" ];
     wants = [ "signal-cli.service" ];
+    preStart = lib.mkAfter ''
+      chmod 0700 /var/lib/hermes/.hermes
+    '';
   };
 }
