@@ -82,11 +82,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1793718258,
-        "narHash": "sha256-TDJ0BjIX1lhz2thPvURUnlZKSETV+xUDJfKCGKZfMlM=",
+        "lastModified": 1793789053,
+        "narHash": "sha256-qfJvz60YjYppgjk0naW1w6BPZzvihYVrat1/7dkdcsc=",
         "ref": "main",
-        "rev": "054e9ae827dd2c868c7f8beb426953dacb8ab2be",
-        "revCount": 13,
+        "rev": "8e0839eae52d1f6ec7716b36da526df884b233df",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@github.com/petterhs/family-recipe-importer"
       },
@@ -202,11 +202,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1793771982,
-        "narHash": "sha256-yrx4rEpCVVSdhCuezITBpzNDYD5eGo+GNsgdZprsvQk=",
+        "lastModified": 1793689131,
+        "narHash": "sha256-YGZLCiJBk/iHdR1YFAcBY/d0F7L6Udsxk304RKc1jwE=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "71736c9f32597bbca9d89cede5aa136e55946b2f",
+        "rev": "5b526a53189072c34349eb357803f4cc039505a7",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793757180,
-        "narHash": "sha256-gyV7AtCwLnOImcrfSETP4J3Ie96bz19DY47B7m7Y3HM=",
+        "lastModified": 1793193205,
+        "narHash": "sha256-X6xa6sGA7RnJQuZGbFMC+K+KToWAlBDCCjJXfTwEPsw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b787c48e2ec57a9d098f5c2721882a3bc1e16f97",
+        "rev": "095fef2f265c3c0da4fe315efba8f8a04495ab34",
         "type": "github"
       },
       "original": {
@@ -332,11 +332,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1793738900,
-        "narHash": "sha256-6aDXwGMzPWw4jviz7SUTSw5JseseVSk/lAScABvB7y0=",
+        "lastModified": 1793642239,
+        "narHash": "sha256-6O5UhcX4vxBgHi5Dh90YbdI8/V1h3BuquQhOMIkaaAk=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "a8a2c24c5bdcec8fc0f65eb24b2933488d90851e",
+        "rev": "e93501dd1bfeabf6206cdaebd853008d47a7dcc1",
         "type": "github"
       },
       "original": {
