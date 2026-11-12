@@ -86,11 +86,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793795996,
-        "narHash": "sha256-Zs7fuBj2nMCqPU5/65FXcpHaCkMkWvjcg1Bijsq/344=",
+        "lastModified": 1794478148,
+        "narHash": "sha256-ubgM9MIcJvagAewHSg3zpxkIXAId+Z4cdI/pWEbkWP4=",
         "ref": "main",
-        "rev": "7d617c276355f3fb699f137a0b08ee41ab89d952",
-        "revCount": 16,
+        "rev": "2ebeee85ba1628f58d181d8f7eada47740f74efc",
+        "revCount": 17,
         "type": "git",
         "url": "ssh://git@github.com/petterhs/family-recipe-importer"
       },
