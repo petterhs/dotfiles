@@ -4,6 +4,13 @@
   # Hostname
   networking.hostName = "littleboy";
 
+  # Bound journal scans and disk use on the shared system/data SSD.
+  services.journald.extraConfig = ''
+    SystemMaxUse=512M
+    SystemMaxFileSize=64M
+    MaxRetentionSec=14day
+  '';
+
   homelab.labDomain = "lab.hoem.tech";
 
   homelab.audiobookshelfPublic = {
@@ -59,10 +66,10 @@
 
   # Additional firewall ports for homelab services
   networking.firewall.allowedTCPPorts = [
-    2283  # Immich
-    8095  # Music Assistant
-    1400  # Sonos (for Music Assistant)
-    5432  # PostgreSQL (local only)
-    6379  # Redis (local only)
+    2283 # Immich
+    8095 # Music Assistant
+    1400 # Sonos (for Music Assistant)
+    5432 # PostgreSQL (local only)
+    6379 # Redis (local only)
   ];
 }

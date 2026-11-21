@@ -17,8 +17,7 @@ in
     # littleboy interfaces seen in hardware config: eno1, wlo2
     backboneInterfaces = [ "eno1" ];
 
-    radio.url =
-      "spinel+hdlc+uart:///run/otbr-spinel-proxy/spinel?uart-baudrate=460800";
+    radio.url = "spinel+hdlc+uart:///run/otbr-spinel-proxy/spinel?uart-baudrate=460800";
 
     web = {
       enable = true;
@@ -40,17 +39,28 @@ in
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     before = [ "otbr-agent.service" ];
+    # Bring the agent back after a radio outage and a successful proxy reconnect.
+    upholds = [ "otbr-agent.service" ];
+    postStart = ''
+      # Type=exec alone does not wait for socat to create the serial device.
+      while [ ! -c /run/otbr-spinel-proxy/spinel ]; do
+        sleep 0.1
+      done
+    '';
     serviceConfig = {
       Type = "exec";
       RuntimeDirectory = "otbr-spinel-proxy";
       Restart = "on-failure";
-      RestartSec = 3;
-      ExecStart = "${lib.getExe pkgs.socat} pty,raw,echo=0,link=/run/otbr-spinel-proxy/spinel TCP4:${slzbThread.host}:${toString slzbThread.port}";
+      RestartSec = 10;
+      TimeoutStartSec = 20;
+      # Open TCP first so the PTY only appears once the radio is reachable.
+      ExecStart = "${lib.getExe pkgs.socat} TCP4:${slzbThread.host}:${toString slzbThread.port},connect-timeout=10 pty,raw,echo=0,link=/run/otbr-spinel-proxy/spinel";
     };
   };
 
   systemd.services.otbr-agent = {
     requires = [ "otbr-spinel-tcp-proxy.service" ];
+    bindsTo = [ "otbr-spinel-tcp-proxy.service" ];
     after = [ "otbr-spinel-tcp-proxy.service" ];
   };
 }

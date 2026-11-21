@@ -3,6 +3,12 @@
 {
   systemd.services.music-assistant = {
     path = [ pkgs.librespot-ma ];
+    # NetworkManager can finish startup before a usable LAN address exists.
+    # Retry transient discovery failures instead of staying failed until reboot.
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = 10;
+    };
   };
 
   environment.systemPackages = with pkgs; [
