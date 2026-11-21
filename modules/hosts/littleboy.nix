@@ -5,11 +5,11 @@
   networking.hostName = "littleboy";
 
   # Bound journal scans and disk use on the shared system/data SSD.
-  services.journald.extraConfig = ''
-    SystemMaxUse=512M
-    SystemMaxFileSize=64M
-    MaxRetentionSec=14day
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse = "512M";
+    SystemMaxFileSize = "64M";
+    MaxRetentionSec = "14day";
+  };
 
   homelab.labDomain = "lab.hoem.tech";
 
