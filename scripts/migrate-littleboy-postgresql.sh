@@ -8,7 +8,7 @@
 # A standalone copy accepts the checkout path as its optional argument:
 #   sudo bash ~/migrate-littleboy-postgresql.sh ~/dotfiles
 #
-# Backs up all databases, restores all except Immich into PostgreSQL 18, and leaves
+# Backs up and restores all databases except Immich into PostgreSQL 18, and leaves
 # PostgreSQL 14 unchanged. No switch, deletion, or rollback is performed here.
 # On failure, applications remain stopped; the script prints the backup path.
 # Keep the old cluster and backups until the new deployment has been verified.
@@ -82,9 +82,10 @@ done
 
 [[ $(old_psql -At -d postgres -c "SELECT count(*) FROM pg_stat_activity WHERE backend_type='client backend' AND pid <> pg_backend_pid()") == 0 ]] || die "Other database clients remain connected; stop them before migration."
 
-# Preserve a complete, unfiltered backup, including the legacy vectors extension.
-runuser -u postgres -- "$old_bin/pg_dumpall" -h /run/postgresql \
-  --file="$backup/full-postgresql-14.sql"
+# Immich is intentionally excluded from BOTH backup and restore. Its abandoned
+# vector indexes cannot be inspected by the currently installed server libraries.
+runuser -u postgres -- "$new_bin/pg_dumpall" -h /run/postgresql \
+  --exclude-database=immich --file="$backup/postgresql-14-excluding-immich.sql"
 runuser -u postgres -- "$new_bin/pg_dumpall" -h /run/postgresql \
   --globals-only --file="$backup/globals.sql"
 # initdb creates postgres already; retain its ALTER ROLE statements and passwords.

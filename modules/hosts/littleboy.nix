@@ -3,11 +3,15 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 {
   # Hostname
   networking.hostName = "littleboy";
+
+  # The 512 MiB EFI partition cannot hold an unlimited kernel history.
+  boot.loader.systemd-boot.configurationLimit = 3;
 
   # Bound journal scans and disk use on the shared system/data SSD.
   services.journald.settings.Journal = {

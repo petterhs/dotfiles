@@ -86,11 +86,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795197884,
-        "narHash": "sha256-elEO5CkYIsWSyWinIYLz43dXhZjPszqAnf0Hm3tUfL0=",
+        "lastModified": 1795257155,
+        "narHash": "sha256-6YpXm7Ndi0CjCmV1xOz6vgNUrpZzgNICz2UpZ4jV0Vk=",
         "owner": "petterhs",
         "repo": "family-recipe-importer",
-        "rev": "ec1473db694b2449317143cff72c41b4776fc938",
+        "rev": "3f05781654682c47c0738f126e845a7ce7b1a3c8",
         "type": "github"
       },
       "original": {
