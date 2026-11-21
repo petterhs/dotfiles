@@ -45,6 +45,10 @@
     # Desktop programs
     rofi
     spotify-player
+
+    # AI coding agents (desktop only; travis/littleboy are headless)
+    claude-code
+    cursor-cli
   ];
 
   # Desktop-specific programs

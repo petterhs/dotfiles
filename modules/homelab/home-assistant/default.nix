@@ -52,6 +52,7 @@
       openplantbook
       ha_washdata
       pax_ble
+      uix
     ];
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
@@ -66,9 +67,8 @@
       auto-entities
       bubble-card
       button-card
-      card-mod
 
-      #from overlays
+      # from overlays
       navbar-card
       swipe-card
       my-cards-bundle
