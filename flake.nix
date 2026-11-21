@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     family-recipe-importer = {
-      url = "git+ssh://git@github.com/petterhs/family-recipe-importer?ref=main";
+      url = "github:petterhs/family-recipe-importer";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
