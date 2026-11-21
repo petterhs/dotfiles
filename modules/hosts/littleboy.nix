@@ -1,5 +1,10 @@
 # littleboy specific configuration
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   # Hostname
   networking.hostName = "littleboy";
@@ -10,6 +15,20 @@
     SystemMaxFileSize = "64M";
     MaxRetentionSec = "14day";
   };
+
+  services.postgresql = {
+    # Run scripts/migrate-littleboy-postgresql.sh BEFORE switching to this version.
+    package = pkgs.postgresql_18;
+  };
+
+  # The upstream module otherwise initializes an empty cluster automatically.
+  systemd.services.postgresql.preStart = lib.mkBefore ''
+    if [ -f /var/lib/postgresql/14/PG_VERSION ] &&
+       [ ! -f ${config.services.postgresql.dataDir}/.migrated-from-14 ]; then
+      echo "PostgreSQL 14 migration is required; run scripts/migrate-littleboy-postgresql.sh before switching." >&2
+      exit 1
+    fi
+  '';
 
   homelab.labDomain = "lab.hoem.tech";
 
